@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Internship Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="form-container">
+
+        <h2>Internship Registration Form</h2>
+
+        <form>
+
+            <!-- Full Name -->
+            <label>Full Name</label>
+            <input type="text" placeholder="Enter your name" required>
+
+            <!-- Email -->
+            <label>Email Address</label>
+            <input type="email" placeholder="Enter your email" required>
+
+            <!-- Phone -->
+            <label>Phone Number</label>
+            <input type="tel" placeholder="Enter phone number" required>
+
+            <!-- Gender -->
+            <label>Gender</label>
+            <div class="gender">
+                <input type="radio" name="gender"> Male
+                <input type="radio" name="gender"> Female
+            </div>
+
+            <!-- Age (min & max) -->
+            <label>Age</label>
+            <input id="age" type="number" min="15" max="100">
+
+            <!-- Birthdate -->
+            <label>Date of Birth</label>
+            <input id="dob" type="date">
+
+            <!-- Address -->
+            <label>Address</label>
+            <textarea rows="2" placeholder="Enter your address"></textarea>
+
+            <!-- Internship Role -->
+            <label>Internship Role</label>
+            <select>
+                <option>Select Role</option>
+                <option>Web Developer</option>
+                <option>Software Developer</option>
+                <option>Data Analyst</option>
+                <option>UI/UX Designer</option>
+                <option>Android Developer</option>
+            </select>
+
+            <!-- Skills  checkbox-->
+            <label>Skills</label>
+            <div class="skills">
+                <input type="checkbox"> HTML
+                <input type="checkbox"> CSS
+                <input type="checkbox"> JavaScript
+                <input type="checkbox"> Python
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit">Register</button>
+
+        </form>
+    </div>
+
+</body>
+
+</html>

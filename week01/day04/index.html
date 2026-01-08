@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document D4</title>
+
+    <link rel="stylesheet" href="istyle.css">
+
+</head>
+
+<body>
+
+    <!-- Header Section for better practice represent hierarchy-->
+    <div>
+        <section>
+            <!-- <h1>Day_four Practice</h1> -->
+        </section>
+    </div>
+
+    <!-- contant section -->
+    <div>
+        <h2>HTML form practice</h2>
+
+        <!-- General Single practice of form element -->
+
+        <h3>Text Fields :</h3>
+        <!-- We can use autocomplete for auto complition based on preveous entered value -->
+        <form>
+            <label for="firstname"> Name:</label>
+            <input type="text" id="firstname" placeholder="Enter your name">
+        </form>
+
+        <h3>Radio button :</h3>
+        <p>Select your favorite car from below :</p>
+
+        <form>
+            <input type="radio" id="volvo" name="fav_car" value="volvo">
+            <label for="volvo">volvo</label><br>
+
+            <input type="radio" id="audi" name="fav_car" value="BMW">
+            <label for="audi">Audi </label><br>
+
+            <input type="radio" id="defender" name="fav_car" value="volvo">
+            <label for="defender">Defender</label>
+        </form>
+
+        <h3>Checkboxe :</h3>
+        <form>
+            <input type="checkbox" id="option1" name="option1" value="pen">
+            <label for="option1">i have pen</label> <br>
+
+            <input type="checkbox" id="option2" name="option2" value="pencil">
+            <label for="option2">i have pencil</label> <br>
+
+            <input type="checkbox" id="option3" name="option3" value="marker">
+            <label for="option3">i have marker</label> <br>
+        </form>
+
+
+        <h3>Select element :</h3>
+        <!-- Here for multiple selection multiple tag used in select tag -->
+        <form action="">
+            <label for="color">Choose your favorite color :</label>
+            <select name="color" id="color" size="1">
+                <option value="black">Black</option>
+                <option value="pink">Pink</option>
+                <option value="white">White</option>
+                <option value="red">Red</option>
+                <option value="yellow">Yellow</option>
+                <option value="green">Green</option>
+                <option value="grey">Grey</option>
+            </select>
+            <br><br>
+            <!-- <input type="submit"> -->
+        </form>
+
+        <h3>Textarea :</h3>
+        <form>
+            <textarea name="address" id="address" rows="5" cols="40">
+
+            </textarea>
+        </form>
+
+        <h3>Button :</h3>
+        <form>
+            <button type="button" onclick="alert('Hey Coder!')">Click Me</button> <br>
+
+        </form>
+
+        <!-- fieldset and legend example -->
+        <form action="">
+            <fieldset>
+                <legend>Personal details:</legend>
+
+                <label for="namef">First Name :</label><br>
+                <input type="text" id="namef"> <br>
+                <label for="namel">Last Name :</label><br>
+                <input type="text" id="namel"> <br><br>
+
+                <input id="submitbtn" type="submit" value="Submit">
+            </fieldset>
+        </form>
+
+    </div>
+
+</body>
+
+</html>

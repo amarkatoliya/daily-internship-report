@@ -1,0 +1,72 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* compulsory practice */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+}
+
+.form-container {
+    width: 450px;
+    margin: 40px auto;
+    background: rgb(238, 238, 238);
+    padding: 25px;
+    border-radius: 9px;
+    box-shadow: 0 0 10px rgba(6, 6, 6, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #dddada;
+    border-radius: 5px;
+}
+
+.gender, .skills {
+    margin-top: 5px;
+}
+
+#age, #dob {
+    width: auto;
+}
+
+.gender input,
+.skills input {
+    width: auto;
+    margin-right: 5px;
+}
+
+
+button {
+    margin-top: 20px;
+    width: auto;
+    align-items: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,67 @@
+/* Basic page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    padding: 30px;
+}
+
+/* Headings */
+h2 {
+    color: #333;
+}
+
+h3 {
+    color: #555;
+}
+
+/* Form spacing */
+form {
+    margin-bottom: 25px;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+}
+
+/* Input fields */
+input[type="text"],
+select,
+textarea {
+    margin-top: 5px;
+    padding: 6px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+
+/* Radio & checkbox spacing */
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Button */
+button,#submitbtn {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Fieldset */
+fieldset {
+    width: 350px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+legend {
+    font-weight: bold;
+}
