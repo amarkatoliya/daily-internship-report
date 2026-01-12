@@ -1,0 +1,56 @@
+/* Reset default spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Page styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+  padding: 25px;
+}
+
+/* Heading */
+h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+h3 {
+  margin: 20px;
+}
+
+/* Ordered list styling */
+.main-list {
+  list-style-type: decimal;
+  margin-left: 25px;
+  color: #202020;
+}
+
+/* Ordered list items */
+.main-list li {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Unordered list styling */
+.sub-list {
+  list-style-type: disc;
+  margin-top: 8px;
+  margin-left: 25px;
+  color: #555;
+}
+
+/* Unordered list items */
+.sub-list li {
+  margin: 6px 0;
+  font-weight: normal;
+}
+
+/* Hover effect  */
+.sub-list li:hover {
+  color: #036ee0;
+  cursor: pointer;
+}
