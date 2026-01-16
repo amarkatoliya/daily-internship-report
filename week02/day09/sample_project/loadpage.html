@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Index</title>
+    <style>
+        body {
+            background: #110f0f;
+        }
+        
+        #bmiBtn {
+            padding: 9px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+    <script src="script.js" defer></script>   <!--defer is very imp-->
+</head>
+
+<body>
+    <h1 style="color: aliceblue;"> BMI Calculater</h1>
+
+    <div class="container">
+        <div>
+            <input id="inHeight" type="number" placeholder="Enter the Height(cm)" required>
+            <input id="inWeight" type="number" placeholder="Enter the Weight(kg)" required>
+        </div>
+        <button id="bmiBtn">Calculate BMI</button>
+
+    </div>
+    <div style="color: cornflowerblue;" id="output"></div>
+</body>
+
+</html>
