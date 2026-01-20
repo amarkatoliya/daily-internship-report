@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Intern Operations System</title>
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+
+  <h1>Intern Operations System</h1>
+
+  <!-- Global Messages -->
+  <div id="message"></div>
+
+  <!-- Intern Form -->
+  <section>
+    <h2>Add Intern</h2>
+    <input id="name" placeholder="Name">
+    <input id="email" placeholder="Email">
+    <input id="skills" placeholder="Skills (comma separated)">
+    <button id="addInternBtn">Add Intern</button>
+  </section>
+
+  <!-- Intern List -->
+  <section>
+    <h2>Intern List</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Skills</th>
+          <th>Tasks</th>
+        </tr>
+      </thead>
+      <tbody id="internTable"></tbody>
+    </table>
+  </section>
+
+  <!-- Task Form -->
+  <section>
+    <h2>Add Task</h2>
+    <input id="taskTitle" placeholder="Task Title">
+    <input id="taskSkills" placeholder="Required Skills">
+    <select id="internSelect"></select>
+    <button id="addTaskBtn">Add Task</button>
+  </section>
+
+  <script src="js/state.js"></script>
+  <script src="js/fake-server.js"></script>
+  <script src="js/validators.js"></script>
+  <script src="js/rules-engine.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
