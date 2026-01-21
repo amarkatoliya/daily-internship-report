@@ -5,59 +5,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details - EasyCart</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
     <!-- Header Section -->
-    <header>
-        <h1>EasyCart</h1>
-        <nav>
-                <a href="index.html">Home</a> | 
-                <a href="products.html">Products</a> | 
-                <a href="cart.html">Cart</a> | 
-                <a href="orders.html">My Orders</a> | 
-                <a href="login.html">Login</a> | 
-                <a href="signup.html">Signup</a>
-        </nav>
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <a href="index.html" class="header__logo">EasyCart</a>
+                <nav class="header__nav">
+                    <ul class="nav__list">
+                        <li><a href="index.html" class="nav__link">Home</a></li>
+                        <li><a href="products.html" class="nav__link">Products</a></li>
+                        <li><a href="cart.html" class="nav__link">Cart</a></li>
+                        <li><a href="orders.html" class="nav__link">Orders</a></li>
+                        <li><a href="login.html" class="nav__link">Login</a></li>
+                        <li><a href="signup.html" class="nav__link">Signup</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
-    <main>
-        <!-- Product Image Section -->
-        <section>
-            <img src="https://via.placeholder.com/400" alt="Wireless Headphones">
-        </section>
+    <main class="main">
+        <div class="container">
+            <div class="product-detail">
+                <!-- Product Gallery -->
+                <div class="product-detail__gallery">
+                    <img class="product-detail__image" src="https://via.placeholder.com/500x500/6366f1/ffffff?text=Headphones" alt="Wireless Headphones">
+                </div>
 
-        <!-- Product Information -->
-        <section>
-            <h2>Wireless Headphones</h2>
-            <p><strong>Price: ₹6,499</strong></p>
+                <!-- Product Information -->
+                <div class="product-detail__info">
+                    <a href="products.html" class="product-detail__back">← Back to Products</a>
 
-            <h3>Description</h3>
-            <p>Experience premium sound quality with these wireless headphones. Features include active noise
-                cancellation, 30-hour battery life, and comfortable over-ear design. Perfect for music lovers and
-                professionals who demand the best audio experience.</p>
+                    <h1 class="product-detail__title">Wireless Headphones</h1>
+                    <p class="product-detail__price">₹6,499</p>
 
-            <h3>Features</h3>
-            <ul>
-                <li>Active Noise Cancellation</li>
-                <li>30-Hour Battery Life</li>
-                <li>Bluetooth 5.0 Connectivity</li>
-                <li>Comfortable Over-Ear Design</li>
-                <li>Quick Charge Support</li>
-            </ul>
+                    <div class="product-detail__description">
+                        <p>Experience premium sound quality with these wireless headphones. Features include active noise
+                            cancellation, 30-hour battery life, and comfortable over-ear design. Perfect for music lovers and
+                            professionals who demand the best audio experience.</p>
+                    </div>
 
-            <!-- Add to Cart Button -->
-            <button>Add to Cart</button>
+                    <div class="product-detail__features">
+                        <h3>Key Features</h3>
+                        <ul class="product-detail__features-list">
+                            <li class="product-detail__feature">Active Noise Cancellation</li>
+                            <li class="product-detail__feature">30-Hour Battery Life</li>
+                            <li class="product-detail__feature">Bluetooth 5.0 Connectivity</li>
+                            <li class="product-detail__feature">Comfortable Over-Ear Design</li>
+                            <li class="product-detail__feature">Quick Charge Support</li>
+                        </ul>
+                    </div>
 
-            <!-- Back to Products Link -->
-            <p><a href="products.html">← Back to Products</a></p>
-        </section>
+                    <div class="product-detail__actions">
+                        <button class="btn btn--primary">Add to Cart</button>
+                        <button class="btn btn--secondary">Add to Wishlist</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; Hey there! Your one stop shop for all your needs.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3>EasyCart</h3>
+                    <p>Your one-stop shop for all your needs. Quality products at unbeatable prices.</p>
+                </div>
+                <div class="footer__section">
+                    <h3>Quick Links</h3>
+                    <a href="products.html">Products</a>
+                    <a href="cart.html">Shopping Cart</a>
+                    <a href="orders.html">My Orders</a>
+                </div>
+                <div class="footer__section">
+                    <h3>Support</h3>
+                    <a href="#">Contact Us</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Shipping Info</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2024 EasyCart. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 </body>
 

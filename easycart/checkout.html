@@ -5,95 +5,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - EasyCart</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
     <!-- Header Section -->
-    <header>
-        <h1>EasyCart</h1>
-        <nav>
-                <a href="index.html">Home</a> | 
-                <a href="products.html">Products</a> | 
-                <a href="cart.html">Cart</a> | 
-                <a href="orders.html">My Orders</a> | 
-                <a href="login.html">Login</a> | 
-                <a href="signup.html">Signup</a>
-        </nav>
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <a href="index.html" class="header__logo">EasyCart</a>
+                <nav class="header__nav">
+                    <ul class="nav__list">
+                        <li><a href="index.html" class="nav__link">Home</a></li>
+                        <li><a href="products.html" class="nav__link">Products</a></li>
+                        <li><a href="cart.html" class="nav__link">Cart</a></li>
+                        <li><a href="orders.html" class="nav__link">Orders</a></li>
+                        <li><a href="login.html" class="nav__link">Login</a></li>
+                        <li><a href="signup.html" class="nav__link">Signup</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
-    <main>
-        <h2>Checkout</h2>
+    <main class="main">
+        <div class="container">
+            <section class="section">
+                <h2 class="section__title">Checkout</h2>
+            </section>
 
-        <!-- Shipping Options -->
-        <section>
-            <h3>Shipping Options</h3>
-            <form>
-                <input type="radio" name="shipping" value="standard" checked>
-                <label>Standard Shipping - ₹500 (5-7 business days)</label>
-                <br>
-                <input type="radio" name="shipping" value="express">
-                <label>Express Shipping - ₹1,250 (2-3 business days)</label>
-            </form>
-        </section>
+            <!-- Shipping Options -->
+            <section class="section">
+                <form class="form">
+                    <h3>Shipping Options</h3>
+                    <div class="form__radio-group">
+                        <label class="form__radio-label">
+                            <input class="form__radio-input" type="radio" name="shipping" value="standard" checked>
+                            Standard Shipping - ₹500 (5-7 business days)
+                        </label>
+                        <label class="form__radio-label">
+                            <input class="form__radio-input" type="radio" name="shipping" value="express">
+                            Express Shipping - ₹1,250 (2-3 business days)
+                        </label>
+                    </div>
+                </form>
+            </section>
 
-        <!-- Order Summary -->
-        <section>
-            <h3>Order Summary</h3>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Wireless Headphones</td>
-                        <td>2</td>
-                        <td>₹6,499</td>
-                    </tr>
-                    <tr>
-                        <td>Smart Watch</td>
-                        <td>1</td>
-                        <td>₹16,499</td>
-                    </tr>
-                    <tr>
-                        <td>Laptop Backpack</td>
-                        <td>1</td>
-                        <td>₹3,999</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>Subtotal:</td>
-                        <td></td>
-                        <td>₹33,496</td>
-                    </tr>
-                    <tr>
-                        <td>Shipping:</td>
-                        <td></td>
-                        <td>₹500</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Total:</strong></td>
-                        <td></td>
-                        <td><strong>₹33,996</strong></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </section>
+            <!-- Order Summary -->
+            <section class="section">
+                <div class="table">
+                    <div class="table__header">
+                        <div class="table__row">
+                            <div class="table__cell table__cell--header">Product</div>
+                            <div class="table__cell table__cell--header">Quantity</div>
+                            <div class="table__cell table__cell--header">Price</div>
+                        </div>
+                    </div>
+                    <div class="table__body">
+                        <div class="table__row">
+                            <div class="table__cell">Wireless Headphones</div>
+                            <div class="table__cell">2</div>
+                            <div class="table__cell table__cell--price">₹6,499</div>
+                        </div>
+                        <div class="table__row">
+                            <div class="table__cell">Smart Watch</div>
+                            <div class="table__cell">1</div>
+                            <div class="table__cell table__cell--price">₹16,499</div>
+                        </div>
+                        <div class="table__row">
+                            <div class="table__cell">Laptop Backpack</div>
+                            <div class="table__cell">1</div>
+                            <div class="table__cell table__cell--price">₹3,999</div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Place Order Button -->
-        <section>
-            <button>Place Order</button>
-        </section>
+                <div class="order-summary">
+                    <h3 class="order-summary__title">Order Summary</h3>
+                    <div class="order-summary__row">
+                        <span>Subtotal:</span>
+                        <span>₹33,496</span>
+                    </div>
+                    <div class="order-summary__row">
+                        <span>Shipping:</span>
+                        <span>₹500</span>
+                    </div>
+                    <div class="order-summary__row order-summary__row--total">
+                        <strong>Total:</strong>
+                        <strong>₹33,996</strong>
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-6);">
+                    <button class="btn btn--primary btn--full">Place Order</button>
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; Hey there! Your one stop shop for all your needs.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3>EasyCart</h3>
+                    <p>Your one-stop shop for all your needs. Quality products at unbeatable prices.</p>
+                </div>
+                <div class="footer__section">
+                    <h3>Quick Links</h3>
+                    <a href="products.html">Products</a>
+                    <a href="cart.html">Shopping Cart</a>
+                    <a href="orders.html">My Orders</a>
+                </div>
+                <div class="footer__section">
+                    <h3>Support</h3>
+                    <a href="#">Contact Us</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Shipping Info</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2024 EasyCart. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 </body>
 

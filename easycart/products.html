@@ -5,118 +5,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - EasyCart</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
     <!-- Header Section -->
-    <header>
-        <h1>EasyCart</h1>
-        <nav>
-                <a href="index.html">Home</a> | 
-                <a href="products.html">Products</a> | 
-                <a href="cart.html">Cart</a> | 
-                <a href="orders.html">My Orders</a> | 
-                <a href="login.html">Login</a> | 
-                <a href="signup.html">Signup</a>
-        </nav>
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <a href="index.html" class="header__logo">EasyCart</a>
+                <nav class="header__nav">
+                    <ul class="nav__list">
+                        <li><a href="index.html" class="nav__link">Home</a></li>
+                        <li><a href="products.html" class="nav__link">Products</a></li>
+                        <li><a href="cart.html" class="nav__link">Cart</a></li>
+                        <li><a href="orders.html" class="nav__link">Orders</a></li>
+                        <li><a href="login.html" class="nav__link">Login</a></li>
+                        <li><a href="signup.html" class="nav__link">Signup</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
-    <main>
-        <!-- Page Heading -->
-        <h2>All Products</h2>
-        <p>Category: Electronics | Brand: All Brands</p>
+    <main class="main">
+        <div class="container">
+            <!-- Page Heading -->
+            <section class="section">
+                <h2 class="section__title">All Products</h2>
+                <p class="text-secondary">Category: Electronics | Brand: All Brands</p>
+            </section>
 
-        <!-- Products Grid -->
-        <section>
-            <table>
-                <tr>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Wireless Headphones">
-                        <h3>Wireless Headphones</h3>
-                        <p>₹6,499</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Smart Watch">
-                        <h3>Smart Watch</h3>
-                        <p>₹16,499</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Laptop">
-                        <h3>Laptop Pro 15</h3>
-                        <p>₹1,04,999</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Smartphone">
-                        <h3>Smartphone X</h3>
-                        <p>₹74,999</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Tablet">
-                        <h3>Tablet Air</h3>
-                        <p>₹41,999</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Camera">
-                        <h3>Digital Camera</h3>
-                        <p>₹49,999</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Speaker">
-                        <h3>Bluetooth Speaker</h3>
-                        <p>₹7,499</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Mouse">
-                        <h3>Wireless Mouse</h3>
-                        <p>₹2,499</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Keyboard">
-                        <h3>Mechanical Keyboard</h3>
-                        <p>₹9,999</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Monitor">
-                        <h3>4K Monitor</h3>
-                        <p>₹33,999</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="Backpack">
-                        <h3>Laptop Backpack</h3>
-                        <p>₹3,999</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                    <td>
-                        <img src="https://via.placeholder.com/200" alt="USB Cable">
-                        <h3>USB-C Cable</h3>
-                        <p>₹1,599</p>
-                        <a href="product-detail.html">View Details</a>
-                    </td>
-                </tr>
-            </table>
-        </section>
+            <!-- Products Grid -->
+            <section class="section">
+                <div class="products-grid">
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/6366f1/ffffff?text=Headphones" alt="Wireless Headphones">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Wireless Headphones</h3>
+                            <p class="product-card__price">₹6,499</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/10b981/ffffff?text=Watch" alt="Smart Watch">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Smart Watch</h3>
+                            <p class="product-card__price">₹16,499</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/f59e0b/ffffff?text=Laptop" alt="Laptop Pro 15">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Laptop Pro 15</h3>
+                            <p class="product-card__price">₹1,04,999</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/64748b/ffffff?text=Phone" alt="Smartphone X">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Smartphone X</h3>
+                            <p class="product-card__price">₹74,999</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/6366f1/ffffff?text=Tablet" alt="Tablet Air">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Tablet Air</h3>
+                            <p class="product-card__price">₹41,999</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/10b981/ffffff?text=Camera" alt="Digital Camera">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Digital Camera</h3>
+                            <p class="product-card__price">₹49,999</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/f59e0b/ffffff?text=Speaker" alt="Bluetooth Speaker">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Bluetooth Speaker</h3>
+                            <p class="product-card__price">₹7,499</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/64748b/ffffff?text=Mouse" alt="Wireless Mouse">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Wireless Mouse</h3>
+                            <p class="product-card__price">₹2,499</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/6366f1/ffffff?text=Keyboard" alt="Mechanical Keyboard">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Mechanical Keyboard</h3>
+                            <p class="product-card__price">₹9,999</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/10b981/ffffff?text=Monitor" alt="4K Monitor">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">4K Monitor</h3>
+                            <p class="product-card__price">₹33,999</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/f59e0b/ffffff?text=Backpack" alt="Laptop Backpack">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Laptop Backpack</h3>
+                            <p class="product-card__price">₹3,999</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/64748b/ffffff?text=Cable" alt="USB-C Cable">
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">USB-C Cable</h3>
+                            <p class="product-card__price">₹1,599</p>
+                            <div class="product-card__actions">
+                                <a href="product-detail.html" class="btn btn--primary btn--sm">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; Hey there! Your one stop shop for all your needs.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3>EasyCart</h3>
+                    <p>Your one-stop shop for all your needs. Quality products at unbeatable prices.</p>
+                </div>
+                <div class="footer__section">
+                    <h3>Quick Links</h3>
+                    <a href="products.html">Products</a>
+                    <a href="cart.html">Shopping Cart</a>
+                    <a href="orders.html">My Orders</a>
+                </div>
+                <div class="footer__section">
+                    <h3>Support</h3>
+                    <a href="#">Contact Us</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Shipping Info</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2024 EasyCart. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 </body>
 

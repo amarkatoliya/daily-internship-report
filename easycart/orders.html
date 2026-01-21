@@ -5,82 +5,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Orders - EasyCart</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
     <!-- Header Section -->
-    <header>
-        <h1>EasyCart</h1>
-        <nav>
-                <a href="index.html">Home</a> | 
-                <a href="products.html">Products</a> | 
-                <a href="cart.html">Cart</a> | 
-                <a href="orders.html">My Orders</a> | 
-                <a href="login.html">Login</a> | 
-                <a href="signup.html">Signup</a>
-        </nav>
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <a href="index.html" class="header__logo">EasyCart</a>
+                <nav class="header__nav">
+                    <ul class="nav__list">
+                        <li><a href="index.html" class="nav__link">Home</a></li>
+                        <li><a href="products.html" class="nav__link">Products</a></li>
+                        <li><a href="cart.html" class="nav__link">Cart</a></li>
+                        <li><a href="orders.html" class="nav__link">Orders</a></li>
+                        <li><a href="login.html" class="nav__link">Login</a></li>
+                        <li><a href="signup.html" class="nav__link">Signup</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
-    <main>
-        <h2>My Orders</h2>
+    <main class="main">
+        <div class="container">
+            <section class="section orders-header">
+                <h2 class="section__title orders-header__title">My Orders</h2>
+                <p class="orders-header__subtitle">Track and manage all your purchases in one place</p>
+            </section>
 
-        <!-- Orders Table -->
-        <section>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Items</th>
-                        <th>Total Price</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>ORD-2024-001</td>
-                        <td>2024-01-15</td>
-                        <td>Wireless Headphones (2), Smart Watch (1)</td>
-                        <td>₹33,996</td>
-                        <td>Delivered</td>
-                    </tr>
-                    <tr>
-                        <td>ORD-2024-002</td>
-                        <td>2024-01-20</td>
-                        <td>Laptop Pro 15 (1), Laptop Backpack (1)</td>
-                        <td>₹1,09,498</td>
-                        <td>Shipped</td>
-                    </tr>
-                    <tr>
-                        <td>ORD-2024-003</td>
-                        <td>2024-01-25</td>
-                        <td>Smartphone X (1), USB-C Cable (2)</td>
-                        <td>₹78,196</td>
-                        <td>Processing</td>
-                    </tr>
-                    <tr>
-                        <td>ORD-2024-004</td>
-                        <td>2024-02-01</td>
-                        <td>Bluetooth Speaker (1), Wireless Mouse (1)</td>
-                        <td>₹9,998</td>
-                        <td>Delivered</td>
-                    </tr>
-                    <tr>
-                        <td>ORD-2024-005</td>
-                        <td>2024-02-05</td>
-                        <td>Tablet Air (1), 4K Monitor (1)</td>
-                        <td>₹76,498</td>
-                        <td>In Transit</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+            <!-- Orders Filters -->
+            <section class="section">
+                <div class="orders-filters">
+                    <button class="orders-filter active">All Orders</button>
+                    <button class="orders-filter">Delivered</button>
+                    <button class="orders-filter">In Transit</button>
+                    <button class="orders-filter">Processing</button>
+                </div>
+            </section>
+
+            <!-- Orders Table -->
+            <section class="section">
+                <div class="table orders-table">
+                    <div class="table__header">
+                        <div class="table__row">
+                            <div class="table__cell table__cell--header">Order ID</div>
+                            <div class="table__cell table__cell--header">Date</div>
+                            <div class="table__cell table__cell--header">Items</div>
+                            <div class="table__cell table__cell--header">Total</div>
+                            <div class="table__cell table__cell--header">Status</div>
+                        </div>
+                    </div>
+                    <div class="table__body">
+                        <div class="table__row">
+                            <div class="table__cell">
+                                <span class="order__id">ORD-2024-001</span>
+                            </div>
+                            <div class="table__cell">
+                                <span class="order__date">2024-01-15</span>
+                            </div>
+                            <div class="table__cell">
+                                <div class="order__items">Wireless Headphones (2), Smart Watch (1)</div>
+                            </div>
+                            <div class="table__cell table__cell--price">₹33,996</div>
+                            <div class="table__cell">
+                                <span class="table__cell--status table__cell--status--delivered">Delivered</span>
+                            </div>
+                        </div>
+                        <div class="table__row">
+                            <div class="table__cell">
+                                <span class="order__id">ORD-2024-002</span>
+                            </div>
+                            <div class="table__cell">
+                                <span class="order__date">2024-01-20</span>
+                            </div>
+                            <div class="table__cell">
+                                <div class="order__items">Laptop Pro 15 (1), Laptop Backpack (1)</div>
+                            </div>
+                            <div class="table__cell table__cell--price">₹1,09,498</div>
+                            <div class="table__cell">
+                                <span class="table__cell--status table__cell--status--shipped">Shipped</span>
+                            </div>
+                        </div>
+                        <div class="table__row">
+                            <div class="table__cell">
+                                <span class="order__id">ORD-2024-003</span>
+                            </div>
+                            <div class="table__cell">
+                                <span class="order__date">2024-01-25</span>
+                            </div>
+                            <div class="table__cell">
+                                <div class="order__items">Smartphone X (1), USB-C Cable (2)</div>
+                            </div>
+                            <div class="table__cell table__cell--price">₹78,196</div>
+                            <div class="table__cell">
+                                <span class="table__cell--status table__cell--status--processing">Processing</span>
+                            </div>
+                        </div>
+                        <div class="table__row">
+                            <div class="table__cell">
+                                <span class="order__id">ORD-2024-004</span>
+                            </div>
+                            <div class="table__cell">
+                                <span class="order__date">2024-02-01</span>
+                            </div>
+                            <div class="table__cell">
+                                <div class="order__items">Bluetooth Speaker (1), Wireless Mouse (1)</div>
+                            </div>
+                            <div class="table__cell table__cell--price">₹9,998</div>
+                            <div class="table__cell">
+                                <span class="table__cell--status table__cell--status--delivered">Delivered</span>
+                            </div>
+                        </div>
+                        <div class="table__row">
+                            <div class="table__cell">
+                                <span class="order__id">ORD-2024-005</span>
+                            </div>
+                            <div class="table__cell">
+                                <span class="order__date">2024-02-05</span>
+                            </div>
+                            <div class="table__cell">
+                                <div class="order__items">Tablet Air (1), 4K Monitor (1)</div>
+                            </div>
+                            <div class="table__cell table__cell--price">₹76,498</div>
+                            <div class="table__cell">
+                                <span class="table__cell--status table__cell--status--in-transit">In Transit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; Hey there! Your one stop shop for all your needs.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3>EasyCart</h3>
+                    <p>Your one-stop shop for all your needs. Quality products at unbeatable prices.</p>
+                </div>
+                <div class="footer__section">
+                    <h3>Quick Links</h3>
+                    <a href="products.html">Products</a>
+                    <a href="cart.html">Shopping Cart</a>
+                    <a href="orders.html">My Orders</a>
+                </div>
+                <div class="footer__section">
+                    <h3>Support</h3>
+                    <a href="#">Contact Us</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Shipping Info</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2024 EasyCart. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 </body>
 

@@ -1,0 +1,22 @@
+/* ============================================
+   EasyCart - Main Stylesheet
+   ============================================
+   This file imports all CSS modules in the correct order.
+   ============================================ */
+
+/* ===== IMPORT CSS MODULES ===== */
+
+/* 1. CSS Variables - Design tokens */
+@import url('variables.css');
+
+/* 2. Base styles - Fundamental rules */
+@import url('base.css');
+
+/* 3. Component styles - All components combined */
+@import url('components.css');
+
+/* 4. Page-specific styles - Cart & Orders pages */
+@import url('pages.css');
+
+/* 5. Responsive styles - Always last */
+@import url('responsive.css');
