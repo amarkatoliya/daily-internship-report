@@ -20,7 +20,7 @@
                         <li><a href="index.html" class="nav__link">Home</a></li>
                         <li><a href="products.html" class="nav__link">Products</a></li>
                         <li><a href="cart.html" class="nav__link">Cart</a></li>
-                        <li><a href="orders.html" class="nav__link">Orders</a></li>
+                        <li><a href="orders.html" class="nav__link nav__link--active">Orders</a></li>
                         <li><a href="login.html" class="nav__link">Login</a></li>
                         <li><a href="signup.html" class="nav__link">Signup</a></li>
                     </ul>
@@ -32,112 +32,160 @@
     <!-- Main Content -->
     <main class="main">
         <div class="container">
-            <section class="section orders-header">
-                <h2 class="section__title orders-header__title">My Orders</h2>
+            <!-- Page Header -->
+            <div class="orders-header">
+                <h1 class="orders-header__title">My Orders</h1>
                 <p class="orders-header__subtitle">Track and manage all your purchases in one place</p>
-            </section>
+            </div>
+
+            <!-- Orders Stats -->
+            <div class="orders-stats">
+                <div class="orders-stats__item">
+                    <div class="orders-stats__number">5</div>
+                    <div class="orders-stats__label">Total Orders</div>
+                </div>
+                <div class="orders-stats__item">
+                    <div class="orders-stats__number">3</div>
+                    <div class="orders-stats__label">Delivered</div>
+                </div>
+                <div class="orders-stats__item">
+                    <div class="orders-stats__number">1</div>
+                    <div class="orders-stats__label">In Transit</div>
+                </div>
+                <div class="orders-stats__item">
+                    <div class="orders-stats__number">1</div>
+                    <div class="orders-stats__label">Processing</div>
+                </div>
+            </div>
 
             <!-- Orders Filters -->
-            <section class="section">
-                <div class="orders-filters">
-                    <button class="orders-filter active">All Orders</button>
-                    <button class="orders-filter">Delivered</button>
-                    <button class="orders-filter">In Transit</button>
-                    <button class="orders-filter">Processing</button>
-                </div>
-            </section>
+            <div class="orders-filters">
+                <button class="orders-filter orders-filter--active" data-filter="all">All Orders</button>
+                <button class="orders-filter" data-filter="delivered">Delivered</button>
+                <button class="orders-filter" data-filter="in-transit">In Transit</button>
+                <button class="orders-filter" data-filter="processing">Processing</button>
+            </div>
 
             <!-- Orders Table -->
-            <section class="section">
-                <div class="table orders-table">
-                    <div class="table__header">
-                        <div class="table__row">
-                            <div class="table__cell table__cell--header">Order ID</div>
-                            <div class="table__cell table__cell--header">Date</div>
-                            <div class="table__cell table__cell--header">Items</div>
-                            <div class="table__cell table__cell--header">Total</div>
-                            <div class="table__cell table__cell--header">Status</div>
-                        </div>
-                    </div>
-                    <div class="table__body">
-                        <div class="table__row">
-                            <div class="table__cell">
-                                <span class="order__id">ORD-2024-001</span>
-                            </div>
-                            <div class="table__cell">
-                                <span class="order__date">2024-01-15</span>
-                            </div>
-                            <div class="table__cell">
-                                <div class="order__items">Wireless Headphones (2), Smart Watch (1)</div>
-                            </div>
-                            <div class="table__cell table__cell--price">₹33,996</div>
-                            <div class="table__cell">
-                                <span class="table__cell--status table__cell--status--delivered">Delivered</span>
-                            </div>
-                        </div>
-                        <div class="table__row">
-                            <div class="table__cell">
-                                <span class="order__id">ORD-2024-002</span>
-                            </div>
-                            <div class="table__cell">
-                                <span class="order__date">2024-01-20</span>
-                            </div>
-                            <div class="table__cell">
-                                <div class="order__items">Laptop Pro 15 (1), Laptop Backpack (1)</div>
-                            </div>
-                            <div class="table__cell table__cell--price">₹1,09,498</div>
-                            <div class="table__cell">
-                                <span class="table__cell--status table__cell--status--shipped">Shipped</span>
-                            </div>
-                        </div>
-                        <div class="table__row">
-                            <div class="table__cell">
-                                <span class="order__id">ORD-2024-003</span>
-                            </div>
-                            <div class="table__cell">
-                                <span class="order__date">2024-01-25</span>
-                            </div>
-                            <div class="table__cell">
-                                <div class="order__items">Smartphone X (1), USB-C Cable (2)</div>
-                            </div>
-                            <div class="table__cell table__cell--price">₹78,196</div>
-                            <div class="table__cell">
-                                <span class="table__cell--status table__cell--status--processing">Processing</span>
-                            </div>
-                        </div>
-                        <div class="table__row">
-                            <div class="table__cell">
-                                <span class="order__id">ORD-2024-004</span>
-                            </div>
-                            <div class="table__cell">
-                                <span class="order__date">2024-02-01</span>
-                            </div>
-                            <div class="table__cell">
-                                <div class="order__items">Bluetooth Speaker (1), Wireless Mouse (1)</div>
-                            </div>
-                            <div class="table__cell table__cell--price">₹9,998</div>
-                            <div class="table__cell">
-                                <span class="table__cell--status table__cell--status--delivered">Delivered</span>
-                            </div>
-                        </div>
-                        <div class="table__row">
-                            <div class="table__cell">
-                                <span class="order__id">ORD-2024-005</span>
-                            </div>
-                            <div class="table__cell">
-                                <span class="order__date">2024-02-05</span>
-                            </div>
-                            <div class="table__cell">
-                                <div class="order__items">Tablet Air (1), 4K Monitor (1)</div>
-                            </div>
-                            <div class="table__cell table__cell--price">₹76,498</div>
-                            <div class="table__cell">
-                                <span class="table__cell--status table__cell--status--in-transit">In Transit</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <div class="orders-table-container">
+                <table class="orders-table">
+                    <thead class="orders-table__header">
+                        <tr>
+                            <th class="orders-table__header-cell">Order ID</th>
+                            <th class="orders-table__header-cell">Date</th>
+                            <th class="orders-table__header-cell">Items</th>
+                            <th class="orders-table__header-cell">Total</th>
+                            <th class="orders-table__header-cell">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="orders-table__body">
+                        <tr class="orders-table__row" data-status="delivered">
+                            <td class="orders-table__cell">
+                                <span class="order-id">ORD-2024-001</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <time class="order-date" datetime="2024-01-15">Jan 15, 2024</time>
+                            </td>
+                            <td class="orders-table__cell">
+                                <div class="order-items">
+                                    <div class="order-item">Wireless Headphones × 2</div>
+                                    <div class="order-item">Smart Watch × 1</div>
+                                </div>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-total">₹33,996</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-status order-status--delivered">Delivered</span>
+                            </td>
+                        </tr>
+
+                        <tr class="orders-table__row" data-status="shipped">
+                            <td class="orders-table__cell">
+                                <span class="order-id">ORD-2024-002</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <time class="order-date" datetime="2024-01-20">Jan 20, 2024</time>
+                            </td>
+                            <td class="orders-table__cell">
+                                <div class="order-items">
+                                    <div class="order-item">Laptop Pro 15 × 1</div>
+                                    <div class="order-item">Laptop Backpack × 1</div>
+                                </div>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-total">₹1,09,498</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-status order-status--shipped">Shipped</span>
+                            </td>
+                        </tr>
+
+                        <tr class="orders-table__row" data-status="processing">
+                            <td class="orders-table__cell">
+                                <span class="order-id">ORD-2024-003</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <time class="order-date" datetime="2024-01-25">Jan 25, 2024</time>
+                            </td>
+                            <td class="orders-table__cell">
+                                <div class="order-items">
+                                    <div class="order-item">Smartphone X × 1</div>
+                                    <div class="order-item">USB-C Cable × 2</div>
+                                </div>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-total">₹78,196</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-status order-status--processing">Processing</span>
+                            </td>
+                        </tr>
+
+                        <tr class="orders-table__row" data-status="delivered">
+                            <td class="orders-table__cell">
+                                <span class="order-id">ORD-2024-004</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <time class="order-date" datetime="2024-02-01">Feb 1, 2024</time>
+                            </td>
+                            <td class="orders-table__cell">
+                                <div class="order-items">
+                                    <div class="order-item">Bluetooth Speaker × 1</div>
+                                    <div class="order-item">Wireless Mouse × 1</div>
+                                </div>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-total">₹9,998</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-status order-status--delivered">Delivered</span>
+                            </td>
+                        </tr>
+
+                        <tr class="orders-table__row" data-status="in-transit">
+                            <td class="orders-table__cell">
+                                <span class="order-id">ORD-2024-005</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <time class="order-date" datetime="2024-02-05">Feb 5, 2024</time>
+                            </td>
+                            <td class="orders-table__cell">
+                                <div class="order-items">
+                                    <div class="order-item">Tablet Air × 1</div>
+                                    <div class="order-item">4K Monitor × 1</div>
+                                </div>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-total">₹76,498</span>
+                            </td>
+                            <td class="orders-table__cell">
+                                <span class="order-status order-status--in-transit">In Transit</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 

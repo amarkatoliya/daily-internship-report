@@ -32,50 +32,83 @@
     <!-- Main Content -->
     <main class="main">
         <div class="container">
-            <section class="section">
-                <h2 class="section__title">Create Your Account</h2>
+            <div class="auth-header">
+                <div class="auth-header__badge">Join EasyCart</div>
+                <h1 class="auth-header__title">Create your account</h1>
+                <p class="auth-header__subtitle">Checkout faster, track your orders, and unlock member-only rewards.</p>
+            </div>
 
-                <!-- Signup Form -->
-                <form class="form" action="#" method="post">
-                    <div class="form__group">
-                        <label class="form__label" for="name">Full Name</label>
-                        <input class="form__input" type="text" id="name" name="name" placeholder="Enter your full name" required>
-                    </div>
+            <div class="auth-page">
+                <div class="auth-card">
+                    <form class="auth-form" action="#" method="post">
+                        <div class="auth-form__row">
+                            <div class="auth-form__group">
+                                <label class="form__label" for="name">Full name</label>
+                                <input class="form__input" type="text" id="name" name="name" placeholder="Alex Johnson" required>
+                            </div>
+                        </div>
 
-                    <div class="form__group">
-                        <label class="form__label" for="email">Email Address</label>
-                        <input class="form__input" type="email" id="email" name="email" placeholder="Enter your email" required>
-                    </div>
+                        <div class="auth-form__row">
+                            <div class="auth-form__group">
+                                <label class="form__label" for="email">Email address</label>
+                                <input class="form__input" type="email" id="email" name="email" placeholder="you@example.com" required>
+                            </div>
+                        </div>
 
-                    <div class="form__group">
-                        <label class="form__label" for="password">Password</label>
-                        <input class="form__input" type="password" id="password" name="password" placeholder="Create a password" required>
-                    </div>
+                        <div class="auth-form__row auth-form__row--two-cols">
+                            <div class="auth-form__group">
+                                <label class="form__label" for="password">Password</label>
+                                <input class="form__input" type="password" id="password" name="password" placeholder="Create a password" required>
+                            </div>
+                            <div class="auth-form__group">
+                                <label class="form__label" for="confirm-password">Confirm password</label>
+                                <input class="form__input" type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter password" required>
+                            </div>
+                        </div>
 
-                    <div class="form__group">
-                        <label class="form__label" for="confirm-password">Confirm Password</label>
-                        <input class="form__input" type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
-                    </div>
-
-                    <div class="form__group">
-                        <div class="form__radio-group">
-                            <label class="form__radio-label">
-                                <input class="form__radio-input" type="radio" name="terms" value="accept" required>
-                                I agree to the <a href="#" class="form__link">Terms & Conditions</a>
+                        <div class="auth-form__meta">
+                            <label class="auth-checkbox">
+                                <input type="checkbox" name="marketing" value="yes">
+                                <span>Send me updates on offers and new arrivals</span>
                             </label>
                         </div>
-                    </div>
 
-                    <div class="form__actions">
-                        <button class="btn btn--primary btn--full" type="submit">Create Account</button>
-                    </div>
-                </form>
+                        <div class="auth-form__meta">
+                            <label class="auth-checkbox">
+                                <input type="checkbox" name="terms" value="accept" required>
+                                <span>I agree to the <a href="#" class="form__link">Terms & Conditions</a></span>
+                            </label>
+                        </div>
 
-                <!-- Login Link -->
-                <div class="text-center">
-                    <p>Already have an account? <a href="login.html" class="form__link">Login here</a></p>
+                        <button class="btn btn--primary btn--full" type="submit">Create account</button>
+
+                        <div class="auth-divider">
+                            <span>or</span>
+                        </div>
+
+                        <button class="btn btn--secondary btn--full" type="button">Sign up with Google</button>
+                    </form>
+
+                    <p class="auth-footer-text">Already have an account? <a href="login.html" class="form__link">Login here</a></p>
                 </div>
-            </section>
+
+                <div class="auth-panel">
+                    <h2>Member benefits</h2>
+                    <ul class="auth-panel__list">
+                        <li>Save multiple addresses and preferences</li>
+                        <li>View and reorder past purchases quickly</li>
+                        <li>Early access to exclusive drops and sales</li>
+                        <li>Personalized recommendations</li>
+                    </ul>
+                    <div class="auth-panel__callout">
+                        <div class="auth-panel__icon">🚚</div>
+                        <div>
+                            <strong>Free shipping perks</strong>
+                            <p>Get free shipping on select items after you sign up.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 

@@ -19,7 +19,7 @@
                     <ul class="nav__list">
                         <li><a href="index.html" class="nav__link">Home</a></li>
                         <li><a href="products.html" class="nav__link">Products</a></li>
-                        <li><a href="cart.html" class="nav__link">Cart</a></li>
+                        <li><a href="cart.html" class="nav__link nav__link--active">Cart</a></li>
                         <li><a href="orders.html" class="nav__link">Orders</a></li>
                         <li><a href="login.html" class="nav__link">Login</a></li>
                         <li><a href="signup.html" class="nav__link">Signup</a></li>
@@ -32,87 +32,166 @@
     <!-- Main Content -->
     <main class="main">
         <div class="container">
-            <section class="section">
-                <h2 class="section__title">Shopping Cart</h2>
-            </section>
+            <!-- Page Header -->
+            <div class="cart-header">
+                <h1 class="cart-header__title">Shopping Cart</h1>
+                <p class="cart-header__subtitle">Review your items and proceed to checkout</p>
+            </div>
+
+            <!-- Cart Stats -->
+            <div class="cart-stats">
+                <div class="cart-stats__item">
+                    <div class="cart-stats__number">3</div>
+                    <div class="cart-stats__label">Items in Cart</div>
+                </div>
+                <div class="cart-stats__item">
+                    <div class="cart-stats__number">4</div>
+                    <div class="cart-stats__label">Total Quantity</div>
+                </div>
+                <div class="cart-stats__item">
+                    <div class="cart-stats__number">₹33,996</div>
+                    <div class="cart-stats__label">Cart Total</div>
+                </div>
+            </div>
 
             <!-- Cart Items Table -->
-            <section class="section">
-                <div class="table cart-table">
-                    <div class="table__header">
-                        <div class="table__row">
-                            <div class="table__cell table__cell--header">Product Name</div>
-                            <div class="table__cell table__cell--header">Quantity</div>
-                            <div class="table__cell table__cell--header">Price</div>
-                            <div class="table__cell table__cell--header">Total</div>
-                        </div>
-                    </div>
-                    <div class="table__body">
-                        <div class="table__row">
-                            <div class="table__cell">
-                                <div class="cart-item__name">Wireless Headphones</div>
-                            </div>
-                            <div class="table__cell">
-                                <div class="cart-item__quantity">
-                                    <input type="number" class="cart-item__quantity-input" value="2" min="1">
-                                    <button class="cart-item__remove-btn">Remove</button>
+            <div class="cart-table-container">
+                <table class="cart-table">
+                    <thead class="cart-table__header">
+                        <tr>
+                            <th class="cart-table__header-cell">Product</th>
+                            <th class="cart-table__header-cell">Quantity</th>
+                            <th class="cart-table__header-cell">Price</th>
+                            <th class="cart-table__header-cell">Total</th>
+                            <th class="cart-table__header-cell">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="cart-table__body">
+                        <tr class="cart-table__row">
+                            <td class="cart-table__cell">
+                                <div class="cart-item">
+                                    <div class="cart-item__image">
+                                        <img src="https://via.placeholder.com/80x80/f3f4f6/6b7280?text=🎧" alt="Wireless Headphones">
+                                    </div>
+                                    <div class="cart-item__details">
+                                        <div class="cart-item__name">Wireless Headphones</div>
+                                        <div class="cart-item__description">Premium noise-canceling wireless headphones</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="table__cell table__cell--price">₹6,499</div>
-                            <div class="table__cell table__cell--price">₹12,998</div>
-                        </div>
-                        <div class="table__row">
-                            <div class="table__cell">
-                                <div class="cart-item__name">Smart Watch</div>
-                            </div>
-                            <div class="table__cell">
-                                <div class="cart-item__quantity">
-                                    <input type="number" class="cart-item__quantity-input" value="1" min="1">
-                                    <button class="cart-item__remove-btn">Remove</button>
-                                </div>
-                            </div>
-                            <div class="table__cell table__cell--price">₹16,499</div>
-                            <div class="table__cell table__cell--price">₹16,499</div>
-                        </div>
-                        <div class="table__row">
-                            <div class="table__cell">
-                                <div class="cart-item__name">Laptop Backpack</div>
-                            </div>
-                            <div class="table__cell">
-                                <div class="cart-item__quantity">
-                                    <input type="number" class="cart-item__quantity-input" value="1" min="1">
-                                    <button class="cart-item__remove-btn">Remove</button>
-                                </div>
-                            </div>
-                            <div class="table__cell table__cell--price">₹3,999</div>
-                            <div class="table__cell table__cell--price">₹3,999</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                            </td>
+                            <td class="cart-table__cell">
+                                <input type="number" class="cart-quantity-input" value="2" min="1" max="10">
+                            </td>
+                            <td class="cart-table__cell">
+                                <span class="cart-price">₹6,499</span>
+                            </td>
+                            <td class="cart-table__cell">
+                                <span class="cart-total">₹12,998</span>
+                            </td>
+                            <td class="cart-table__cell">
+                                <button class="cart-remove-btn" aria-label="Remove Wireless Headphones from cart">Remove</button>
+                            </td>
+                        </tr>
 
-            <!-- Price Summary -->
-            <section class="order-summary cart-order-summary">
-                <h3 class="order-summary__title cart-order-summary__title">Order Summary</h3>
-                <div class="order-summary__row">
-                    <span>Subtotal:</span>
-                    <span>₹33,496</span>
+                        <tr class="cart-table__row">
+                            <td class="cart-table__cell">
+                                <div class="cart-item">
+                                    <div class="cart-item__image">
+                                        <img src="https://via.placeholder.com/80x80/f3f4f6/6b7280?text=⌚" alt="Smart Watch">
+                                    </div>
+                                    <div class="cart-item__details">
+                                        <div class="cart-item__name">Smart Watch</div>
+                                        <div class="cart-item__description">Fitness tracking smartwatch with heart rate monitor</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="cart-table__cell">
+                                <input type="number" class="cart-quantity-input" value="1" min="1" max="10">
+                            </td>
+                            <td class="cart-table__cell">
+                                <span class="cart-price">₹16,499</span>
+                            </td>
+                            <td class="cart-table__cell">
+                                <span class="cart-total">₹16,499</span>
+                            </td>
+                            <td class="cart-table__cell">
+                                <button class="cart-remove-btn" aria-label="Remove Smart Watch from cart">Remove</button>
+                            </td>
+                        </tr>
+
+                        <tr class="cart-table__row">
+                            <td class="cart-table__cell">
+                                <div class="cart-item">
+                                    <div class="cart-item__image">
+                                        <img src="https://via.placeholder.com/80x80/f3f4f6/6b7280?text=🎒" alt="Laptop Backpack">
+                                    </div>
+                                    <div class="cart-item__details">
+                                        <div class="cart-item__name">Laptop Backpack</div>
+                                        <div class="cart-item__description">Professional laptop backpack with multiple compartments</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="cart-table__cell">
+                                <input type="number" class="cart-quantity-input" value="1" min="1" max="10">
+                            </td>
+                            <td class="cart-table__cell">
+                                <span class="cart-price">₹3,999</span>
+                            </td>
+                            <td class="cart-table__cell">
+                                <span class="cart-total">₹3,999</span>
+                            </td>
+                            <td class="cart-table__cell">
+                                <button class="cart-remove-btn" aria-label="Remove Laptop Backpack from cart">Remove</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="cart-summary">
+                <div class="cart-summary__header">
+                    <h2 class="cart-summary__title">Order Summary</h2>
                 </div>
-                <div class="order-summary__row">
-                    <span>Shipping:</span>
-                    <span>₹500</span>
+
+                <div class="cart-summary__content">
+                    <div class="cart-summary__row">
+                        <span class="cart-summary__label">Subtotal (3 items)</span>
+                        <span class="cart-summary__value">₹33,496</span>
+                    </div>
+
+                    <div class="cart-summary__row">
+                        <span class="cart-summary__label">Shipping</span>
+                        <span class="cart-summary__value cart-summary__value--free">FREE</span>
+                    </div>
+
+                    <div class="cart-summary__row">
+                        <span class="cart-summary__label">Tax (GST)</span>
+                        <span class="cart-summary__value">₹2,500</span>
+                    </div>
+
+                    <div class="cart-summary__divider"></div>
+
+                    <div class="cart-summary__row cart-summary__row--total">
+                        <span class="cart-summary__label cart-summary__label--total">Total</span>
+                        <span class="cart-summary__value cart-summary__value--total">₹35,996</span>
+                    </div>
                 </div>
-                <div class="order-summary__row order-summary__row--total cart-order-summary__row--total">
-                    <strong>Total:</strong>
-                    <strong>₹33,996</strong>
-                </div>
-                <div class="cart-actions">
+
+                <div class="cart-summary__actions">
                     <a href="products.html" class="cart-continue-shopping">
                         ← Continue Shopping
                     </a>
                     <a href="checkout.html" class="btn btn--primary btn--full">Proceed to Checkout</a>
                 </div>
-            </section>
+
+                <div class="cart-summary__footer">
+                    <p class="cart-summary__note">
+                        <span class="cart-summary__icon">🔒</span>
+                        Secure checkout with SSL encryption
+                    </p>
+                </div>
+            </div>
         </div>
     </main>
 
