@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - EasyCart</title>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>EasyCart</h1>
+        <nav>
+                <a href="index.html">Home</a> | 
+                <a href="products.html">Products</a> | 
+                <a href="cart.html">Cart</a> | 
+                <a href="orders.html">My Orders</a> | 
+                <a href="login.html">Login</a> | 
+                <a href="signup.html">Signup</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <h2>Checkout</h2>
+
+        <!-- Shipping Options -->
+        <section>
+            <h3>Shipping Options</h3>
+            <form>
+                <input type="radio" name="shipping" value="standard" checked>
+                <label>Standard Shipping - ₹500 (5-7 business days)</label>
+                <br>
+                <input type="radio" name="shipping" value="express">
+                <label>Express Shipping - ₹1,250 (2-3 business days)</label>
+            </form>
+        </section>
+
+        <!-- Order Summary -->
+        <section>
+            <h3>Order Summary</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Wireless Headphones</td>
+                        <td>2</td>
+                        <td>₹6,499</td>
+                    </tr>
+                    <tr>
+                        <td>Smart Watch</td>
+                        <td>1</td>
+                        <td>₹16,499</td>
+                    </tr>
+                    <tr>
+                        <td>Laptop Backpack</td>
+                        <td>1</td>
+                        <td>₹3,999</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td></td>
+                        <td>₹33,496</td>
+                    </tr>
+                    <tr>
+                        <td>Shipping:</td>
+                        <td></td>
+                        <td>₹500</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td></td>
+                        <td><strong>₹33,996</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <!-- Place Order Button -->
+        <section>
+            <button>Place Order</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Hey there! Your one stop shop for all your needs.</p>
+    </footer>
+</body>
+
+</html>
