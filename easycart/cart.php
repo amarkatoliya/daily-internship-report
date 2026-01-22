@@ -5,20 +5,44 @@ session_start();
 // Include data layer
 require_once 'data.php';
 
-// Handle cart actions
 $message = '';
 $messageType = '';
 
+// Initialize cart if not exists (must happen before any POST action)
+if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Sanitize cart: remove invalid items (prevents "Undefined array key" warnings)
+$_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) {
+    return is_array($item) && isset($item['id']) && (int)$item['id'] > 0 && isset($item['quantity']) && (int)$item['quantity'] > 0;
+});
+$_SESSION['cart'] = array_values($_SESSION['cart']);
+
+// Handle cart actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['update_quantity'])) {
         $productId = (int) $_POST['product_id'];
-        $quantity = (int) $_POST['quantity'];
+        $quantity = (int) ($_POST['quantity'] ?? 0);
+
+        // Support +/- buttons using delta (increment/decrement by 1)
+        if (isset($_POST['delta'])) {
+            $delta = (int) $_POST['delta'];
+            if ($delta !== 0) {
+                foreach ($_SESSION['cart'] as $existingItem) {
+                    if (isset($existingItem['id']) && (int)$existingItem['id'] === $productId) {
+                        $quantity = (int)($existingItem['quantity'] ?? 0) + $delta;
+                        break;
+                    }
+                }
+            }
+        }
 
         // Validate quantity
         if ($quantity <= 0) {
             // Remove item if quantity is 0 or negative
             $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) use ($productId) {
-                return $item['id'] != $productId;
+                return isset($item['id']) && (int)$item['id'] != $productId;
             });
             $_SESSION['cart'] = array_values($_SESSION['cart']);
             $message = 'Item removed from cart due to invalid quantity.';
@@ -30,12 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Update quantity
             $updated = false;
             foreach ($_SESSION['cart'] as &$item) {
-                if ($item['id'] == $productId) {
+                if (isset($item['id']) && (int)$item['id'] === $productId) {
                     $item['quantity'] = $quantity;
                     $updated = true;
                     break;
                 }
             }
+            unset($item); // break reference
             if ($updated) {
                 $message = 'Quantity updated successfully.';
                 $messageType = 'success';
@@ -47,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (isset($_POST['remove_item'])) {
         $productId = (int) $_POST['product_id'];
         $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) use ($productId) {
-            return $item['id'] != $productId;
+            return isset($item['id']) && (int)$item['id'] != $productId;
         });
         // Re-index array
         $_SESSION['cart'] = array_values($_SESSION['cart']);
@@ -59,17 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $messageType = 'success';
     }
 }
-
-// Initialize cart if not exists
-if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
-
-// Sanitize cart: remove items without valid ID (prevents "Undefined array key" warnings)
-$_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) {
-    return isset($item['id']) && $item['id'] > 0;
-});
-$_SESSION['cart'] = array_values($_SESSION['cart']);
 
 // Get full cart items with product details
 $cartItems = [];
@@ -204,12 +218,24 @@ $cartCount = count($_SESSION['cart']);
                                             style="display: inline-flex; gap: var(--space-2); align-items: center;">
                                             <input type="hidden" name="product_id"
                                                 value="<?php echo $item['product']['id']; ?>">
+                                            <button type="submit" name="update_quantity" value="1"
+                                                title="Decrease quantity"
+                                                style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-color); background: white; cursor: pointer;"
+                                                onclick="this.form.delta.value = -1;">
+                                                −
+                                            </button>
+                                            <input type="hidden" name="delta" value="-1">
+
                                             <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>"
-                                                min="1" max="99" required
-                                                oninput="validateQuantity(this)"
-                                                style="width: 70px; padding: var(--space-2); border: 1px solid var(--border-color); border-radius: var(--radius);">
-                                            <button type="submit" name="update_quantity"
-                                                class="btn btn--sm btn--outline">Update</button>
+                                                min="1" max="99" required readonly
+                                                style="width: 56px; text-align: center; padding: var(--space-2); border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+
+                                            <button type="submit" name="update_quantity" value="1"
+                                                title="Increase quantity"
+                                                style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-color); background: white; cursor: pointer;"
+                                                onclick="this.form.delta.value = 1;">
+                                                +
+                                            </button>
                                         </form>
                                     </div>
                                     <div class="table__cell table__cell--price">
