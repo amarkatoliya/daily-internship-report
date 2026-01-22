@@ -41,7 +41,7 @@ $featuredProducts = array_slice($products, 0, 4);
                     <ul class="nav__list">
                         <li><a href="index.php" class="nav__link nav__link--active">Home</a></li>
                         <li><a href="products.php" class="nav__link">Products</a></li>
-                        <li><a href="cart.php" class="nav__link" style="position: relative;">Cart
+                        <li><a href="cart.php" class="nav__link nav__link--cart">Cart
                                 <?php if ($cartCount > 0): ?>
                                         <span class="cart-badge">
                                             <?php echo $cartCount; ?>
@@ -62,19 +62,105 @@ $featuredProducts = array_slice($products, 0, 4);
         <div class="container">
             <!-- Hero Section -->
             <section class="section section--hero animate-fade-in-up">
-                <div class="hero__content">
-                    <h2 class="hero__title">Welcome to EasyCart</h2>
-                    <p class="hero__subtitle">Discover amazing products at unbeatable prices. Shop the latest trends and
-                        essentials all in one place.</p>
-                    <a href="products.php" class="hero__cta">
-                        <span>Shop Now</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
+                <div class="hero__container">
+                    <div class="hero__content">
+                        <div class="hero__badge">
+                            <span class="hero__badge-text">✨ Your Premium Shopping Experience</span>
+                        </div>
+
+                        <h1 class="hero__title">
+                            Discover Amazing Products at
+                            <span class="hero__title-highlight">Unbeatable Prices</span>
+                        </h1>
+
+                        <p class="hero__subtitle">
+                            Shop the latest trends, electronics, fashion, and home essentials all in one place.
+                            Fast delivery, secure payments, and exceptional customer service.
+                        </p>
+
+                        <div class="hero__actions">
+                            <a href="products.php" class="hero__cta hero__cta--primary">
+                                <span>Start Shopping</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </a>
+                            <a href="#featured" class="hero__cta hero__cta--secondary">
+                                <span>Explore Categories</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 14L12 21L5 14H9V3H15V14H19Z" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </a>
+                        </div>
+
+                        <div class="hero__stats">
+                            <div class="hero__stat">
+                                <div class="hero__stat-number">10K+</div>
+                                <div class="hero__stat-label">Happy Customers</div>
+                            </div>
+                            <div class="hero__stat">
+                                <div class="hero__stat-number">500+</div>
+                                <div class="hero__stat-label">Products</div>
+                            </div>
+                            <div class="hero__stat">
+                                <div class="hero__stat-number">4.9★</div>
+                                <div class="hero__stat-label">Rating</div>
+                            </div>
+                            <div class="hero__stat">
+                                <div class="hero__stat-number">24/7</div>
+                                <div class="hero__stat-label">Support</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero__visual">
+                        <div class="hero__image-container">
+                            <div class="hero__image-main">
+                                <img src="assets/images/laptop.jpg" alt="Premium Laptop" class="hero__image">
+                                <div class="hero__image-badge">
+                                    <span>Featured</span>
+                                </div>
+                            </div>
+                            <div class="hero__floating-cards">
+                                <div class="hero__floating-card hero__floating-card--1">
+                                    <img src="assets/images/smartphone.jpg" alt="Smartphone" class="hero__floating-image">
+                                </div>
+                                <div class="hero__floating-card hero__floating-card--2">
+                                    <img src="assets/images/headphones.jpg" alt="Headphones" class="hero__floating-image">
+                                </div>
+                                <div class="hero__floating-card hero__floating-card--3">
+                                    <img src="assets/images/smartwatch.jpg" alt="Smartwatch" class="hero__floating-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="hero__background"></div>
+
+                <div class="hero__background">
+                    <div class="hero__bg-shape hero__bg-shape--1"></div>
+                    <div class="hero__bg-shape hero__bg-shape--2"></div>
+                    <div class="hero__bg-shape hero__bg-shape--3"></div>
+                </div>
+
+                <div class="hero__decorations">
+                    <div class="hero__decoration hero__decoration--1">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor" opacity="0.1"/>
+                        </svg>
+                    </div>
+                    <div class="hero__decoration hero__decoration--2">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" opacity="0.05"/>
+                        </svg>
+                    </div>
+                    <div class="hero__decoration hero__decoration--3">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L13.09 8.26L19 9L14 14L15.18 21L12 17.77L8.82 21L10 14L5 9L10.91 8.26L12 2Z" fill="currentColor" opacity="0.08"/>
+                        </svg>
+                    </div>
+                </div>
             </section>
 
             <!-- Featured Products Section -->
@@ -115,7 +201,7 @@ $featuredProducts = array_slice($products, 0, 4);
             </section>
 
             <!-- Popular Categories Section -->
-            <section class="section">
+            <section id="featured" class="section">
                 <h2 class="section__title">Popular Categories</h2>
                 <div class="categories-grid">
                     <?php foreach ($categories as $category): ?>
