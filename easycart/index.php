@@ -14,7 +14,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 }
 
 // Get first 4 products for featured section
-$featuredProducts = array_slice($products, 0, 4);
+$featuredProducts = array_slice($products, 0, 6);
 ?>
 <!DOCTYPE html>
 <html lang="en">

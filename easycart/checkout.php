@@ -169,7 +169,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <link rel="stylesheet" href="css/styles.css">
     <script>
         function togglePaymentForms() {
-            const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            const paymentMethodInput = document.querySelector('input[name="payment_method"]:checked');
+            const paymentMethod = paymentMethodInput.value;
             const cardForm = document.getElementById('card-form');
             const upiForm = document.getElementById('upi-form');
             const codNotice = document.getElementById('cod-notice');
@@ -178,10 +179,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             const finalTotal = document.getElementById('final-total');
             const placeOrderButton = document.getElementById('place-order-button');
 
+            // Update active state on labels
+            document.querySelectorAll('.payment-method-card').forEach(label => {
+                label.classList.remove('active');
+            });
+            paymentMethodInput.closest('.payment-method-card').classList.add('active');
+
             // Hide all forms
             cardForm.style.display = 'none';
             upiForm.style.display = 'none';
             codNotice.style.display = 'none';
+
+            // Remove animation classes to restart them if needed
+            cardForm.classList.remove('animate-fade-in-up');
+            upiForm.classList.remove('animate-fade-in-up');
+            codNotice.classList.remove('animate-fade-in-up');
 
             // Remove required attributes
             cardForm.querySelectorAll('input').forEach(input => input.required = false);
@@ -190,14 +202,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             // Show selected form and set required attributes
             if (paymentMethod === 'card') {
                 cardForm.style.display = 'block';
+                // Small timeout to allow display:block to apply before animation
+                setTimeout(() => cardForm.classList.add('animate-fade-in-up'), 10);
                 cardForm.querySelectorAll('input').forEach(input => input.required = true);
                 updateExtraCharges(0);
             } else if (paymentMethod === 'upi') {
                 upiForm.style.display = 'block';
+                setTimeout(() => upiForm.classList.add('animate-fade-in-up'), 10);
                 upiForm.querySelectorAll('input').forEach(input => input.required = true);
                 updateExtraCharges(0);
             } else if (paymentMethod === 'cod') {
                 codNotice.style.display = 'block';
+                setTimeout(() => codNotice.classList.add('animate-fade-in-up'), 10);
                 updateExtraCharges(50); // COD charge
             }
 
@@ -208,9 +224,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
                 if (charges > 0) {
                     extraChargesRow.style.display = 'flex';
+                    extraChargesRow.classList.add('animate-fade-in-up');
                     extraChargesAmount.textContent = '₹' + charges.toLocaleString();
                 } else {
                     extraChargesRow.style.display = 'none';
+                    extraChargesRow.classList.remove('animate-fade-in-up');
                 }
 
                 finalTotal.textContent = '₹' + newTotal.toLocaleString();
@@ -241,15 +259,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         }
 
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             togglePaymentForms();
 
             // Add event listeners for formatting
-            document.querySelector('input[name="card_number"]').addEventListener('input', function() {
+            document.querySelector('input[name="card_number"]').addEventListener('input', function () {
                 formatCardNumber(this);
             });
 
-            document.querySelector('input[name="expiry_date"]').addEventListener('input', function() {
+            document.querySelector('input[name="expiry_date"]').addEventListener('input', function () {
                 formatExpiryDate(this);
             });
         });
@@ -381,15 +399,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             </h3>
                             <div class="payment-methods">
                                 <label class="payment-method-card active">
-                                    <input type="radio" name="payment_method" value="card" checked onchange="togglePaymentForms()">
+                                    <input type="radio" name="payment_method" value="card" checked
+                                        onchange="togglePaymentForms()">
                                     <span>Credit / Debit Card</span>
                                 </label>
                                 <label class="payment-method-card">
-                                    <input type="radio" name="payment_method" value="upi" onchange="togglePaymentForms()">
+                                    <input type="radio" name="payment_method" value="upi"
+                                        onchange="togglePaymentForms()">
                                     <span>UPI</span>
                                 </label>
                                 <label class="payment-method-card">
-                                    <input type="radio" name="payment_method" value="cod" onchange="togglePaymentForms()">
+                                    <input type="radio" name="payment_method" value="cod"
+                                        onchange="togglePaymentForms()">
                                     <span>Cash on Delivery</span>
                                 </label>
                             </div>
@@ -398,20 +419,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <div id="card-form" class="payment-form card-form">
                                 <div class="form__group">
                                     <label class="form__label">Cardholder Name</label>
-                                    <input type="text" name="cardholder_name" class="form__input" placeholder="John Doe" required>
+                                    <input type="text" name="cardholder_name" class="form__input" placeholder="John Doe"
+                                        required>
                                 </div>
                                 <div class="form__group">
                                     <label class="form__label">Card Number</label>
-                                    <input type="text" name="card_number" class="form__input" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                                    <input type="text" name="card_number" class="form__input"
+                                        placeholder="1234 5678 9012 3456" maxlength="19" required>
                                 </div>
                                 <div class="checkout-expiry-cvv-grid">
                                     <div class="form__group">
                                         <label class="form__label">Expiry Date</label>
-                                        <input type="text" name="expiry_date" class="form__input" placeholder="MM/YY" maxlength="5" required>
+                                        <input type="text" name="expiry_date" class="form__input" placeholder="MM/YY"
+                                            maxlength="5" required>
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">CVV</label>
-                                        <input type="text" name="cvv" class="form__input" placeholder="123" maxlength="4" required>
+                                        <input type="text" name="cvv" class="form__input" placeholder="123"
+                                            maxlength="4" required>
                                     </div>
                                 </div>
                             </div>
@@ -420,7 +445,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <div id="upi-form" class="payment-form upi-form" style="display: none;">
                                 <div class="form__group">
                                     <label class="form__label">UPI ID</label>
-                                    <input type="text" name="upi_id" class="form__input" placeholder="yourname@upi" pattern=".+@.+">
+                                    <input type="text" name="upi_id" class="form__input" placeholder="yourname@upi"
+                                        pattern=".+@.+">
                                 </div>
                                 <p class="cod-notice-text">
                                     Enter your UPI ID (e.g., yourname@paytm, yourname@ybl)
@@ -430,7 +456,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <!-- Cash on Delivery Notice -->
                             <div id="cod-notice" class="payment-form cod-notice" style="display: none;">
                                 <div class="cod-notice-header">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <line x1="12" y1="8" x2="12" y2="12"></line>
                                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -438,7 +465,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                     <strong>Cash on Delivery</strong>
                                 </div>
                                 <p class="cod-notice-text">
-                                    Pay when your order is delivered to your doorstep. ₹50 additional charges will be applied for COD payment.
+                                    Pay when your order is delivered to your doorstep. ₹50 additional charges will be
+                                    applied for COD payment.
                                 </p>
                             </div>
                         </section>
@@ -506,7 +534,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                 <?php echo formatPrice($total); ?>
                             </button>
                             <div class="secure-checkout-notice">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
                                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                 </svg>
