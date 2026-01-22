@@ -1,109 +1,105 @@
+<?php
+session_start();
+require_once 'data.php';
+// Get cart count for badge (filter invalid items)
+$cartCount = 0;
+if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+    $cartCount = count(array_filter($_SESSION['cart'], function ($item) {
+        return isset($item['id']) && $item['id'] > 0;
+    }));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="View detailed product information, specifications, and add to cart. High-quality products at competitive prices.">
-    <link rel="icon" type="image/x-icon"
-        href="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=32&h=32&fit=crop&crop=center">
-    <title>Product Details - EasyCart</title>
+    <title>Sign Up - EasyCart</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <!-- Header Section -->
     <header class="header">
         <div class="container">
             <div class="header__content">
-                <a href="index.html" class="header__logo">EasyCart</a>
+                <a href="index.php" class="header__logo">EasyCart</a>
                 <nav class="header__nav">
                     <ul class="nav__list">
-                        <li><a href="index.html" class="nav__link">Home</a></li>
-                        <li><a href="products.html" class="nav__link">Products</a></li>
-                        <li><a href="cart.html" class="nav__link" style="position: relative;">Cart <span
-                                    class="cart-badge">3</span></a></li>
-                        <li><a href="orders.html" class="nav__link">Orders</a></li>
-                        <li><a href="login.html" class="nav__link">Login</a></li>
-                        <li><a href="signup.html" class="nav__link">Signup</a></li>
+                        <li><a href="index.php" class="nav__link">Home</a></li>
+                        <li><a href="products.php" class="nav__link">Products</a></li>
+                        <li><a href="cart.php" class="nav__link" style="position: relative;">Cart
+                                <?php if ($cartCount > 0): ?>
+                                    <span class="cart-badge">
+                                        <?php echo $cartCount; ?>
+                                    </span>
+                                <?php endif; ?>
+                            </a></li>
+                        <li><a href="orders.php" class="nav__link">Orders</a></li>
+                        <li><a href="login.php" class="nav__link">Login</a></li>
+                        <li><a href="signup.php" class="nav__link nav__link--active">Signup</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="main">
         <div class="container">
-            <div class="product-detail">
-                <!-- Product Gallery -->
-                <div class="product-detail__gallery">
-                    <img class="product-detail__image" src="assets/images/headphones.jpg"
-                        alt="Premium Wireless Headphones with active noise cancellation and superior sound quality"
-                        loading="eager">
-                </div>
-
-                <!-- Product Information -->
-                <div class="product-detail__info">
-                    <a href="products.html" class="product-detail__back">← Back to Products</a>
-
-                    <h1 class="product-detail__title">Wireless Headphones</h1>
-                    <p class="product-detail__price">₹6,499</p>
-
-                    <div class="product-detail__description">
-                        <p>Experience premium sound quality with these wireless headphones. Features include active
-                            noise
-                            cancellation, 30-hour battery life, and comfortable over-ear design. Perfect for music
-                            lovers and
-                            professionals who demand the best audio experience.</p>
+            <section class="section">
+                <form class="form">
+                    <h2 style="text-align: center; margin-bottom: var(--space-6);">Create Your Account</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                        <div class="form__group">
+                            <label class="form__label">First Name</label>
+                            <input type="text" class="form__input" placeholder="John" required>
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label">Last Name</label>
+                            <input type="text" class="form__input" placeholder="Doe" required>
+                        </div>
                     </div>
-
-                    <div class="product-detail__features">
-                        <h3>Key Features</h3>
-                        <ul class="product-detail__features-list">
-                            <li class="product-detail__feature">Active Noise Cancellation</li>
-                            <li class="product-detail__feature">30-Hour Battery Life</li>
-                            <li class="product-detail__feature">Bluetooth 5.0 Connectivity</li>
-                            <li class="product-detail__feature">Comfortable Over-Ear Design</li>
-                            <li class="product-detail__feature">Quick Charge Support</li>
-                        </ul>
+                    <div class="form__group">
+                        <label class="form__label">Email Address</label>
+                        <input type="email" class="form__input" placeholder="john@example.com" required>
                     </div>
-
-                    <div class="product-detail__actions">
-                        <button class="btn btn--primary">Add to Cart</button>
-                        <button class="btn btn--secondary">Add to Wishlist</button>
+                    <div class="form__group">
+                        <label class="form__label">Password</label>
+                        <input type="password" class="form__input" placeholder="Create a password" required>
                     </div>
-                </div>
-            </div>
+                    <div class="form__group">
+                        <label class="form__label">Confirm Password</label>
+                        <input type="password" class="form__input" placeholder="Confirm your password" required>
+                    </div>
+                    <div class="form__actions">
+                        <button type="submit" class="btn btn--primary btn--full">Create Account</button>
+                    </div>
+                    <div style="text-align: center; margin-top: var(--space-4);">
+                        <p>Already have an account? <a href="login.php" class="form__link">Login</a></p>
+                    </div>
+                </form>
+            </section>
         </div>
     </main>
 
-    <!-- Footer -->
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer__content">
-                <!-- Brand Column -->
                 <div class="footer__section">
                     <h3>EasyCart</h3>
                     <p>Your premier online shopping destination. Discover quality products at unbeatable prices.</p>
                     <p>123 Commerce Blvd, Tech City, TC 90210</p>
                 </div>
-
-                <!-- Quick Links -->
                 <div class="footer__section">
                     <h3>Shop</h3>
                     <ul class="footer__links">
-                        <li><a href="products.html" class="footer__link">All Products</a></li>
-                        <li><a href="products.html" class="footer__link">Electronics</a></li>
-                        <li><a href="products.html" class="footer__link">Fashion</a></li>
-                        <li><a href="products.html" class="footer__link">New Arrivals</a></li>
+                        <li><a href="products.php" class="footer__link">All Products</a></li>
+                        <li><a href="products.php?category=Electronics" class="footer__link">Electronics</a></li>
+                        <li><a href="products.php?category=Fashion" class="footer__link">Fashion</a></li>
+                        <li><a href="products.php" class="footer__link">New Arrivals</a></li>
                     </ul>
                 </div>
-
-                <!-- Support -->
                 <div class="footer__section">
                     <h3>Support</h3>
                     <ul class="footer__links">
@@ -113,8 +109,6 @@
                         <li><a href="#" class="footer__link">Returns</a></li>
                     </ul>
                 </div>
-
-                <!-- Newsletter -->
                 <div class="footer__section">
                     <h3>Stay Connected</h3>
                     <p>Subscribe to our newsletter for exclusive deals.</p>
@@ -124,11 +118,8 @@
                     </form>
                 </div>
             </div>
-
-            <!-- Bottom Bar -->
             <div class="footer__bottom">
                 <p>&copy; 2024 EasyCart. All rights reserved.</p>
-
                 <div class="footer__social">
                     <a href="#" class="social-link" aria-label="Facebook">
                         <svg class="social-icon" viewBox="0 0 24 24">
@@ -150,7 +141,6 @@
                         </svg>
                     </a>
                 </div>
-
                 <div class="footer__payment">
                     <svg width="32" height="20" viewBox="0 0 32 20" fill="none">
                         <rect width="32" height="20" rx="3" fill="white" fill-opacity="0.1" />
