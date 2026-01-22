@@ -12,32 +12,48 @@ if ($orderSuccess) {
 }
 
 // Static orders array (simulating past orders)
-$orders = [
+$staticOrders = [
     [
-        'id' => 'ORD-2024-001',
-        'date' => '2024-01-15',
+        'id' => 'ORD-2026-001',
+        'date' => '2026-01-15',
         'items' => 3,
         'total' => 33996,
         'status' => 'Delivered',
         'tracking' => 'TRACK1234567890'
     ],
     [
-        'id' => 'ORD-2024-002',
-        'date' => '2024-01-18',
+        'id' => 'ORD-2026-002',
+        'date' => '2026-01-18',
         'items' => 2,
         'total' => 23498,
         'status' => 'In Transit',
         'tracking' => 'TRACK0987654321'
     ],
     [
-        'id' => 'ORD-2024-003',
-        'date' => '2024-01-20',
+        'id' => 'ORD-2026-003',
+        'date' => '2026-01-20',
         'items' => 1,
         'total' => 90499,
         'status' => 'Processing',
         'tracking' => 'TRACK1122334455'
     ]
 ];
+
+// Merge session orders with static orders
+$orders = $staticOrders;
+if (isset($_SESSION['orders']) && is_array($_SESSION['orders'])) {
+    // Convert session orders to the format expected by the display
+    foreach ($_SESSION['orders'] as $sessionOrder) {
+        $orders[] = [
+            'id' => $sessionOrder['id'],
+            'date' => date('Y-m-d', strtotime($sessionOrder['date'])),
+            'items' => count($sessionOrder['items']),
+            'total' => $sessionOrder['total'],
+            'status' => ucfirst($sessionOrder['status']),
+            'tracking' => 'PENDING' // No tracking yet for new orders
+        ];
+    }
+}
 
 $cartCount = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 ?>
