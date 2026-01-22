@@ -6,17 +6,42 @@ session_start();
 require_once 'data.php';
 
 // Handle cart actions
+$message = '';
+$messageType = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['update_quantity'])) {
         $productId = (int) $_POST['product_id'];
         $quantity = (int) $_POST['quantity'];
 
-        if ($quantity > 0) {
+        // Validate quantity
+        if ($quantity <= 0) {
+            // Remove item if quantity is 0 or negative
+            $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) use ($productId) {
+                return $item['id'] != $productId;
+            });
+            $_SESSION['cart'] = array_values($_SESSION['cart']);
+            $message = 'Item removed from cart due to invalid quantity.';
+            $messageType = 'success';
+        } elseif ($quantity > 99) {
+            $message = 'Maximum quantity allowed is 99.';
+            $messageType = 'error';
+        } else {
+            // Update quantity
+            $updated = false;
             foreach ($_SESSION['cart'] as &$item) {
                 if ($item['id'] == $productId) {
                     $item['quantity'] = $quantity;
+                    $updated = true;
                     break;
                 }
+            }
+            if ($updated) {
+                $message = 'Quantity updated successfully.';
+                $messageType = 'success';
+            } else {
+                $message = 'Item not found in cart.';
+                $messageType = 'error';
             }
         }
     } elseif (isset($_POST['remove_item'])) {
@@ -26,8 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
         // Re-index array
         $_SESSION['cart'] = array_values($_SESSION['cart']);
+        $message = 'Item removed from cart.';
+        $messageType = 'success';
     } elseif (isset($_POST['clear_cart'])) {
         $_SESSION['cart'] = [];
+        $message = 'Cart cleared successfully.';
+        $messageType = 'success';
     }
 }
 
@@ -70,6 +99,30 @@ $cartCount = count($_SESSION['cart']);
     <title>Shopping Cart - EasyCart</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Cart quantity validation
+        function validateQuantity(input) {
+            const value = parseInt(input.value);
+            if (isNaN(value) || value < 1) {
+                input.value = 1;
+            } else if (value > 99) {
+                input.value = 99;
+            }
+        }
+
+        // Add event listeners when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInputs = document.querySelectorAll('input[name="quantity"]');
+            quantityInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    validateQuantity(this);
+                });
+                input.addEventListener('blur', function() {
+                    validateQuantity(this);
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -103,6 +156,11 @@ $cartCount = count($_SESSION['cart']);
         <div class="container">
             <section class="section">
                 <h2 class="section__title">Shopping Cart</h2>
+                <?php if (!empty($message)): ?>
+                    <div class="alert alert--<?php echo $messageType; ?>" style="margin-top: var(--space-4);">
+                        <?php echo htmlspecialchars($message); ?>
+                    </div>
+                <?php endif; ?>
             </section>
 
             <?php if (count($cartItems) > 0): ?>
@@ -147,7 +205,8 @@ $cartCount = count($_SESSION['cart']);
                                             <input type="hidden" name="product_id"
                                                 value="<?php echo $item['product']['id']; ?>">
                                             <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>"
-                                                min="1" max="99"
+                                                min="1" max="99" required
+                                                oninput="validateQuantity(this)"
                                                 style="width: 70px; padding: var(--space-2); border: 1px solid var(--border-color); border-radius: var(--radius);">
                                             <button type="submit" name="update_quantity"
                                                 class="btn btn--sm btn--outline">Update</button>

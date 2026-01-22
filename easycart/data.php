@@ -122,7 +122,7 @@ $products = [
         'id' => 8,
         'name' => 'Running Shoes',
         'price' => 7999,
-        'image_url' => 'assets/images/shoes.jpg',
+        'image_url' => 'assets/images/run.jpg',
         'category' => 'Fashion',
         'brand' => 'Nike',
         'description' => 'Premium running shoes with advanced cushioning and breathable design. Perfect for athletes and fitness enthusiasts.',
@@ -132,6 +132,22 @@ $products = [
             'Lightweight design',
             'Durable outsole',
             'Ergonomic fit'
+        ]
+    ],
+    [
+        'id' => 9,
+        'name' => 'White Shoes',
+        'price' => 6999,
+        'image_url' => 'assets/images/white-shoes.jpg',
+        'category' => 'Fashion',
+        'brand' => 'Nike',
+        'description' => 'Classic white shoes with modern design and superior comfort. Perfect for casual wear and everyday use.',
+        'features' => [
+            'Classic white design',
+            'Comfortable fit',
+            'Durable construction',
+            'Versatile style',
+            'Easy to clean'
         ]
     ]
 ];
