@@ -216,6 +216,41 @@
 
 /* ===== BUTTON COMPONENT ===== */
 
+/* Footer Minimal Variant (for Auth pages) */
+.footer--minimal {
+    padding-top: var(--space-8);
+    border-top: none;
+    margin-top: auto;
+    background: transparent;
+}
+
+.footer--minimal .footer__bottom {
+    border-top: none;
+    padding-top: 0;
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.footer--minimal .footer__links-inline {
+    display: flex;
+    gap: var(--space-6);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer--minimal .footer__link {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.footer--minimal .footer__link:hover {
+    color: var(--color-primary);
+    padding-left: 0;
+}
+
+/* ===== BUTTON COMPONENT ===== */
+
 .btn {
     display: inline-flex;
     align-items: center;

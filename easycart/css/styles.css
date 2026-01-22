@@ -17,6 +17,7 @@
 
 /* 4. Page-specific styles - Cart & Orders pages */
 @import url('pages.css');
+@import url('auth.css');
 
 /* 5. Responsive styles - Always last */
 @import url('responsive.css');
