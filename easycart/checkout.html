@@ -19,7 +19,8 @@
                     <ul class="nav__list">
                         <li><a href="index.html" class="nav__link">Home</a></li>
                         <li><a href="products.html" class="nav__link">Products</a></li>
-                        <li><a href="cart.html" class="nav__link">Cart</a></li>
+                        <li><a href="cart.html" class="nav__link" style="position: relative;">Cart <span
+                                    class="cart-badge">3</span></a></li>
                         <li><a href="orders.html" class="nav__link">Orders</a></li>
                         <li><a href="login.html" class="nav__link">Login</a></li>
                         <li><a href="signup.html" class="nav__link">Signup</a></li>
@@ -31,102 +32,252 @@
 
     <!-- Main Content -->
     <main class="main">
-        <div class="container">
-            <section class="section">
-                <h2 class="section__title">Checkout</h2>
-            </section>
+        <div class="container animate-fade-in-up">
+            <!-- Checkout Steps -->
+            <div class="checkout-steps">
+                <div class="checkout-step completed">
+                    <div class="checkout-step__number">✓</div>
+                    <span>Cart</span>
+                </div>
+                <div class="checkout-step active">
+                    <div class="checkout-step__number">2</div>
+                    <span>Shipping</span>
+                </div>
+                <div class="checkout-step">
+                    <div class="checkout-step__number">3</div>
+                    <span>Payment</span>
+                </div>
+            </div>
 
-            <!-- Shipping Options -->
-            <section class="section">
-                <form class="form">
-                    <h3>Shipping Options</h3>
-                    <div class="form__radio-group">
-                        <label class="form__radio-label">
-                            <input class="form__radio-input" type="radio" name="shipping" value="standard" checked>
-                            Standard Shipping - ₹500 (5-7 business days)
-                        </label>
-                        <label class="form__radio-label">
-                            <input class="form__radio-input" type="radio" name="shipping" value="express">
-                            Express Shipping - ₹1,250 (2-3 business days)
-                        </label>
-                    </div>
-                </form>
-            </section>
+            <div class="checkout-layout">
+                <!-- Left Column: Forms -->
+                <div class="checkout-main">
+                    <!-- Contact Info -->
+                    <section class="checkout-form-section">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Contact Information
+                        </h3>
+                        <div class="form__group">
+                            <label class="form__label">Email Address</label>
+                            <input type="email" class="form__input" placeholder="you@example.com"
+                                value="alex@example.com">
+                        </div>
+                    </section>
 
-            <!-- Order Summary -->
-            <section class="section">
-                <div class="table">
-                    <div class="table__header">
-                        <div class="table__row">
-                            <div class="table__cell table__cell--header">Product</div>
-                            <div class="table__cell table__cell--header">Quantity</div>
-                            <div class="table__cell table__cell--header">Price</div>
+                    <!-- Shipping Address -->
+                    <section class="checkout-form-section">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Shipping Address
+                        </h3>
+                        <div class="auth-form__row auth-form__row--two-cols"
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-4);">
+                            <div class="form__group">
+                                <label class="form__label">First Name</label>
+                                <input type="text" class="form__input" placeholder="Alex">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Last Name</label>
+                                <input type="text" class="form__input" placeholder="Johnson">
+                            </div>
                         </div>
-                    </div>
-                    <div class="table__body">
-                        <div class="table__row">
-                            <div class="table__cell">Wireless Headphones</div>
-                            <div class="table__cell">2</div>
-                            <div class="table__cell table__cell--price">₹6,499</div>
+                        <div class="form__group">
+                            <label class="form__label">Address</label>
+                            <input type="text" class="form__input" placeholder="123 Main Street, Apt 4B">
                         </div>
-                        <div class="table__row">
-                            <div class="table__cell">Smart Watch</div>
-                            <div class="table__cell">1</div>
-                            <div class="table__cell table__cell--price">₹16,499</div>
+                        <div class="auth-form__row auth-form__row--two-cols"
+                            style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-4);">
+                            <div class="form__group">
+                                <label class="form__label">City</label>
+                                <input type="text" class="form__input" placeholder="New York">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">State</label>
+                                <input type="text" class="form__input" placeholder="NY">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">ZIP Code</label>
+                                <input type="text" class="form__input" placeholder="10001">
+                            </div>
                         </div>
-                        <div class="table__row">
-                            <div class="table__cell">Laptop Backpack</div>
-                            <div class="table__cell">1</div>
-                            <div class="table__cell table__cell--price">₹3,999</div>
+                    </section>
+
+                    <!-- Payment Method -->
+                    <section class="checkout-form-section">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Payment
+                        </h3>
+                        <div class="payment-methods">
+                            <label class="payment-method-card active" onclick="selectPayment('card', this)">
+                                <input type="radio" name="payment" checked>
+                                <span>Credit Card</span>
+                                <div style="margin-left: auto; display: flex; gap: 4px;">
+                                    <svg width="24" height="15" viewBox="0 0 32 20" fill="none">
+                                        <rect width="32" height="20" rx="3" fill="#1A1F2C" />
+                                        <circle cx="11" cy="10" r="6" fill="#EB001B" />
+                                        <circle cx="21" cy="10" r="6" fill="#F79E1B" />
+                                    </svg>
+                                </div>
+                            </label>
+                            <label class="payment-method-card" onclick="selectPayment('upi', this)">
+                                <input type="radio" name="payment">
+                                <span>UPI / Netbanking</span>
+                            </label>
                         </div>
-                    </div>
+
+                        <!-- Credit Card Form -->
+                        <div id="card-form">
+                            <div class="form__group">
+                                <label class="form__label">Card Number</label>
+                                <input type="text" class="form__input" placeholder="0000 0000 0000 0000">
+                            </div>
+                            <div class="auth-form__row auth-form__row--two-cols"
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                                <div class="form__group">
+                                    <label class="form__label">Expiry Date</label>
+                                    <input type="text" class="form__input" placeholder="MM / YY">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">CVV</label>
+                                    <input type="text" class="form__input" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UPI Form (Hidden by default) -->
+                        <div id="upi-form" style="display: none;">
+                            <div class="form__group">
+                                <label class="form__label">UPI ID</label>
+                                <input type="text" class="form__input" placeholder="username@upi">
+                            </div>
+                            <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: var(--space-2);">
+                                You will be redirected to the secure payment gateway to complete your transaction.
+                            </p>
+                        </div>
+                    </section>
                 </div>
 
+                <!-- Script for Payment Selection -->
+                <script>
+                    function selectPayment(method, element) {
+                        // Update UI cards
+                        document.querySelectorAll('.payment-method-card').forEach(card => card.classList.remove('active'));
+                        element.classList.add('active');
+                        element.querySelector('input').checked = true;
+
+                        // Toggle Forms
+                        const cardForm = document.getElementById('card-form');
+                        const upiForm = document.getElementById('upi-form');
+
+                        if (method === 'card') {
+                            cardForm.style.display = 'block';
+                            upiForm.style.display = 'none';
+                        } else {
+                            cardForm.style.display = 'none';
+                            upiForm.style.display = 'block';
+                        }
+                    }
+                </script>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <aside class="checkout-sidebar" style="position: sticky; top: 100px;">
                 <div class="order-summary">
                     <h3 class="order-summary__title">Order Summary</h3>
+
+                    <div
+                        style="margin-bottom: var(--space-6); border-bottom: 1px solid var(--border-color-light); padding-bottom: var(--space-4);">
+                        <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-4);">
+                            <div style="position: relative;">
+                                <img src="assets/images/headphones.jpg"
+                                    style="width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border-color);"
+                                    alt="Headphones">
+                                <span
+                                    style="position: absolute; top: -8px; right: -8px; background: var(--color-gray-500); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">2</span>
+                            </div>
+                            <div>
+                                <p style="font-weight: 500; font-size: 0.9rem;">Wireless Headphones</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem;">Black</p>
+                            </div>
+                            <div style="margin-left: auto; font-weight: 500;">₹6,499</div>
+                        </div>
+                        <div style="display: flex; gap: var(--space-3);">
+                            <div style="position: relative;">
+                                <img src="assets/images/smartwatch.jpg"
+                                    style="width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border-color);"
+                                    alt="Watch">
+                                <span
+                                    style="position: absolute; top: -8px; right: -8px; background: var(--color-gray-500); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">1</span>
+                            </div>
+                            <div>
+                                <p style="font-weight: 500; font-size: 0.9rem;">Smart Watch</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem;">Silver</p>
+                            </div>
+                            <div style="margin-left: auto; font-weight: 500;">₹16,499</div>
+                        </div>
+                    </div>
+
                     <div class="order-summary__row">
-                        <span>Subtotal:</span>
+                        <span>Subtotal</span>
                         <span>₹33,496</span>
                     </div>
                     <div class="order-summary__row">
-                        <span>Shipping:</span>
+                        <span>Shipping</span>
                         <span>₹500</span>
                     </div>
                     <div class="order-summary__row order-summary__row--total">
-                        <strong>Total:</strong>
+                        <strong>Total</strong>
                         <strong>₹33,996</strong>
                     </div>
-                </div>
 
-                <div style="margin-top: var(--space-6);">
-                    <button class="btn btn--primary btn--full">Place Order</button>
+                    <div style="margin-top: var(--space-6);">
+                        <button class="btn btn--primary btn--full btn--lg">Pay ₹33,996</button>
+                        <div
+                            style="display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-4); opacity: 0.6;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="social-icon">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <span style="font-size: 0.75rem;">Secure Encryption</span>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </aside>
+        </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <!-- Footer -->
+    <footer class="footer"
+        style="padding: var(--space-8) 0; margin-top: auto; border-top: 1px solid rgba(255, 255, 255, 0.1);">
         <div class="container">
-            <div class="footer__content">
-                <div class="footer__section">
-                    <h3>EasyCart</h3>
-                    <p>Your one-stop shop for all your needs. Quality products at unbeatable prices.</p>
+            <div class="footer__bottom"
+                style="border: none; padding-top: 0; justify-content: center; flex-direction: column;">
+                <div class="footer__payment" style="opacity: 0.8; margin-bottom: var(--space-4);">
+                    <span style="font-size: 0.875rem; color: #9ca3af; margin-right: var(--space-2);">Secure
+                        Checkout</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
                 </div>
-                <div class="footer__section">
-                    <h3>Quick Links</h3>
-                    <a href="products.html">Products</a>
-                    <a href="cart.html">Shopping Cart</a>
-                    <a href="orders.html">My Orders</a>
-                </div>
-                <div class="footer__section">
-                    <h3>Support</h3>
-                    <a href="#">Contact Us</a>
-                    <a href="#">FAQ</a>
-                    <a href="#">Shipping Info</a>
-                </div>
-            </div>
-            <div class="footer__bottom">
                 <p>&copy; 2024 EasyCart. All rights reserved.</p>
             </div>
         </div>
