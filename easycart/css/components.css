@@ -431,7 +431,7 @@
 .product-card__image {
     position: relative;
     width: 100%;
-    height: 240px;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     background: var(--color-gray-100);
 }
@@ -440,6 +440,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.product-card:hover .product-card__image img {
+    transform: scale(1.05);
 }
 
 .product-card__badge {
@@ -543,7 +548,7 @@
 .product-detail__image {
     width: 100%;
     max-width: 500px;
-    height: 500px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-xl);
