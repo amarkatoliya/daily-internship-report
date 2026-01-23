@@ -15,7 +15,7 @@ if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
 
 // Sanitize cart: remove invalid items (prevents "Undefined array key" warnings)
 $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) {
-    return is_array($item) && isset($item['id']) && (int)$item['id'] > 0 && isset($item['quantity']) && (int)$item['quantity'] > 0;
+    return is_array($item) && isset($item['id']) && (int) $item['id'] > 0 && isset($item['quantity']) && (int) $item['quantity'] > 0;
 });
 $_SESSION['cart'] = array_values($_SESSION['cart']);
 
@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $delta = (int) $_POST['delta'];
             if ($delta !== 0) {
                 foreach ($_SESSION['cart'] as $existingItem) {
-                    if (isset($existingItem['id']) && (int)$existingItem['id'] === $productId) {
-                        $quantity = (int)($existingItem['quantity'] ?? 0) + $delta;
+                    if (isset($existingItem['id']) && (int) $existingItem['id'] === $productId) {
+                        $quantity = (int) ($existingItem['quantity'] ?? 0) + $delta;
                         break;
                     }
                 }
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($quantity <= 0) {
             // Remove item if quantity is 0 or negative
             $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) use ($productId) {
-                return isset($item['id']) && (int)$item['id'] != $productId;
+                return isset($item['id']) && (int) $item['id'] != $productId;
             });
             $_SESSION['cart'] = array_values($_SESSION['cart']);
             $message = 'Item removed from cart due to invalid quantity.';
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Update quantity
             $updated = false;
             foreach ($_SESSION['cart'] as &$item) {
-                if (isset($item['id']) && (int)$item['id'] === $productId) {
+                if (isset($item['id']) && (int) $item['id'] === $productId) {
                     $item['quantity'] = $quantity;
                     $updated = true;
                     break;
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (isset($_POST['remove_item'])) {
         $productId = (int) $_POST['product_id'];
         $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) use ($productId) {
-            return isset($item['id']) && (int)$item['id'] != $productId;
+            return isset($item['id']) && (int) $item['id'] != $productId;
         });
         // Re-index array
         $_SESSION['cart'] = array_values($_SESSION['cart']);
@@ -113,30 +113,7 @@ $cartCount = count($_SESSION['cart']);
     <title>Shopping Cart - EasyCart</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
-    <script>
-        // Cart quantity validation
-        function validateQuantity(input) {
-            const value = parseInt(input.value);
-            if (isNaN(value) || value < 1) {
-                input.value = 1;
-            } else if (value > 99) {
-                input.value = 99;
-            }
-        }
-
-        // Add event listeners when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            const quantityInputs = document.querySelectorAll('input[name="quantity"]');
-            quantityInputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    validateQuantity(this);
-                });
-                input.addEventListener('blur', function() {
-                    validateQuantity(this);
-                });
-            });
-        });
-    </script>
+    <script src="js/cart.js" defer></script>
 </head>
 
 <body>
@@ -218,8 +195,7 @@ $cartCount = count($_SESSION['cart']);
                                             style="display: inline-flex; gap: var(--space-2); align-items: center;">
                                             <input type="hidden" name="product_id"
                                                 value="<?php echo $item['product']['id']; ?>">
-                                            <button type="submit" name="update_quantity" value="1"
-                                                title="Decrease quantity"
+                                            <button type="submit" name="update_quantity" value="1" title="Decrease quantity"
                                                 style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-color); background: white; cursor: pointer;"
                                                 onclick="this.form.delta.value = -1;">
                                                 −
@@ -230,8 +206,7 @@ $cartCount = count($_SESSION['cart']);
                                                 min="1" max="99" required readonly
                                                 style="width: 56px; text-align: center; padding: var(--space-2); border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
 
-                                            <button type="submit" name="update_quantity" value="1"
-                                                title="Increase quantity"
+                                            <button type="submit" name="update_quantity" value="1" title="Increase quantity"
                                                 style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-color); background: white; cursor: pointer;"
                                                 onclick="this.form.delta.value = 1;">
                                                 +

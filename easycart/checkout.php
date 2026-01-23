@@ -167,111 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <title>Checkout - EasyCart</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
-    <script>
-        function togglePaymentForms() {
-            const paymentMethodInput = document.querySelector('input[name="payment_method"]:checked');
-            const paymentMethod = paymentMethodInput.value;
-            const cardForm = document.getElementById('card-form');
-            const upiForm = document.getElementById('upi-form');
-            const codNotice = document.getElementById('cod-notice');
-            const extraChargesRow = document.getElementById('extra-charges-row');
-            const extraChargesAmount = document.getElementById('extra-charges-amount');
-            const finalTotal = document.getElementById('final-total');
-            const placeOrderButton = document.getElementById('place-order-button');
-
-            // Update active state on labels
-            document.querySelectorAll('.payment-method-card').forEach(label => {
-                label.classList.remove('active');
-            });
-            paymentMethodInput.closest('.payment-method-card').classList.add('active');
-
-            // Hide all forms
-            cardForm.style.display = 'none';
-            upiForm.style.display = 'none';
-            codNotice.style.display = 'none';
-
-            // Remove animation classes to restart them if needed
-            cardForm.classList.remove('animate-fade-in-up');
-            upiForm.classList.remove('animate-fade-in-up');
-            codNotice.classList.remove('animate-fade-in-up');
-
-            // Remove required attributes
-            cardForm.querySelectorAll('input').forEach(input => input.required = false);
-            upiForm.querySelectorAll('input').forEach(input => input.required = false);
-
-            // Show selected form and set required attributes
-            if (paymentMethod === 'card') {
-                cardForm.style.display = 'block';
-                // Small timeout to allow display:block to apply before animation
-                setTimeout(() => cardForm.classList.add('animate-fade-in-up'), 10);
-                cardForm.querySelectorAll('input').forEach(input => input.required = true);
-                updateExtraCharges(0);
-            } else if (paymentMethod === 'upi') {
-                upiForm.style.display = 'block';
-                setTimeout(() => upiForm.classList.add('animate-fade-in-up'), 10);
-                upiForm.querySelectorAll('input').forEach(input => input.required = true);
-                updateExtraCharges(0);
-            } else if (paymentMethod === 'cod') {
-                codNotice.style.display = 'block';
-                setTimeout(() => codNotice.classList.add('animate-fade-in-up'), 10);
-                updateExtraCharges(50); // COD charge
-            }
-
-            function updateExtraCharges(charges) {
-                const subtotal = <?php echo $subtotal; ?>;
-                const shipping = <?php echo $shipping; ?>;
-                const newTotal = subtotal + shipping + charges;
-
-                if (charges > 0) {
-                    extraChargesRow.style.display = 'flex';
-                    extraChargesRow.classList.add('animate-fade-in-up');
-                    extraChargesAmount.textContent = '₹' + charges.toLocaleString();
-                } else {
-                    extraChargesRow.style.display = 'none';
-                    extraChargesRow.classList.remove('animate-fade-in-up');
-                }
-
-                finalTotal.textContent = '₹' + newTotal.toLocaleString();
-                placeOrderButton.innerHTML = 'Place Order - ₹' + newTotal.toLocaleString();
-            }
-        }
-
-        // Format card number with spaces
-        function formatCardNumber(input) {
-            let value = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            let formatted = '';
-            for (let i = 0; i < value.length; i++) {
-                if (i > 0 && i % 4 === 0) {
-                    formatted += ' ';
-                }
-                formatted += value[i];
-            }
-            input.value = formatted;
-        }
-
-        // Format expiry date
-        function formatExpiryDate(input) {
-            let value = input.value.replace(/\D/g, '');
-            if (value.length >= 2) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 4);
-            }
-            input.value = value;
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function () {
-            togglePaymentForms();
-
-            // Add event listeners for formatting
-            document.querySelector('input[name="card_number"]').addEventListener('input', function () {
-                formatCardNumber(this);
-            });
-
-            document.querySelector('input[name="expiry_date"]').addEventListener('input', function () {
-                formatExpiryDate(this);
-            });
-        });
-    </script>
+    <script src="js/checkout.js" defer></script>
 </head>
 
 <body>
@@ -300,7 +196,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     </header>
 
     <main class="main">
-        <div class="container animate-fade-in-up">
+        <div class="container animate-fade-in-up" id="checkout-container" data-subtotal="<?php echo $subtotal; ?>"
+            data-shipping="<?php echo $shipping; ?>">
             <div class="checkout-steps">
                 <div class="checkout-step completed">
                     <div class="checkout-step__number">✓</div>
