@@ -45,6 +45,7 @@ if ($categoryFilter !== 'all') {
     </title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/add-to-cart.js" defer></script>
 </head>
 
 <body>

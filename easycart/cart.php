@@ -168,9 +168,9 @@ $cartCount = count($_SESSION['cart']);
                                 <div class="table__cell table__cell--header">Action</div>
                             </div>
                         </div>
-                        <div class="table__body">
+                        <div class="table__body" id="cart-table-body">
                             <?php foreach ($cartItems as $item): ?>
-                                <div class="table__row"
+                                <div class="table__row" id="product-row-<?php echo $item['product']['id']; ?>"
                                     style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 100px; gap: var(--space-4); align-items: center;">
                                     <div class="table__cell">
                                         <div style="display: flex; gap: var(--space-4); align-items: center;">
@@ -213,14 +213,15 @@ $cartCount = count($_SESSION['cart']);
                                             </button>
                                         </form>
                                     </div>
-                                    <div class="table__cell table__cell--price">
+                                    <div class="table__cell table__cell--price"
+                                        id="item-total-<?php echo $item['product']['id']; ?>">
                                         <?php echo formatPrice($item['total']); ?>
                                     </div>
                                     <div class="table__cell">
-                                        <form method="POST">
+                                        <form method="POST" class="remove-item-form">
                                             <input type="hidden" name="product_id"
                                                 value="<?php echo $item['product']['id']; ?>">
-                                            <button type="submit" name="remove_item" class="btn btn--sm"
+                                            <button type="submit" name="remove_item" class="btn btn--sm remove-item-btn"
                                                 style="background: var(--color-danger); color: white;">Remove</button>
                                         </form>
                                     </div>
@@ -234,7 +235,7 @@ $cartCount = count($_SESSION['cart']);
                         <h3 class="order-summary__title">Cart Summary</h3>
                         <div class="order-summary__row">
                             <span>Subtotal:</span>
-                            <span>
+                            <span id="cart-subtotal">
                                 <?php echo formatPrice($subtotal); ?>
                             </span>
                         </div>
@@ -246,7 +247,7 @@ $cartCount = count($_SESSION['cart']);
                         </div>
                         <div class="order-summary__row order-summary__row--total">
                             <strong>Total:</strong>
-                            <strong>
+                            <strong id="cart-total">
                                 <?php echo formatPrice($subtotal + 500); ?>
                             </strong>
                         </div>

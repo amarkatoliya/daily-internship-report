@@ -18,6 +18,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     <title>Sign Up - EasyCart</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/auth.js" defer></script>
 </head>
 
 <body>
@@ -64,27 +65,28 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                     <p class="auth-subtitle">It's free and easy to get started.</p>
                 </div>
 
-                <form class="form"
+                <form class="form" id="signup-form"
                     style="box-shadow: none; padding: 0; background: transparent; border: none; max-width: 100%;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="auth-input-group">
                             <label class="auth-label">First Name</label>
-                            <input type="text" class="auth-input" placeholder="John" required>
+                            <input type="text" id="first_name" class="auth-input" placeholder="John" required>
                         </div>
                         <div class="auth-input-group">
                             <label class="auth-label">Last Name</label>
-                            <input type="text" class="auth-input" placeholder="Doe" required>
+                            <input type="text" id="last_name" class="auth-input" placeholder="Doe" required>
                         </div>
                     </div>
 
                     <div class="auth-input-group">
                         <label class="auth-label">Email</label>
-                        <input type="email" class="auth-input" placeholder="john@example.com" required>
+                        <input type="email" id="email" class="auth-input" placeholder="john@example.com" required>
                     </div>
 
                     <div class="auth-input-group">
                         <label class="auth-label">Password</label>
-                        <input type="password" class="auth-input" placeholder="Create a password" required>
+                        <input type="password" id="password" class="auth-input" placeholder="Create a password"
+                            required>
                     </div>
 
                     <button type="submit" class="btn btn--primary btn--full btn--lg">Create Account</button>

@@ -27,10 +27,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
                 'quantity' => 1
             ];
         }
+
+        // Return JSON if AJAX request
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            require_once 'data.php';
+            $cartCount = count(array_filter($_SESSION['cart'], function ($item) {
+                return isset($item['id']) && $item['id'] > 0;
+            }));
+
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true,
+                'message' => 'Product added to cart!',
+                'cartCount' => $cartCount
+            ]);
+            exit;
+        }
     }
 }
 
-// Redirect to cart page
+// Redirect to cart page for standard form submissions
 header('Location: cart.php');
 exit;
 ?>

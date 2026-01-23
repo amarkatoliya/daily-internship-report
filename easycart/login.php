@@ -18,6 +18,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     <title>Login - EasyCart</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/auth.js" defer></script>
 </head>
 
 <body>
@@ -33,13 +34,14 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 
                 <div class="auth-visual__card">
                     <div style="display: flex; gap: 1rem; align-items: center;">
-                        <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <div
+                            style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                             <svg width=" 24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
-                            stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                </svg>
-                                  
+                            </svg>
+
                         </div>
                         <div>
                             <div style="font-weight: bold; font-size: 1.1rem;">Verified & Secure</div>
@@ -64,16 +66,16 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                     <p class="auth-subtitle">Welcome back! Please enter your details.</p>
                 </div>
 
-                <form class="form"
+                <form class="form" id="login-form"
                     style="box-shadow: none; padding: 0; background: transparent; border: none; max-width: 100%;">
                     <div class="auth-input-group">
                         <label class="auth-label">Email</label>
-                        <input type="email" class="auth-input" placeholder="Enter your email" required>
+                        <input type="email" id="email" class="auth-input" placeholder="Enter your email" required>
                     </div>
 
                     <div class="auth-input-group">
                         <label class="auth-label">Password</label>
-                        <input type="password" class="auth-input" placeholder="••••••••" required>
+                        <input type="password" id="password" class="auth-input" placeholder="••••••••" required>
                     </div>
 
                     <div

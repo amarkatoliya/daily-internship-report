@@ -98,6 +98,79 @@ function formatExpiryDate(input) {
 document.addEventListener('DOMContentLoaded', function () {
     togglePaymentForms();
 
+    // Address Validation
+    const checkoutForm = document.querySelector('form');
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function (e) {
+            if (!validateAddressFields()) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    function validateAddressFields() {
+        const requiredFields = ['email', 'first_name', 'last_name', 'address', 'city', 'state', 'zip'];
+        let isValid = true;
+
+        requiredFields.forEach(fieldName => {
+            const input = document.querySelector(`[name="${fieldName}"]`);
+            if (input) {
+                clearFieldError(input);
+                if (input.value.trim() === '') {
+                    showFieldError(input, `${fieldName.replace('_', ' ')} is required`);
+                    isValid = false;
+                }
+            }
+        });
+
+        // Also validate current payment method fields
+        const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+        if (paymentMethod === 'card') {
+            const cardFields = ['cardholder_name', 'card_number', 'expiry_date', 'cvv'];
+            cardFields.forEach(fieldName => {
+                const input = document.querySelector(`[name="${fieldName}"]`);
+                if (input && input.value.trim() === '') {
+                    showFieldError(input, 'This field is required');
+                    isValid = false;
+                }
+            });
+        } else if (paymentMethod === 'upi') {
+            const upiInput = document.querySelector('[name="upi_id"]');
+            if (upiInput && upiInput.value.trim() === '') {
+                showFieldError(upiInput, 'UPI ID is required');
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    function showFieldError(input, message) {
+        input.style.borderColor = 'var(--color-danger)';
+        const group = input.closest('.form__group');
+        if (group) {
+            let error = group.querySelector('.field-error');
+            if (!error) {
+                error = document.createElement('div');
+                error.className = 'field-error';
+                error.style.color = 'var(--color-danger)';
+                error.style.fontSize = '0.75rem';
+                error.style.marginTop = '0.25rem';
+                group.appendChild(error);
+            }
+            error.textContent = message;
+        }
+    }
+
+    function clearFieldError(input) {
+        input.style.borderColor = '';
+        const group = input.closest('.form__group');
+        if (group) {
+            const error = group.querySelector('.field-error');
+            if (error) error.remove();
+        }
+    }
+
     // Add event listeners for formatting
     const cardNumberInput = document.querySelector('input[name="card_number"]');
     if (cardNumberInput) {
