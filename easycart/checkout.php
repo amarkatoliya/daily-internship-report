@@ -35,7 +35,16 @@ foreach ($_SESSION['cart'] as $cartItem) {
     }
 }
 
-$shipping = 500;
+$base_shipping = 500;
+$shipping_costs = [
+    'standard' => 500,
+    'express' => 1500,
+    'overnight' => 2500
+];
+
+$selected_shipping = $_POST['shipping_method'] ?? 'standard';
+$shipping = $shipping_costs[$selected_shipping] ?? 500;
+
 $extra_charges = 0; // Will be set based on payment method
 $total = $subtotal + $shipping + $extra_charges;
 $cartCount = count($_SESSION['cart']);
@@ -178,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                 <nav class="header__nav">
                     <ul class="nav__list">
                         <li><a href="index.php" class="nav__link">Home</a></li>
-                        <li><a href="products.php" class="nav__link">Products</a></li>
+                        <li><a href="plp.php" class="nav__link">Products</a></li>
                         <li><a href="cart.php" class="nav__link nav__link--cart">Cart
                                 <?php if ($cartCount > 0): ?>
                                     <span class="cart-badge">
@@ -282,6 +291,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                     <label class="form__label">ZIP Code</label>
                                     <input type="text" name="zip" class="form__input" required>
                                 </div>
+                            </div>
+                        </section>
+
+                        <section class="checkout-form-section">
+                            <h3>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="1" y="3" width="15" height="13"></rect>
+                                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                </svg>
+                                Shipping Method
+                            </h3>
+                            <div class="payment-methods">
+                                <label class="payment-method-card active">
+                                    <input type="radio" name="shipping_method" value="standard" checked
+                                        onchange="updateShipping(500, 'Standard Delivery')">
+                                    <div class="shipping-info">
+                                        <span class="shipping-name">Standard Delivery</span>
+                                        <span class="shipping-time">5-7 Business Days</span>
+                                        <span class="shipping-cost">₹500</span>
+                                    </div>
+                                </label>
+                                <label class="payment-method-card">
+                                    <input type="radio" name="shipping_method" value="express"
+                                        onchange="updateShipping(1500, 'Express Delivery')">
+                                    <div class="shipping-info">
+                                        <span class="shipping-name">Express Delivery</span>
+                                        <span class="shipping-time">1-2 Business Days</span>
+                                        <span class="shipping-cost">₹1,500</span>
+                                    </div>
+                                </label>
+                                <label class="payment-method-card">
+                                    <input type="radio" name="shipping_method" value="overnight"
+                                        onchange="updateShipping(2500, 'Overnight Delivery')">
+                                    <div class="shipping-info">
+                                        <span class="shipping-name">Overnight Delivery</span>
+                                        <span class="shipping-time">Next Business Day</span>
+                                        <span class="shipping-cost">₹2,500</span>
+                                    </div>
+                                </label>
                             </div>
                         </section>
 
@@ -407,7 +458,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                         </div>
                         <div class="order-summary__row">
                             <span>Shipping</span>
-                            <span>
+                            <span id="summary-shipping">
                                 <?php echo formatPrice($shipping); ?>
                             </span>
                         </div>

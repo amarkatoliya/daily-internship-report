@@ -1,3 +1,26 @@
+// Current state storage
+let currentShipping = 500;
+let currentPaymentCharge = 0;
+
+function updateShipping(cost, name) {
+    currentShipping = cost;
+
+    // Update active state on labels
+    const shippingRadios = document.getElementsByName('shipping_method');
+    shippingRadios.forEach(radio => {
+        const card = radio.closest('.payment-method-card');
+        if (radio.checked) {
+            card.classList.add('active');
+        } else {
+            card.classList.remove('active');
+        }
+    });
+
+    const shippingDisplay = document.querySelector('.order-summary__row span:nth-child(2)'); // This is brittle, better ID
+    // Let's find by text content or add IDs to checkout.php
+    updateSummaryTotals();
+}
+
 function togglePaymentForms() {
     const paymentMethodInput = document.querySelector('input[name="payment_method"]:checked');
     if (!paymentMethodInput) return;
@@ -6,19 +29,10 @@ function togglePaymentForms() {
     const cardForm = document.getElementById('card-form');
     const upiForm = document.getElementById('upi-form');
     const codNotice = document.getElementById('cod-notice');
-    const extraChargesRow = document.getElementById('extra-charges-row');
-    const extraChargesAmount = document.getElementById('extra-charges-amount');
-    const finalTotal = document.getElementById('final-total');
-    const placeOrderButton = document.getElementById('place-order-button');
-
-    // Get values from data attributes
-    const checkoutContainer = document.getElementById('checkout-container');
-    const subtotal = parseInt(checkoutContainer.dataset.subtotal);
-    const shipping = parseInt(checkoutContainer.dataset.shipping);
 
     // Update active state on labels
-    document.querySelectorAll('.payment-method-card').forEach(label => {
-        label.classList.remove('active');
+    document.querySelectorAll('input[name="payment_method"]').forEach(input => {
+        input.closest('.payment-method-card').classList.remove('active');
     });
     paymentMethodInput.closest('.payment-method-card').classList.add('active');
 
@@ -41,35 +55,49 @@ function togglePaymentForms() {
         cardForm.style.display = 'block';
         setTimeout(() => cardForm.classList.add('animate-fade-in-up'), 10);
         cardForm.querySelectorAll('input').forEach(input => input.required = true);
-        updateExtraCharges(0);
+        currentPaymentCharge = 0;
     } else if (paymentMethod === 'upi' && upiForm) {
         upiForm.style.display = 'block';
         setTimeout(() => upiForm.classList.add('animate-fade-in-up'), 10);
         upiForm.querySelectorAll('input').forEach(input => input.required = true);
-        updateExtraCharges(0);
+        currentPaymentCharge = 0;
     } else if (paymentMethod === 'cod' && codNotice) {
         codNotice.style.display = 'block';
         setTimeout(() => codNotice.classList.add('animate-fade-in-up'), 10);
-        updateExtraCharges(50); // COD charge
+        currentPaymentCharge = 50; // COD charge
     }
 
-    function updateExtraCharges(charges) {
-        const newTotal = subtotal + shipping + charges;
+    updateSummaryTotals();
+}
 
-        if (extraChargesRow && extraChargesAmount) {
-            if (charges > 0) {
-                extraChargesRow.style.display = 'flex';
-                extraChargesRow.classList.add('animate-fade-in-up');
-                extraChargesAmount.textContent = '₹' + charges.toLocaleString();
-            } else {
-                extraChargesRow.style.display = 'none';
-                extraChargesRow.classList.remove('animate-fade-in-up');
-            }
+function updateSummaryTotals() {
+    const checkoutContainer = document.getElementById('checkout-container');
+    const subtotal = parseInt(checkoutContainer.dataset.subtotal);
+
+    // Elements
+    const shippingRow = document.getElementById('summary-shipping');
+    const extraChargesRow = document.getElementById('extra-charges-row');
+    const extraChargesAmount = document.getElementById('extra-charges-amount');
+    const finalTotalDisplay = document.getElementById('final-total');
+    const placeOrderButton = document.getElementById('place-order-button');
+
+    // Calculations
+    const newTotal = subtotal + currentShipping + currentPaymentCharge;
+
+    // Updates
+    if (shippingRow) shippingRow.textContent = '₹' + currentShipping.toLocaleString();
+
+    if (extraChargesRow && extraChargesAmount) {
+        if (currentPaymentCharge > 0) {
+            extraChargesRow.style.display = 'flex';
+            extraChargesAmount.textContent = '₹' + currentPaymentCharge.toLocaleString();
+        } else {
+            extraChargesRow.style.display = 'none';
         }
-
-        if (finalTotal) finalTotal.textContent = '₹' + newTotal.toLocaleString();
-        if (placeOrderButton) placeOrderButton.innerHTML = 'Place Order - ₹' + newTotal.toLocaleString();
     }
+
+    if (finalTotalDisplay) finalTotalDisplay.textContent = '₹' + newTotal.toLocaleString();
+    if (placeOrderButton) placeOrderButton.innerHTML = 'Place Order - ₹' + newTotal.toLocaleString();
 }
 
 // Format card number with spaces

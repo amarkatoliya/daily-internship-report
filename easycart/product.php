@@ -15,7 +15,7 @@ $product = getProductById($productId);
 
 // If product not found, redirect to products page
 if (!$product) {
-    header('Location: products.php');
+    header('Location: plp.php');
     exit;
 }
 
@@ -51,7 +51,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                 <nav class="header__nav">
                     <ul class="nav__list">
                         <li><a href="index.php" class="nav__link">Home</a></li>
-                        <li><a href="products.php" class="nav__link">Products</a></li>
+                        <li><a href="plp.php" class="nav__link">Products</a></li>
                         <li><a href="cart.php" class="nav__link" style="position: relative;">Cart
                                 <?php if ($cartCount > 0): ?>
                                     <span class="cart-badge">
@@ -72,7 +72,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     <main class="main">
         <div class="container">
             <section class="section">
-                <a href="products.php" class="product-detail__back">
+                <a href="plp.php" class="product-detail__back">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M19 12H5M5 12l7-7m-7 7l7 7" />
                     </svg>
@@ -154,7 +154,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                                 </svg>
                                 Add to Cart
                             </button>
-                            <a href="products.php" class="btn btn--outline btn--lg">Continue Shopping</a>
+                            <a href="plp.php" class="btn btn--outline btn--lg">Continue Shopping</a>
                         </form>
                     </div>
                 </div>
@@ -174,10 +174,10 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                 <div class="footer__section">
                     <h3>Shop</h3>
                     <ul class="footer__links">
-                        <li><a href="products.php" class="footer__link">All Products</a></li>
-                        <li><a href="products.php?category=Electronics" class="footer__link">Electronics</a></li>
-                        <li><a href="products.php?category=Fashion" class="footer__link">Fashion</a></li>
-                        <li><a href="products.php" class="footer__link">New Arrivals</a></li>
+                        <li><a href="plp.php" class="footer__link">All Products</a></li>
+                        <li><a href="plp.php?category=Electronics" class="footer__link">Electronics</a></li>
+                        <li><a href="plp.php?category=Fashion" class="footer__link">Fashion</a></li>
+                        <li><a href="plp.php" class="footer__link">New Arrivals</a></li>
                     </ul>
                 </div>
                 <div class="footer__section">

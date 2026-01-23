@@ -42,7 +42,7 @@ $featuredProducts = array_slice($products, 0, 6);
                 <nav class="header__nav">
                     <ul class="nav__list">
                         <li><a href="index.php" class="nav__link nav__link--active">Home</a></li>
-                        <li><a href="products.php" class="nav__link">Products</a></li>
+                        <li><a href="plp.php" class="nav__link">Products</a></li>
                         <li><a href="cart.php" class="nav__link nav__link--cart">Cart
                                 <?php if ($cartCount > 0): ?>
                                     <span class="cart-badge">
@@ -81,7 +81,7 @@ $featuredProducts = array_slice($products, 0, 6);
                         </p>
 
                         <div class="hero__actions">
-                            <a href="products.php" class="hero__cta hero__cta--primary">
+                            <a href="plp.php" class="hero__cta hero__cta--primary">
                                 <span>Start Shopping</span>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +105,7 @@ $featuredProducts = array_slice($products, 0, 6);
                                 <div class="hero__stat-label">Happy Customers</div>
                             </div>
                             <div class="hero__stat">
-                                <div class="hero__stat-number">500+</div>
+                                <div class="hero__stat-number"><?php echo count($products); ?>+</div>
                                 <div class="hero__stat-label">Products</div>
                             </div>
                             <div class="hero__stat">
@@ -216,7 +216,7 @@ $featuredProducts = array_slice($products, 0, 6);
                 <h2 class="section__title">Popular Categories</h2>
                 <div class="categories-grid">
                     <?php foreach ($categories as $category): ?>
-                        <a href="products.php?category=<?php echo urlencode($category['name']); ?>" class="category-card">
+                        <a href="plp.php?category=<?php echo urlencode($category['name']); ?>" class="category-card">
                             <div class="category-card__icon">
                                 <?php echo $category['icon']; ?>
                             </div>
@@ -233,7 +233,7 @@ $featuredProducts = array_slice($products, 0, 6);
                 <h2 class="section__title">Popular Brands</h2>
                 <div class="categories-grid">
                     <?php foreach ($brands as $brand): ?>
-                        <a href="products.php?brand=<?php echo urlencode($brand['name']); ?>" class="category-card">
+                        <a href="plp.php?brand=<?php echo urlencode($brand['name']); ?>" class="category-card">
                             <div class="category-card__icon">
                                 <?php echo $brand['logo']; ?>
                             </div>
@@ -262,10 +262,10 @@ $featuredProducts = array_slice($products, 0, 6);
                 <div class="footer__section">
                     <h3>Shop</h3>
                     <ul class="footer__links">
-                        <li><a href="products.php" class="footer__link">All Products</a></li>
-                        <li><a href="products.php?category=Electronics" class="footer__link">Electronics</a></li>
-                        <li><a href="products.php?category=Fashion" class="footer__link">Fashion</a></li>
-                        <li><a href="products.php" class="footer__link">New Arrivals</a></li>
+                        <li><a href="plp.php" class="footer__link">All Products</a></li>
+                        <li><a href="plp.php?category=Electronics" class="footer__link">Electronics</a></li>
+                        <li><a href="plp.php?category=Fashion" class="footer__link">Fashion</a></li>
+                        <li><a href="plp.php" class="footer__link">New Arrivals</a></li>
                     </ul>
                 </div>
 

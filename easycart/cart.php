@@ -125,7 +125,7 @@ $cartCount = count($_SESSION['cart']);
                 <nav class="header__nav">
                     <ul class="nav__list">
                         <li><a href="index.php" class="nav__link">Home</a></li>
-                        <li><a href="products.php" class="nav__link">Products</a></li>
+                        <li><a href="plp.php" class="nav__link">Products</a></li>
                         <li><a href="cart.php" class="nav__link nav__link--active" style="position: relative;">Cart
                                 <?php if ($cartCount > 0): ?>
                                     <span class="cart-badge">
@@ -256,7 +256,7 @@ $cartCount = count($_SESSION['cart']);
                     <!-- Cart Actions -->
                     <div style="display: flex; gap: var(--space-4); margin-top: var(--space-6);">
                         <a href="checkout.php" class="btn btn--primary btn--lg">Proceed to Checkout</a>
-                        <a href="products.php" class="btn btn--outline btn--lg">Continue Shopping</a>
+                        <a href="plp.php" class="btn btn--outline btn--lg">Continue Shopping</a>
                         <form method="POST" style="margin-left: auto;">
                             <button type="submit" name="clear_cart" class="btn btn--lg"
                                 style="background: var(--color-danger); color: white;"
@@ -277,7 +277,7 @@ $cartCount = count($_SESSION['cart']);
                         <h3 style="font-size: var(--font-size-2xl); margin-bottom: var(--space-4);">Your cart is empty</h3>
                         <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">Add some products to get
                             started</p>
-                        <a href="products.php" class="btn btn--primary btn--lg">Browse Products</a>
+                        <a href="plp.php" class="btn btn--primary btn--lg">Browse Products</a>
                     </div>
                 </section>
             <?php endif; ?>
@@ -296,10 +296,10 @@ $cartCount = count($_SESSION['cart']);
                 <div class="footer__section">
                     <h3>Shop</h3>
                     <ul class="footer__links">
-                        <li><a href="products.php" class="footer__link">All Products</a></li>
-                        <li><a href="products.php?category=Electronics" class="footer__link">Electronics</a></li>
-                        <li><a href="products.php?category=Fashion" class="footer__link">Fashion</a></li>
-                        <li><a href="products.php" class="footer__link">New Arrivals</a></li>
+                        <li><a href="plp.php" class="footer__link">All Products</a></li>
+                        <li><a href="plp.php?category=Electronics" class="footer__link">Electronics</a></li>
+                        <li><a href="plp.php?category=Fashion" class="footer__link">Fashion</a></li>
+                        <li><a href="plp.php" class="footer__link">New Arrivals</a></li>
                     </ul>
                 </div>
                 <div class="footer__section">

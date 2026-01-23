@@ -76,7 +76,7 @@ $cartCount = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
                 <nav class="header__nav">
                     <ul class="nav__list">
                         <li><a href="index.php" class="nav__link">Home</a></li>
-                        <li><a href="products.php" class="nav__link">Products</a></li>
+                        <li><a href="plp.php" class="nav__link">Products</a></li>
                         <li><a href="cart.php" class="nav__link" style="position: relative;">Cart
                                 <?php if ($cartCount > 0): ?>
                                     <span class="cart-badge">
@@ -178,7 +178,7 @@ $cartCount = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
                 </div>
 
                 <div style="margin-top: var(--space-8); text-align: center;">
-                    <a href="products.php" class="btn btn--primary btn--lg">Continue Shopping</a>
+                    <a href="plp.php" class="btn btn--primary btn--lg">Continue Shopping</a>
                 </div>
             </section>
         </div>
@@ -195,10 +195,10 @@ $cartCount = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
                 <div class="footer__section">
                     <h3>Shop</h3>
                     <ul class="footer__links">
-                        <li><a href="products.php" class="footer__link">All Products</a></li>
-                        <li><a href="products.php?category=Electronics" class="footer__link">Electronics</a></li>
-                        <li><a href="products.php?category=Fashion" class="footer__link">Fashion</a></li>
-                        <li><a href="products.php" class="footer__link">New Arrivals</a></li>
+                        <li><a href="plp.php" class="footer__link">All Products</a></li>
+                        <li><a href="plp.php?category=Electronics" class="footer__link">Electronics</a></li>
+                        <li><a href="plp.php?category=Fashion" class="footer__link">Fashion</a></li>
+                        <li><a href="plp.php" class="footer__link">New Arrivals</a></li>
                     </ul>
                 </div>
                 <div class="footer__section">
