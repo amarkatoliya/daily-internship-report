@@ -39,6 +39,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/add-to-cart.js" defer></script>
+    <script src="js/product-gallery.js" defer></script>
 </head>
 
 <body>
@@ -82,10 +83,24 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
             <!-- Product Detail -->
             <section class="section">
                 <div class="product-detail">
-                    <!-- Product Image -->
-                    <div class="product-detail__gallery">
-                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>"
-                            alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-detail__image">
+                    <!-- Product Image Gallery -->
+                    <div class="product-gallery">
+                        <div class="product-gallery__main">
+                            <img src="<?php echo htmlspecialchars($product['image_url']); ?>"
+                                alt="<?php echo htmlspecialchars($product['name']); ?>" id="mainProductImage"
+                                class="product-detail__image">
+                        </div>
+                        <?php if (isset($product['images']) && count($product['images']) > 1): ?>
+                            <div class="product-gallery__thumbs">
+                                <?php foreach ($product['images'] as $index => $imgUrl): ?>
+                                    <div class="product-gallery__thumb <?php echo $imgUrl === $product['image_url'] ? 'active' : ''; ?>"
+                                        onclick="switchProductImage(this, '<?php echo htmlspecialchars($imgUrl); ?>')">
+                                        <img src="<?php echo htmlspecialchars($imgUrl); ?>"
+                                            alt="Product angle <?php echo $index + 1; ?>">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Product Info -->

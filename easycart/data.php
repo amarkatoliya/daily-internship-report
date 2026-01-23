@@ -20,6 +20,11 @@ $products = [
             'Bluetooth 5.0',
             'Premium sound quality',
             'Comfortable ear cushions'
+        ],
+        'images' => [
+            'assets/images/headphones.jpg',
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=800&auto=format&fit=crop'
         ]
     ],
     [
@@ -36,6 +41,11 @@ $products = [
             'GPS enabled',
             'Water resistant',
             '7-day battery life'
+        ],
+        'images' => [
+            'assets/images/smartwatch.jpg',
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=800&auto=format&fit=crop'
         ]
     ],
     [
@@ -52,6 +62,11 @@ $products = [
             'Water-resistant material',
             'Ergonomic design',
             'Anti-theft pocket'
+        ],
+        'images' => [
+            'assets/images/laptop-backpack.jpg',
+            'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?q=80&w=800&auto=format&fit=crop'
         ]
     ],
     [
@@ -68,6 +83,11 @@ $products = [
             '3-meter length',
             'Universal compatibility',
             'Durable construction'
+        ],
+        'images' => [
+            'assets/images/usb-cable.jpg',
+            'https://images.unsplash.com/photo-1649959223405-f927e0fc1e05?q=80&w=800&auto=format&fit=crop',
+            'https://plus.unsplash.com/premium_photo-1760423006855-81cbed965ac7?q=80&w=800&auto=format&fit=crop'
         ]
     ],
     [
@@ -84,6 +104,11 @@ $products = [
             '512GB SSD',
             '15.6" Full HD display',
             '10-hour battery life'
+        ],
+        'images' => [
+            'assets/images/laptop.jpg',
+            'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop'
         ]
     ],
     [
@@ -100,6 +125,11 @@ $products = [
             'Precision tracking',
             'Silent clicks',
             'Wireless 2.4GHz'
+        ],
+        'images' => [
+            'assets/images/mouse.jpg',
+            'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'
         ]
     ],
     [
@@ -116,6 +146,11 @@ $products = [
             'Triple camera system',
             '5000mAh battery',
             '5G enabled'
+        ],
+        'images' => [
+            'assets/images/smartphone.jpg',
+            'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=800&auto=format&fit=crop'
         ]
     ],
     [
@@ -132,6 +167,11 @@ $products = [
             'Lightweight design',
             'Durable outsole',
             'Ergonomic fit'
+        ],
+        'images' => [
+            'assets/images/run.jpg',
+            'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=800&auto=format&fit=crop'
         ]
     ],
     [
@@ -148,6 +188,11 @@ $products = [
             'Durable construction',
             'Versatile style',
             'Easy to clean'
+        ],
+        'images' => [
+            'assets/images/white-shoes.jpg',
+            'https://images.unsplash.com/photo-1632993819204-3ad5253a4a72?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1608229751021-ed4bd8677753?q=80&w=800&auto=format&fit=crop'
         ]
     ]
 ];
