@@ -103,9 +103,24 @@ document.addEventListener('DOMContentLoaded', function () {
         const row = document.getElementById(`product-row-${productId}`);
         const quantityInput = row.querySelector('[name="quantity"]');
         const itemTotal = document.getElementById(`item-total-${productId}`);
+        const decrementBtn = row.querySelector('button[title="Decrease quantity"]');
 
         quantityInput.value = data.newQuantity;
         itemTotal.textContent = data.itemTotal;
+
+        // Handle decrement button state
+        if (decrementBtn) {
+            if (data.newQuantity <= 1) {
+                decrementBtn.disabled = true;
+                decrementBtn.style.opacity = '0.5';
+                decrementBtn.style.cursor = 'not-allowed';
+            } else {
+                decrementBtn.disabled = false;
+                decrementBtn.style.opacity = '1';
+                decrementBtn.style.cursor = 'pointer';
+            }
+        }
+
         updateTotals(data);
         updateBadge(data.cartCount);
     }

@@ -214,8 +214,8 @@ $total = $subtotal + $shipping;
                                             <input type="hidden" name="product_id"
                                                 value="<?php echo $item['product']['id']; ?>">
                                             <button type="submit" name="update_quantity" value="1" title="Decrease quantity"
-                                                style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-color); background: white; cursor: pointer;"
-                                                onclick="this.form.delta.value = -1;">
+                                                style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-color); background: white; cursor: pointer; <?php echo $item['quantity'] <= 1 ? 'opacity: 0.5; cursor: not-allowed;' : ''; ?>"
+                                                onclick="this.form.delta.value = -1;" <?php echo $item['quantity'] <= 1 ? 'disabled' : ''; ?>>
                                                 −
                                             </button>
                                             <input type="hidden" name="delta" value="-1">
