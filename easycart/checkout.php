@@ -42,18 +42,45 @@ foreach ($_SESSION['cart'] as $item) {
     }
 }
 
-$base_shipping = 500;
-$shipping_costs = [
-    'standard' => 500,
-    'express' => 1500,
-    'overnight' => 2500
-];
+/**
+ * Calculate shipping cost based on method and subtotal
+ * @param string $method Shipping method
+ * @param float $subtotal Cart subtotal
+ * @return float Calculated shipping cost
+ */
+function calculateShippingCost($method, $subtotal)
+{
+    switch ($method) {
+        case 'standard':
+            // Flat ₹40
+            return 40;
+
+        case 'express':
+            // MIN of ₹80 or 10% of subtotal
+            return min(80, $subtotal * 0.10);
+
+        case 'white_glove':
+            // MIN of ₹150 or 5% of subtotal
+            return min(150, $subtotal * 0.05);
+
+        case 'freight':
+            // MAX of 3% of subtotal or ₹200
+            return max($subtotal * 0.03, 200);
+
+        default:
+            return 40; // Default to standard
+    }
+}
 
 $selected_shipping = $_POST['shipping_method'] ?? 'standard';
-$shipping = ($shipping_costs[$selected_shipping] ?? 500) * $totalQuantity;
+$shipping = calculateShippingCost($selected_shipping, $subtotal);
+
+// Calculate 18% tax on (Subtotal + Shipping)
+$tax_rate = 0.18; // 18%
+$tax = ($subtotal + $shipping) * $tax_rate;
 
 $extra_charges = 0; // Will be set based on payment method
-$total = $subtotal + $shipping + $extra_charges;
+$total = $subtotal + $shipping + $tax + $extra_charges;
 $cartCount = count($_SESSION['cart']);
 
 // Handle order placement
@@ -122,8 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         $extra_charges = 50; // COD charge
     }
 
-    // Recalculate total with extra charges
-    $final_total = $subtotal + $shipping + $extra_charges;
+    // Recalculate total with tax and extra charges
+    $final_total = $subtotal + $shipping + $tax + $extra_charges;
 
     // If no errors, process the order
     if (empty($errors)) {
@@ -147,9 +174,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                 'zip' => $_POST['zip']
             ],
             'payment_method' => $payment_method,
+            'shipping_method' => $selected_shipping,
             'items' => $cartItems,
             'subtotal' => $subtotal,
             'shipping' => $shipping,
+            'tax' => $tax,
             'extra_charges' => $extra_charges,
             'total' => $final_total,
             'status' => 'CONFIRMED'
@@ -340,29 +369,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <div class="payment-methods">
                                 <label class="payment-method-card active">
                                     <input type="radio" name="shipping_method" value="standard" checked
-                                        onchange="updateShipping(500, 'Standard Delivery')">
+                                        onchange="updateShipping('standard', 'Standard Shipping')">
                                     <div class="shipping-info">
-                                        <span class="shipping-name">Standard Delivery</span>
+                                        <span class="shipping-name">Standard Shipping</span>
                                         <span class="shipping-time">5-7 Business Days</span>
-                                        <span class="shipping-cost">₹500</span>
+                                        <span class="shipping-cost">Flat ₹40</span>
                                     </div>
                                 </label>
                                 <label class="payment-method-card">
                                     <input type="radio" name="shipping_method" value="express"
-                                        onchange="updateShipping(1500, 'Express Delivery')">
+                                        onchange="updateShipping('express', 'Express Shipping')">
                                     <div class="shipping-info">
-                                        <span class="shipping-name">Express Delivery</span>
+                                        <span class="shipping-name">Express Shipping</span>
                                         <span class="shipping-time">1-2 Business Days</span>
-                                        <span class="shipping-cost">₹1,500</span>
+                                        <span class="shipping-cost">₹80 or 10% (whichever is lower)</span>
                                     </div>
                                 </label>
                                 <label class="payment-method-card">
-                                    <input type="radio" name="shipping_method" value="overnight"
-                                        onchange="updateShipping(2500, 'Overnight Delivery')">
+                                    <input type="radio" name="shipping_method" value="white_glove"
+                                        onchange="updateShipping('white_glove', 'White Glove Delivery')">
                                     <div class="shipping-info">
-                                        <span class="shipping-name">Overnight Delivery</span>
-                                        <span class="shipping-time">Next Business Day</span>
-                                        <span class="shipping-cost">₹2,500</span>
+                                        <span class="shipping-name">White Glove Delivery</span>
+                                        <span class="shipping-time">Premium Service</span>
+                                        <span class="shipping-cost">₹150 or 5% (whichever is lower)</span>
+                                    </div>
+                                </label>
+                                <label class="payment-method-card">
+                                    <input type="radio" name="shipping_method" value="freight"
+                                        onchange="updateShipping('freight', 'Freight Shipping')">
+                                    <div class="shipping-info">
+                                        <span class="shipping-name">Freight Shipping</span>
+                                        <span class="shipping-time">Bulk Orders</span>
+                                        <span class="shipping-cost">3% or ₹200 minimum</span>
                                     </div>
                                 </label>
                             </div>
@@ -492,6 +530,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <span>Shipping</span>
                             <span id="summary-shipping">
                                 <?php echo formatPrice($shipping); ?>
+                            </span>
+                        </div>
+                        <div class="order-summary__row">
+                            <span>Tax (18%)</span>
+                            <span id="summary-tax">
+                                <?php echo formatPrice($tax); ?>
                             </span>
                         </div>
                         <div class="order-summary__row" id="extra-charges-row" style="display: none;">

@@ -2,8 +2,52 @@
 let currentShipping = 500;
 let currentPaymentCharge = 0;
 
-function updateShipping(cost, name) {
-    currentShipping = cost;
+/**
+ * Calculate shipping cost based on method and subtotal
+ * @param {string} method - Shipping method: 'standard', 'express', 'white_glove', 'freight'
+ * @param {number} subtotal - Cart subtotal amount
+ * @returns {number} Calculated shipping cost
+ */
+function calculateShipping(method, subtotal) {
+    switch (method) {
+        case 'standard':
+            // Flat ₹40
+            return 40;
+
+        case 'express':
+            // MIN of ₹80 or 10% of subtotal
+            return Math.min(80, subtotal * 0.10);
+
+        case 'white_glove':
+            // MIN of ₹150 or 5% of subtotal
+            return Math.min(150, subtotal * 0.05);
+
+        case 'freight':
+            // MAX of 3% of subtotal or ₹200
+            return Math.max(subtotal * 0.03, 200);
+
+        default:
+            return 40; // Default to standard
+    }
+}
+
+/**
+ * Calculate 18% tax on (Subtotal + Shipping)
+ * @param {number} subtotal - Cart subtotal amount
+ * @param {number} shipping - Shipping cost
+ * @returns {number} Calculated tax amount
+ */
+function calculateTax(subtotal, shipping) {
+    const taxRate = 0.18; // 18%
+    return (subtotal + shipping) * taxRate;
+}
+
+function updateShipping(method, name) {
+    const checkoutContainer = document.getElementById('checkout-container');
+    const subtotal = parseInt(checkoutContainer.dataset.subtotal);
+
+    // Calculate shipping cost based on method and subtotal
+    currentShipping = calculateShipping(method, subtotal);
 
     // Update active state on labels
     const shippingRadios = document.getElementsByName('shipping_method');
@@ -16,10 +60,9 @@ function updateShipping(cost, name) {
         }
     });
 
-    const shippingDisplay = document.querySelector('.order-summary__row span:nth-child(2)'); // This is brittle, better ID
-    // Let's find by text content or add IDs to checkout.php
     updateSummaryTotals();
 }
+
 
 function togglePaymentForms() {
     const paymentMethodInput = document.querySelector('input[name="payment_method"]:checked');
@@ -73,21 +116,24 @@ function togglePaymentForms() {
 function updateSummaryTotals() {
     const checkoutContainer = document.getElementById('checkout-container');
     const subtotal = parseInt(checkoutContainer.dataset.subtotal);
-    const totalQuantity = parseInt(checkoutContainer.dataset.totalQuantity || 1);
 
     // Elements
     const shippingRow = document.getElementById('summary-shipping');
+    const taxRow = document.getElementById('summary-tax');
     const extraChargesRow = document.getElementById('extra-charges-row');
     const extraChargesAmount = document.getElementById('extra-charges-amount');
     const finalTotalDisplay = document.getElementById('final-total');
     const placeOrderButton = document.getElementById('place-order-button');
 
-    // Calculations
-    const calculatedShipping = currentShipping * totalQuantity;
-    const newTotal = subtotal + calculatedShipping + currentPaymentCharge;
+    // Calculations - shipping is per order, not per item
+    const calculatedShipping = currentShipping;
+    const calculatedTax = calculateTax(subtotal, calculatedShipping);
+    const newTotal = subtotal + calculatedShipping + calculatedTax + currentPaymentCharge;
 
     // Updates
-    if (shippingRow) shippingRow.textContent = '₹' + calculatedShipping.toLocaleString();
+    if (shippingRow) shippingRow.textContent = '₹' + calculatedShipping.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    if (taxRow) taxRow.textContent = '₹' + calculatedTax.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     if (extraChargesRow && extraChargesAmount) {
         if (currentPaymentCharge > 0) {
@@ -98,8 +144,8 @@ function updateSummaryTotals() {
         }
     }
 
-    if (finalTotalDisplay) finalTotalDisplay.textContent = '₹' + newTotal.toLocaleString();
-    if (placeOrderButton) placeOrderButton.innerHTML = 'Place Order - ₹' + newTotal.toLocaleString();
+    if (finalTotalDisplay) finalTotalDisplay.textContent = '₹' + newTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (placeOrderButton) placeOrderButton.innerHTML = 'Place Order - ₹' + newTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 // Format card number with spaces
@@ -126,6 +172,13 @@ function formatExpiryDate(input) {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function () {
+    // Initialize shipping cost with default method (standard)
+    const checkoutContainer = document.getElementById('checkout-container');
+    if (checkoutContainer) {
+        const subtotal = parseInt(checkoutContainer.dataset.subtotal);
+        currentShipping = calculateShipping('standard', subtotal);
+    }
+
     togglePaymentForms();
 
     // Address Validation
