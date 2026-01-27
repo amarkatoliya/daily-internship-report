@@ -51,8 +51,18 @@ $featuredProducts = array_slice($products, 0, 6);
                                 <?php endif; ?>
                             </a></li>
                         <li><a href="orders.php" class="nav__link">Orders</a></li>
-                        <li><a href="login.php" class="nav__link">Login</a></li>
-                        <li><a href="signup.php" class="nav__link">Signup</a></li>
+                        <?php if (isset($_SESSION['user'])): ?>
+                            <li class="nav__user">
+                                <span class="nav__link" style="color: var(--color-primary); font-weight: 600;">
+                                    Hi, <?php echo htmlspecialchars($_SESSION['user']['first_name']); ?>
+                                </span>
+                            </li>
+                            <li><a href="logout.php" class="nav__link"
+                                    onclick="return confirm('Are you sure you want to logout?');">Logout</a></li>
+                        <?php else: ?>
+                            <li><a href="login.php" class="nav__link">Login</a></li>
+                            <li><a href="signup.php" class="nav__link">Signup</a></li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>

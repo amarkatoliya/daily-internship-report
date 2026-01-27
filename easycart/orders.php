@@ -2,6 +2,13 @@
 // Start session
 session_start();
 
+// Protection: Redirect to login if not authenticated
+if (!isset($_SESSION['user'])) {
+    $_SESSION['error'] = "Please log in to view your orders.";
+    header("Location: login.php");
+    exit();
+}
+
 // Include data layer
 require_once 'data.php';
 
@@ -39,18 +46,26 @@ $staticOrders = [
     ]
 ];
 
-// Merge session orders with static orders
-$orders = $staticOrders;
-if (isset($_SESSION['orders']) && is_array($_SESSION['orders'])) {
-    // Convert session orders to the format expected by the display
-    foreach ($_SESSION['orders'] as $sessionOrder) {
+// Load orders from persistent JSON storage
+$ordersFile = 'data/orders.json';
+$orders = $staticOrders; // Initialize with static orders
+$allPersistentOrders = [];
+if (file_exists($ordersFile)) {
+    $jsonContent = file_get_contents($ordersFile);
+    $allPersistentOrders = json_decode($jsonContent, true) ?: [];
+}
+
+// Filter orders for the logged-in user and format them for display
+$userEmail = $_SESSION['user']['email'];
+foreach ($allPersistentOrders as $persistentOrder) {
+    if (isset($persistentOrder['customer']['email']) && $persistentOrder['customer']['email'] === $userEmail) {
         $orders[] = [
-            'id' => $sessionOrder['id'],
-            'date' => date('Y-m-d', strtotime($sessionOrder['date'])),
-            'items' => count($sessionOrder['items']),
-            'total' => $sessionOrder['total'],
-            'status' => ucfirst($sessionOrder['status']),
-            'tracking' => 'PENDING' // No tracking yet for new orders
+            'id' => $persistentOrder['id'],
+            'date' => date('Y-m-d', strtotime($persistentOrder['date'])),
+            'items' => count($persistentOrder['items']),
+            'total' => $persistentOrder['total'],
+            'status' => ucfirst($persistentOrder['status']),
+            'tracking' => 'TRACK' . substr(md5($persistentOrder['id']), 0, 10) // Mock tracking ID based on order ID
         ];
     }
 }
@@ -85,8 +100,18 @@ $cartCount = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
                                 <?php endif; ?>
                             </a></li>
                         <li><a href="orders.php" class="nav__link nav__link--active">Orders</a></li>
-                        <li><a href="login.php" class="nav__link">Login</a></li>
-                        <li><a href="signup.php" class="nav__link">Signup</a></li>
+                        <?php if (isset($_SESSION['user'])): ?>
+                            <li class="nav__user">
+                                <span class="nav__link" style="color: var(--color-primary); font-weight: 600;">
+                                    Hi, <?php echo htmlspecialchars($_SESSION['user']['first_name']); ?>
+                                </span>
+                            </li>
+                            <li><a href="logout.php" class="nav__link"
+                                    onclick="return confirm('Are you sure you want to logout?');">Logout</a></li>
+                        <?php else: ?>
+                            <li><a href="login.php" class="nav__link">Login</a></li>
+                            <li><a href="signup.php" class="nav__link">Signup</a></li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>

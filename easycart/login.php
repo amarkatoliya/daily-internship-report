@@ -64,18 +64,40 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                     <a href="index.php" class="auth-logo">EasyCart</a>
                     <h2 class="auth-title">Log in to your account</h2>
                     <p class="auth-subtitle">Welcome back! Please enter your details.</p>
+
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <div class="alert alert--danger"
+                            style="margin-bottom: 1rem; color: var(--color-danger); font-size: 0.9rem; background: rgba(220, 53, 69, 0.1); padding: 0.75rem; border-radius: 4px; border: 1px solid var(--color-danger);">
+                            <?php
+                            echo $_SESSION['error'];
+                            unset($_SESSION['error']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div class="alert alert--success"
+                            style="margin-bottom: 1rem; color: var(--color-success); font-size: 0.9rem; background: rgba(40, 167, 69, 0.1); padding: 0.75rem; border-radius: 4px; border: 1px solid var(--color-success);">
+                            <?php
+                            echo $_SESSION['success'];
+                            unset($_SESSION['success']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-                <form class="form" id="login-form"
+                <form class="form" id="login-form" action="login_process.php" method="POST"
                     style="box-shadow: none; padding: 0; background: transparent; border: none; max-width: 100%;">
                     <div class="auth-input-group">
                         <label class="auth-label">Email</label>
-                        <input type="email" id="email" class="auth-input" placeholder="Enter your email" required>
+                        <input type="email" id="email" name="email" class="auth-input" placeholder="Enter your email"
+                            required>
                     </div>
 
                     <div class="auth-input-group">
                         <label class="auth-label">Password</label>
-                        <input type="password" id="password" class="auth-input" placeholder="••••••••" required>
+                        <input type="password" id="password" name="password" class="auth-input" placeholder="••••••••"
+                            required>
                     </div>
 
                     <div

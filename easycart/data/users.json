@@ -1,0 +1,16 @@
+[
+    {
+        "first_name": "abc",
+        "last_name": "abc",
+        "email": "abc@gmail.com",
+        "password": "$2y$10$WrlptbO7uNDrPdCqR2XvsuFanYzEtyytq6smcag1Vo810ezQq\/zpq",
+        "created_at": "2026-01-27 09:17:01"
+    },
+    {
+        "first_name": "one",
+        "last_name": "one",
+        "email": "one@gmail.com",
+        "password": "$2y$10$b8sVtTeVR9Ebyzq62sYjqO39wuGDePrien4zpImr1XTGV6UMTmSPy",
+        "created_at": "2026-01-27 09:44:14"
+    }
+]

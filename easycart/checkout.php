@@ -145,10 +145,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             'shipping' => $shipping,
             'extra_charges' => $extra_charges,
             'total' => $final_total,
-            'status' => 'confirmed'
+            'status' => 'CONFIRMED'
         ];
 
-        // Store order in session (in a real app, this would go to database)
+        // Store order in persistent JSON storage
+        $ordersFile = 'data/orders.json';
+        $allOrders = [];
+        if (file_exists($ordersFile)) {
+            $jsonContent = file_get_contents($ordersFile);
+            $allOrders = json_decode($jsonContent, true) ?: [];
+        }
+        $allOrders[] = $order;
+        file_put_contents($ordersFile, json_encode($allOrders, JSON_PRETTY_PRINT));
+
+        // Also keep in session for immediate feedback
         if (!isset($_SESSION['orders'])) {
             $_SESSION['orders'] = [];
         }
@@ -196,8 +206,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                 <?php endif; ?>
                             </a></li>
                         <li><a href="orders.php" class="nav__link">Orders</a></li>
-                        <li><a href="login.php" class="nav__link">Login</a></li>
-                        <li><a href="signup.php" class="nav__link">Signup</a></li>
+                        <?php if (isset($_SESSION['user'])): ?>
+                            <li class="nav__user">
+                                <span class="nav__link" style="color: var(--color-primary); font-weight: 600;">
+                                    Hi, <?php echo htmlspecialchars($_SESSION['user']['first_name']); ?>
+                                </span>
+                            </li>
+                            <li><a href="logout.php" class="nav__link"
+                                    onclick="return confirm('Are you sure you want to logout?');">Logout</a></li>
+                        <?php else: ?>
+                            <li><a href="login.php" class="nav__link">Login</a></li>
+                            <li><a href="signup.php" class="nav__link">Signup</a></li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>
@@ -249,9 +269,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                 Contact Information
                             </h3>
                             <div class="form__group">
-                                <label class="form__label">Email Address</label>
-                                <input type="email" name="email" class="form__input" placeholder="you@example.com"
-                                    required>
+                                <label for="email" class="form__label">Email Address</label>
+                                <input type="email" id="email" name="email" class="form__input"
+                                    placeholder="you@example.com"
+                                    value="<?php echo htmlspecialchars($_SESSION['user']['email'] ?? ''); ?>" required>
                             </div>
                         </section>
 
@@ -266,30 +287,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             </h3>
                             <div class="checkout-address-grid">
                                 <div class="form__group">
-                                    <label class="form__label">First Name</label>
-                                    <input type="text" name="first_name" class="form__input" required>
+                                    <label for="first_name" class="form__label">First Name</label>
+                                    <input type="text" id="first_name" name="first_name" class="form__input"
+                                        value="<?php echo htmlspecialchars($_SESSION['user']['first_name'] ?? ''); ?>"
+                                        required>
                                 </div>
                                 <div class="form__group">
-                                    <label class="form__label">Last Name</label>
-                                    <input type="text" name="last_name" class="form__input" required>
+                                    <label for="last_name" class="form__label">Last Name</label>
+                                    <input type="text" id="last_name" name="last_name" class="form__input"
+                                        value="<?php echo htmlspecialchars($_SESSION['user']['last_name'] ?? ''); ?>"
+                                        required>
                                 </div>
                             </div>
                             <div class="form__group">
-                                <label class="form__label">Address</label>
-                                <input type="text" name="address" class="form__input" required>
+                                <label for="address" class="form__label">Address</label>
+                                <input type="text" id="address" name="address" class="form__input" required>
                             </div>
                             <div class="checkout-city-state-grid">
                                 <div class="form__group">
-                                    <label class="form__label">City</label>
-                                    <input type="text" name="city" class="form__input" required>
+                                    <label for="city" class="form__label">City</label>
+                                    <input type="text" id="city" name="city" class="form__input" required>
                                 </div>
                                 <div class="form__group">
-                                    <label class="form__label">State</label>
-                                    <input type="text" name="state" class="form__input" required>
+                                    <label for="state" class="form__label">State</label>
+                                    <input type="text" id="state" name="state" class="form__input" required>
                                 </div>
                                 <div class="form__group">
-                                    <label class="form__label">ZIP Code</label>
-                                    <input type="text" name="zip" class="form__input" required>
+                                    <label for="zip" class="form__label">ZIP Code</label>
+                                    <input type="text" id="zip" name="zip" class="form__input" required>
                                 </div>
                             </div>
                         </section>
@@ -366,24 +391,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <!-- Credit Card Form -->
                             <div id="card-form" class="payment-form card-form">
                                 <div class="form__group">
-                                    <label class="form__label">Cardholder Name</label>
-                                    <input type="text" name="cardholder_name" class="form__input" placeholder="John Doe"
-                                        required>
+                                    <label for="cardholder_name" class="form__label">Cardholder Name</label>
+                                    <input type="text" id="cardholder_name" name="cardholder_name" class="form__input"
+                                        placeholder="John Doe" required>
                                 </div>
                                 <div class="form__group">
-                                    <label class="form__label">Card Number</label>
-                                    <input type="text" name="card_number" class="form__input"
+                                    <label for="card_number" class="form__label">Card Number</label>
+                                    <input type="text" id="card_number" name="card_number" class="form__input"
                                         placeholder="1234 5678 9012 3456" maxlength="19" required>
                                 </div>
                                 <div class="checkout-expiry-cvv-grid">
                                     <div class="form__group">
-                                        <label class="form__label">Expiry Date</label>
-                                        <input type="text" name="expiry_date" class="form__input" placeholder="MM/YY"
-                                            maxlength="5" required>
+                                        <label for="expiry_date" class="form__label">Expiry Date</label>
+                                        <input type="text" id="expiry_date" name="expiry_date" class="form__input"
+                                            placeholder="MM/YY" maxlength="5" required>
                                     </div>
                                     <div class="form__group">
-                                        <label class="form__label">CVV</label>
-                                        <input type="text" name="cvv" class="form__input" placeholder="123"
+                                        <label for="cvv" class="form__label">CVV</label>
+                                        <input type="text" id="cvv" name="cvv" class="form__input" placeholder="123"
                                             maxlength="4" required>
                                     </div>
                                 </div>
@@ -392,9 +417,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <!-- UPI Form -->
                             <div id="upi-form" class="payment-form upi-form" style="display: none;">
                                 <div class="form__group">
-                                    <label class="form__label">UPI ID</label>
-                                    <input type="text" name="upi_id" class="form__input" placeholder="yourname@upi"
-                                        pattern=".+@.+">
+                                    <label for="upi_id" class="form__label">UPI ID</label>
+                                    <input type="text" id="upi_id" name="upi_id" class="form__input"
+                                        placeholder="yourname@upi" pattern=".+@.+">
                                 </div>
                                 <p class="cod-notice-text">
                                     Enter your UPI ID (e.g., yourname@paytm, yourname@ybl)
