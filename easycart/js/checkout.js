@@ -73,6 +73,7 @@ function togglePaymentForms() {
 function updateSummaryTotals() {
     const checkoutContainer = document.getElementById('checkout-container');
     const subtotal = parseInt(checkoutContainer.dataset.subtotal);
+    const totalQuantity = parseInt(checkoutContainer.dataset.totalQuantity || 1);
 
     // Elements
     const shippingRow = document.getElementById('summary-shipping');
@@ -82,10 +83,11 @@ function updateSummaryTotals() {
     const placeOrderButton = document.getElementById('place-order-button');
 
     // Calculations
-    const newTotal = subtotal + currentShipping + currentPaymentCharge;
+    const calculatedShipping = currentShipping * totalQuantity;
+    const newTotal = subtotal + calculatedShipping + currentPaymentCharge;
 
     // Updates
-    if (shippingRow) shippingRow.textContent = '₹' + currentShipping.toLocaleString();
+    if (shippingRow) shippingRow.textContent = '₹' + calculatedShipping.toLocaleString();
 
     if (extraChargesRow && extraChargesAmount) {
         if (currentPaymentCharge > 0) {

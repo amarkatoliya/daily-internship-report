@@ -112,9 +112,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateTotals(data) {
         const subtotalEl = document.getElementById('cart-subtotal');
+        const shippingEl = document.getElementById('cart-shipping-display');
         const totalEl = document.getElementById('cart-total');
+        const totalQtyEl = document.getElementById('total-quantity-display');
+
         if (subtotalEl) subtotalEl.textContent = data.subtotal;
+        if (shippingEl) shippingEl.textContent = data.shipping;
         if (totalEl) totalEl.textContent = data.total;
+        if (totalQtyEl) totalQtyEl.textContent = data.totalQuantity;
     }
 
     function updateBadge(count) {

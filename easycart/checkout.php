@@ -35,6 +35,13 @@ foreach ($_SESSION['cart'] as $cartItem) {
     }
 }
 
+$totalQuantity = 0;
+foreach ($_SESSION['cart'] as $item) {
+    if (isset($item['quantity'])) {
+        $totalQuantity += (int) $item['quantity'];
+    }
+}
+
 $base_shipping = 500;
 $shipping_costs = [
     'standard' => 500,
@@ -43,7 +50,7 @@ $shipping_costs = [
 ];
 
 $selected_shipping = $_POST['shipping_method'] ?? 'standard';
-$shipping = $shipping_costs[$selected_shipping] ?? 500;
+$shipping = ($shipping_costs[$selected_shipping] ?? 500) * $totalQuantity;
 
 $extra_charges = 0; // Will be set based on payment method
 $total = $subtotal + $shipping + $extra_charges;
@@ -226,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
     <main class="main">
         <div class="container animate-fade-in-up" id="checkout-container" data-subtotal="<?php echo $subtotal; ?>"
-            data-shipping="<?php echo $shipping; ?>">
+            data-shipping="<?php echo $shipping; ?>" data-total-quantity="<?php echo $totalQuantity; ?>">
             <div class="checkout-steps">
                 <div class="checkout-step completed">
                     <div class="checkout-step__number">✓</div>

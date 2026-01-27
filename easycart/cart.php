@@ -103,6 +103,14 @@ foreach ($_SESSION['cart'] as $cartItem) {
 }
 
 $cartCount = count($_SESSION['cart']);
+$totalQuantity = 0;
+foreach ($_SESSION['cart'] as $item) {
+    if (isset($item['quantity'])) {
+        $totalQuantity += (int) $item['quantity'];
+    }
+}
+$shipping = 500 * $totalQuantity;
+$total = $subtotal + $shipping;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -244,6 +252,12 @@ $cartCount = count($_SESSION['cart']);
                     <div class="order-summary">
                         <h3 class="order-summary__title">Cart Summary</h3>
                         <div class="order-summary__row">
+                            <span>Total Items:</span>
+                            <span id="total-quantity-display">
+                                <?php echo $totalQuantity; ?>
+                            </span>
+                        </div>
+                        <div class="order-summary__row">
                             <span>Subtotal:</span>
                             <span id="cart-subtotal">
                                 <?php echo formatPrice($subtotal); ?>
@@ -251,14 +265,14 @@ $cartCount = count($_SESSION['cart']);
                         </div>
                         <div class="order-summary__row">
                             <span>Shipping:</span>
-                            <span>
-                                <?php echo formatPrice(500); ?>
+                            <span id="cart-shipping-display">
+                                <?php echo formatPrice($shipping); ?>
                             </span>
                         </div>
                         <div class="order-summary__row order-summary__row--total">
                             <strong>Total:</strong>
                             <strong id="cart-total">
-                                <?php echo formatPrice($subtotal + 500); ?>
+                                <?php echo formatPrice($total); ?>
                             </strong>
                         </div>
                     </div>

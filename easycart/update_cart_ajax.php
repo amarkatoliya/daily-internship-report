@@ -60,7 +60,8 @@ if ($action === 'update') {
 
 // Calculate new totals
 $subtotal = 0;
-$cartCount = 0;
+$totalItemsCount = 0;
+$totalQuantity = 0;
 $itemTotal = 0;
 
 if (isset($_SESSION['cart'])) {
@@ -69,7 +70,8 @@ if (isset($_SESSION['cart'])) {
         if ($product) {
             $currentTotal = $product['price'] * $item['quantity'];
             $subtotal += $currentTotal;
-            $cartCount++;
+            $totalItemsCount++;
+            $totalQuantity += $item['quantity'];
             if ($item['id'] === $productId) {
                 $itemTotal = $currentTotal;
             }
@@ -77,14 +79,16 @@ if (isset($_SESSION['cart'])) {
     }
 }
 
-$shipping = 500;
+$shipping = 500 * $totalQuantity;
 $total = $subtotal + $shipping;
 
 echo json_encode([
     'success' => true,
     'subtotal' => formatPrice($subtotal),
+    'shipping' => formatPrice($shipping),
     'total' => formatPrice($total),
-    'cartCount' => $cartCount,
+    'cartCount' => $totalItemsCount,
+    'totalQuantity' => $totalQuantity,
     'itemTotal' => formatPrice($itemTotal),
     'newQuantity' => $newQuantity ?? 0,
     'isRemoved' => ($action === 'remove')
