@@ -17,6 +17,11 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 $categoryFilter = isset($_GET['category']) ? $_GET['category'] : 'all';
 $brandFilter = isset($_GET['brand']) ? $_GET['brand'] : 'all';
 
+// Pagination configuration
+$productsPerPage = 6;
+$currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+$currentPage = max(1, $currentPage); // Ensure page is at least 1
+
 // Filter products
 if ($categoryFilter !== 'all') {
     $displayProducts = getProductsByCategory($categoryFilter);
@@ -25,6 +30,15 @@ if ($categoryFilter !== 'all') {
 } else {
     $displayProducts = $products;
 }
+
+// Calculate pagination
+$totalProducts = count($displayProducts);
+$totalPages = ceil($totalProducts / $productsPerPage);
+$currentPage = min($currentPage, max(1, $totalPages)); // Ensure page doesn't exceed total
+
+// Get products for current page
+$offset = ($currentPage - 1) * $productsPerPage;
+$productsToDisplay = array_slice($displayProducts, $offset, $productsPerPage);
 
 // Page title based on filter
 $pageTitle = 'All Products';
@@ -93,15 +107,16 @@ if ($categoryFilter !== 'all') {
                     <?php echo $pageTitle; ?>
                 </h2>
                 <p class="text-secondary">Showing
-                    <?php echo count($displayProducts); ?> products
+                    <?php echo $offset + 1; ?>-<?php echo min($offset + $productsPerPage, $totalProducts); ?>
+                    of <?php echo $totalProducts; ?> products
                 </p>
             </section>
 
             <!-- Products Grid -->
             <section class="section">
                 <div class="products-grid animate-fade-in-up">
-                    <?php if (count($displayProducts) > 0): ?>
-                        <?php foreach ($displayProducts as $product): ?>
+                    <?php if (count($productsToDisplay) > 0): ?>
+                        <?php foreach ($productsToDisplay as $product): ?>
                             <article class="product-card">
                                 <div class="product-card__image">
                                     <img src="<?php echo htmlspecialchars($product['image_url']); ?>"
@@ -137,6 +152,63 @@ if ($categoryFilter !== 'all') {
                         <p>No products found in this category.</p>
                     <?php endif; ?>
                 </div>
+
+                <!-- Pagination -->
+                <?php if ($totalPages > 1): ?>
+                    <div class="pagination">
+                        <!-- Previous Button -->
+                        <?php if ($currentPage > 1): ?>
+                            <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $currentPage - 1])); ?>"
+                                class="pagination__btn pagination__btn--prev">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                                Previous
+                            </a>
+                        <?php else: ?>
+                            <span class="pagination__btn pagination__btn--prev pagination__btn--disabled">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                                Previous
+                            </span>
+                        <?php endif; ?>
+
+                        <!-- Page Numbers -->
+                        <div class="pagination__numbers">
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <?php if ($i == $currentPage): ?>
+                                    <span class="pagination__number pagination__number--active"><?php echo $i; ?></span>
+                                <?php else: ?>
+                                    <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $i])); ?>"
+                                        class="pagination__number"><?php echo $i; ?></a>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+                        </div>
+
+                        <!-- Next Button -->
+                        <?php if ($currentPage < $totalPages): ?>
+                            <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $currentPage + 1])); ?>"
+                                class="pagination__btn pagination__btn--next">
+                                Next
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </a>
+                        <?php else: ?>
+                            <span class="pagination__btn pagination__btn--next pagination__btn--disabled">
+                                Next
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
             </section>
         </div>
     </main>
