@@ -18,8 +18,9 @@ $categoryFilter = isset($_GET['category']) ? $_GET['category'] : 'all';
 $brandFilter = isset($_GET['brand']) ? $_GET['brand'] : 'all';
 
 // Pagination configuration
-$productsPerPage = 6;
+$productsPerPage = 3;
 $currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+// var_dump($currentPage); 
 $currentPage = max(1, $currentPage); // Ensure page is at least 1
 
 // Filter products
