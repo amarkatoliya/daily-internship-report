@@ -64,7 +64,7 @@ if ($categoryFilter !== 'all') {
 </head>
 
 <body>
-    <!-- Header Section -->
+
     <!-- Header Section -->
     <?php include 'includes/header.php'; ?>
 
@@ -183,7 +183,7 @@ if ($categoryFilter !== 'all') {
         </div>
     </main>
 
-    <!-- Footer -->
+
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
 </body>

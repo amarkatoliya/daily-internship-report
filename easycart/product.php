@@ -43,7 +43,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 </head>
 
 <body>
-    <!-- Header Section -->
+
     <!-- Header Section -->
     <?php include 'includes/header.php'; ?>
 
@@ -66,8 +66,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                     <div class="product-gallery">
                         <div class="product-gallery__main">
                             <img src="<?php echo htmlspecialchars($product['image_url']); ?>"
-                                alt="<?php echo htmlspecialchars($product['name']); ?>" id="mainProductImage"
-                                class="product-detail__image">
+                                alt="<?php echo htmlspecialchars($product['name']); ?>" id="mainProductImage">
                         </div>
                         <?php if (isset($product['images']) && count($product['images']) > 1): ?>
                             <div class="product-gallery__thumbs">
@@ -141,7 +140,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
         </div>
     </main>
 
-    <!-- Footer -->
+
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
 </body>

@@ -79,25 +79,25 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                     style="box-shadow: none; padding: 0; background: transparent; border: none; max-width: 100%;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="auth-input-group">
-                            <label class="auth-label">First Name</label>
+                            <label for="first_name" class="auth-label">First Name</label>
                             <input type="text" id="first_name" name="first_name" class="auth-input" placeholder="John"
                                 required>
                         </div>
                         <div class="auth-input-group">
-                            <label class="auth-label">Last Name</label>
+                            <label for="last_name" class="auth-label">Last Name</label>
                             <input type="text" id="last_name" name="last_name" class="auth-input" placeholder="Doe"
                                 required>
                         </div>
                     </div>
 
                     <div class="auth-input-group">
-                        <label class="auth-label">Email</label>
+                        <label for="email" class="auth-label">Email</label>
                         <input type="email" id="email" name="email" class="auth-input" placeholder="john@example.com"
                             required>
                     </div>
 
                     <div class="auth-input-group">
-                        <label class="auth-label">Password</label>
+                        <label for="password" class="auth-label">Password</label>
                         <input type="password" id="password" name="password" class="auth-input"
                             placeholder="Create a password" required>
                     </div>

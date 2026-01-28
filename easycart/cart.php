@@ -125,7 +125,7 @@ $total = $subtotal + $shipping;
 </head>
 
 <body>
-    <!-- Header Section -->
+
     <!-- Header Section -->
     <?php include 'includes/header.php'; ?>
 
@@ -277,7 +277,7 @@ $total = $subtotal + $shipping;
         </div>
     </main>
 
-    <!-- Footer -->
+
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
 </body>

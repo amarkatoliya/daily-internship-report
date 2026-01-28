@@ -89,13 +89,13 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                 <form class="form" id="login-form" action="login_process.php" method="POST"
                     style="box-shadow: none; padding: 0; background: transparent; border: none; max-width: 100%;">
                     <div class="auth-input-group">
-                        <label class="auth-label">Email</label>
+                        <label for="email" class="auth-label">Email</label>
                         <input type="email" id="email" name="email" class="auth-input" placeholder="Enter your email"
                             required>
                     </div>
 
                     <div class="auth-input-group">
-                        <label class="auth-label">Password</label>
+                        <label for="password" class="auth-label">Password</label>
                         <input type="password" id="password" name="password" class="auth-input" placeholder="••••••••"
                             required>
                     </div>

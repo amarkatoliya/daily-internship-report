@@ -13,7 +13,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     }));
 }
 
-// Get first 4 products for featured section
+// Get first 6 products for featured section
 $featuredProducts = array_slice($products, 0, 6);
 ?>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ $featuredProducts = array_slice($products, 0, 6);
 </head>
 
 <body>
-    <!-- Header Section -->
+
     <!-- Header Section -->
     <?php include 'includes/header.php'; ?>
 
@@ -226,7 +226,7 @@ $featuredProducts = array_slice($products, 0, 6);
         </div>
     </main>
 
-    <!-- Footer -->
+
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
 </body>
