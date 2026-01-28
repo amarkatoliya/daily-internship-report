@@ -4,7 +4,7 @@ session_start();
 
 // Include data layer
 require_once 'data.php';
-
+// print_r($_SESSION);
 // Sanitize cart: remove items without valid ID
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) {

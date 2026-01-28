@@ -115,51 +115,5 @@
         "extra_charges": 0,
         "total": 22998,
         "status": "CONFIRMED"
-    },
-    {
-        "id": "ORD-2026-004",
-        "date": "2026-01-27 10:03:13",
-        "customer": {
-            "email": "xyz@gmail.com",
-            "first_name": "AMAR",
-            "last_name": "one",
-            "address": "sector 28",
-            "city": "gandhinagar",
-            "state": "India",
-            "zip": "382015"
-        },
-        "payment_method": "cod",
-        "items": [
-            {
-                "product": {
-                    "id": 7,
-                    "name": "Smartphone",
-                    "price": 54999,
-                    "image_url": "assets\/images\/smartphone.jpg",
-                    "category": "Electronics",
-                    "brand": "Samsung",
-                    "description": "Latest smartphone with advanced camera system, powerful processor, and stunning AMOLED display.",
-                    "features": [
-                        "6.5\" AMOLED display",
-                        "128GB storage",
-                        "Triple camera system",
-                        "5000mAh battery",
-                        "5G enabled"
-                    ],
-                    "images": [
-                        "assets\/images\/smartphone.jpg",
-                        "https:\/\/images.unsplash.com\/photo-1511707171634-5f897ff02aa9?q=80&w=800&auto=format&fit=crop",
-                        "https:\/\/images.unsplash.com\/photo-1598327105666-5b89351aff97?q=80&w=800&auto=format&fit=crop"
-                    ]
-                },
-                "quantity": 1,
-                "total": 54999
-            }
-        ],
-        "subtotal": 54999,
-        "shipping": 500,
-        "extra_charges": 50,
-        "total": 55549,
-        "status": "CONFIRMED"
     }
 ]

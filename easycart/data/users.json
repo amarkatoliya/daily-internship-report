@@ -12,5 +12,12 @@
         "email": "one@gmail.com",
         "password": "$2y$10$b8sVtTeVR9Ebyzq62sYjqO39wuGDePrien4zpImr1XTGV6UMTmSPy",
         "created_at": "2026-01-27 09:44:14"
+    },
+    {
+        "first_name": "xyz",
+        "last_name": "xyz",
+        "email": "xyz@gmail.com",
+        "password": "$2y$10$RRxlRjL12FSCCHQrxy.j6OBM2o\/tXm09AUIiVpslchMGTfbVjPtvK",
+        "created_at": "2026-01-28 06:07:31"
     }
 ]
