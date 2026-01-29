@@ -4,7 +4,8 @@ $products = [
     [
         'id' => 1,
         'name' => 'Wireless Headphones',
-        'price' => 6499,
+        'price' => 64,
+        'shipping_type' => 'Express',
         'image_url' => 'assets/images/headphones.jpg',
         'category' => 'Electronics',
         'brand' => 'Samsung',
@@ -25,7 +26,8 @@ $products = [
     [
         'id' => 2,
         'name' => 'Smart Watch',
-        'price' => 16499,
+        'price' => 499,
+        'shipping_type' => 'Freight',
         'image_url' => 'assets/images/smartwatch.jpg',
         'category' => 'Electronics',
         'brand' => 'Apple',
@@ -46,7 +48,8 @@ $products = [
     [
         'id' => 3,
         'name' => 'Laptop Backpack',
-        'price' => 3999,
+        'price' => 200,
+        'shipping_type' => 'Express',
         'image_url' => 'assets/images/laptop-backpack.jpg',
         'category' => 'Fashion',
         'brand' => 'Nike',
@@ -67,7 +70,8 @@ $products = [
     [
         'id' => 4,
         'name' => 'USB-C Cable',
-        'price' => 1599,
+        'price' => 99,
+        'shipping_type' => 'Express',
         'image_url' => 'assets/images/usb-cable.jpg',
         'category' => 'Electronics',
         'brand' => 'Samsung',
@@ -88,7 +92,8 @@ $products = [
     [
         'id' => 5,
         'name' => 'Professional Laptop',
-        'price' => 89999,
+        'price' => 18999,
+        'shipping_type' => 'Freight',
         'image_url' => 'assets/images/laptop.jpg',
         'category' => 'Electronics',
         'brand' => 'Apple',
@@ -109,7 +114,8 @@ $products = [
     [
         'id' => 6,
         'name' => 'Wireless Mouse',
-        'price' => 2499,
+        'price' => 249,
+        'shipping_type' => 'Express',
         'image_url' => 'assets/images/mouse.jpg',
         'category' => 'Electronics',
         'brand' => 'Samsung',
@@ -130,7 +136,8 @@ $products = [
     [
         'id' => 7,
         'name' => 'Smartphone',
-        'price' => 54999,
+        'price' => 8999,
+        'shipping_type' => 'Freight',
         'image_url' => 'assets/images/smartphone.jpg',
         'category' => 'Electronics',
         'brand' => 'Samsung',
@@ -151,7 +158,8 @@ $products = [
     [
         'id' => 8,
         'name' => 'Running Shoes',
-        'price' => 7999,
+        'price' => 799,
+        'shipping_type' => 'Freight',
         'image_url' => 'assets/images/run.jpg',
         'category' => 'Fashion',
         'brand' => 'Nike',
@@ -172,7 +180,8 @@ $products = [
     [
         'id' => 9,
         'name' => 'White Shoes',
-        'price' => 6999,
+        'price' => 699,
+        'shipping_type' => 'Freight',
         'image_url' => 'assets/images/white-shoes.jpg',
         'category' => 'Fashion',
         'brand' => 'Nike',
