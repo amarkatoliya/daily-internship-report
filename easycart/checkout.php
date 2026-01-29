@@ -2,8 +2,9 @@
 // Start session
 session_start();
 
-// Include data layer
+// Include data layer and shared shipping logic
 require_once 'data.php';
+require_once 'shipping_logic.php';
 // print_r($_SESSION);
 // Sanitize cart: remove items without valid ID
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
@@ -42,42 +43,18 @@ foreach ($_SESSION['cart'] as $item) {
     }
 }
 
-/**
- * Calculate shipping cost based on method and subtotal
- * @param string $method Shipping method
- * @param float $subtotal Cart subtotal
- * @return float Calculated shipping cost
- */
-function calculateShippingCost($method, $subtotal)
-{
-    switch ($method) {
-        case 'standard':
-            // Flat ₹40
-            return 40;
-
-        case 'express':
-            // MIN of ₹80 or 10% of subtotal
-            return min(80, $subtotal * 0.10);
-
-        case 'white_glove':
-            // MIN of ₹150 or 5% of subtotal
-            return min(150, $subtotal * 0.05);
-
-        case 'freight':
-            // MAX of 3% of subtotal or ₹200
-            return max($subtotal * 0.03, 200);
-
-        default:
-            return 40; // Default to standard
-    }
+// Save shipping method to session if posted (for persistence across reloads)
+if (isset($_POST['shipping_method'])) {
+    $_SESSION['selected_shipping'] = $_POST['shipping_method'];
 }
 
-$selected_shipping = $_POST['shipping_method'] ?? 'standard';
+// Calculate shipping using shared logic
+// Use session value first, then POST, then default to 'standard'
+$selected_shipping = $_SESSION['selected_shipping'] ?? $_POST['shipping_method'] ?? 'standard';
 $shipping = calculateShippingCost($selected_shipping, $subtotal);
 
-// Calculate 18% tax on (Subtotal + Shipping)
-$tax_rate = 0.18; // 18%
-$tax = ($subtotal + $shipping) * $tax_rate;
+// Calculate tax using shared logic
+$tax = calculateTax($subtotal, $shipping);
 
 $extra_charges = 0; // Will be set based on payment method
 $total = $subtotal + $shipping + $tax + $extra_charges;
@@ -204,6 +181,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         $_SESSION['cart'] = [];
         $_SESSION['order_success'] = true;
         $_SESSION['last_order_id'] = $order_id;
+        
+        // Clear shipping selection after order is placed
+        unset($_SESSION['selected_shipping']);
 
         header('Location: orders.php');
         exit;
@@ -367,8 +347,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                 Shipping Method
                             </h3>
                             <div class="payment-methods">
-                                <label class="payment-method-card active">
-                                    <input type="radio" name="shipping_method" value="standard" checked
+                                <label class="payment-method-card <?php echo ($selected_shipping === 'standard') ? 'active' : ''; ?>">
+                                    <input type="radio" name="shipping_method" value="standard" 
+                                        <?php echo ($selected_shipping === 'standard') ? 'checked' : ''; ?>
                                         onchange="updateShipping('standard', 'Standard Shipping')">
                                     <div class="shipping-info">
                                         <span class="shipping-name">Standard Shipping</span>
@@ -376,8 +357,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                         <span class="shipping-cost">Flat ₹40</span>
                                     </div>
                                 </label>
-                                <label class="payment-method-card">
+                                <label class="payment-method-card <?php echo ($selected_shipping === 'express') ? 'active' : ''; ?>">
                                     <input type="radio" name="shipping_method" value="express"
+                                        <?php echo ($selected_shipping === 'express') ? 'checked' : ''; ?>
                                         onchange="updateShipping('express', 'Express Shipping')">
                                     <div class="shipping-info">
                                         <span class="shipping-name">Express Shipping</span>
@@ -385,8 +367,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                         <span class="shipping-cost">₹80 or 10% (whichever is lower)</span>
                                     </div>
                                 </label>
-                                <label class="payment-method-card">
+                                <label class="payment-method-card <?php echo ($selected_shipping === 'white_glove') ? 'active' : ''; ?>">
                                     <input type="radio" name="shipping_method" value="white_glove"
+                                        <?php echo ($selected_shipping === 'white_glove') ? 'checked' : ''; ?>
                                         onchange="updateShipping('white_glove', 'White Glove Delivery')">
                                     <div class="shipping-info">
                                         <span class="shipping-name">White Glove Delivery</span>
@@ -394,8 +377,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                         <span class="shipping-cost">₹150 or 5% (whichever is lower)</span>
                                     </div>
                                 </label>
-                                <label class="payment-method-card">
+                                <label class="payment-method-card <?php echo ($selected_shipping === 'freight') ? 'active' : ''; ?>">
                                     <input type="radio" name="shipping_method" value="freight"
+                                        <?php echo ($selected_shipping === 'freight') ? 'checked' : ''; ?>
                                         onchange="updateShipping('freight', 'Freight Shipping')">
                                     <div class="shipping-info">
                                         <span class="shipping-name">Freight Shipping</span>

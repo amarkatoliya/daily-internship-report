@@ -1,6 +1,7 @@
 // Current state storage
 let currentShipping = 500;
 let currentPaymentCharge = 0;
+let shippingUpdateTimeout = null; // For debouncing
 
 /**
  * Calculate shipping cost based on method and subtotal
@@ -42,14 +43,16 @@ function calculateTax(subtotal, shipping) {
     return (subtotal + shipping) * taxRate;
 }
 
+/**
+ * Update shipping method and recalculate totals via AJAX
+ * @param {string} method - Shipping method: 'standard', 'express', 'white_glove', 'freight'
+ * @param {string} name - Display name of the shipping method
+ */
 function updateShipping(method, name) {
     const checkoutContainer = document.getElementById('checkout-container');
-    const subtotal = parseInt(checkoutContainer.dataset.subtotal);
+    const subtotal = parseFloat(checkoutContainer.dataset.subtotal);
 
-    // Calculate shipping cost based on method and subtotal
-    currentShipping = calculateShipping(method, subtotal);
-
-    // Update active state on labels
+    // Update active state on labels immediately for better UX
     const shippingRadios = document.getElementsByName('shipping_method');
     shippingRadios.forEach(radio => {
         const card = radio.closest('.payment-method-card');
@@ -60,8 +63,94 @@ function updateShipping(method, name) {
         }
     });
 
-    updateSummaryTotals();
+    // Debounce: Clear previous timeout
+    if (shippingUpdateTimeout) {
+        clearTimeout(shippingUpdateTimeout);
+    }
+
+    // Show loading state
+    const shippingRow = document.getElementById('summary-shipping');
+    const taxRow = document.getElementById('summary-tax');
+    const finalTotalDisplay = document.getElementById('final-total');
+
+    shippingRow.innerHTML = '<span style="opacity: 0.5;">Calculating...</span>';
+    taxRow.innerHTML = '<span style="opacity: 0.5;">Calculating...</span>';
+    finalTotalDisplay.innerHTML = '<span style="opacity: 0.5;">Calculating...</span>';
+
+    // Debounce: Wait 300ms after last click
+    shippingUpdateTimeout = setTimeout(() => {
+        // Make AJAX request to calculate shipping
+        fetch('update_ship_ajax.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+                shipping_method: method,
+                subtotal: subtotal
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update current shipping cost
+                    currentShipping = data.shipping;
+
+                    // Update the summary display
+                    updateSummaryTotals();
+
+                    // Save to session via hidden form submission (for persistence)
+                    saveShippingToSession(method);
+                } else {
+                    console.error('Shipping calculation failed:', data.error);
+                    showNotification('Unable to calculate shipping. Using estimated cost.', 'warning');
+                    // Fallback to local calculation
+                    currentShipping = calculateShipping(method, subtotal);
+                    updateSummaryTotals();
+                }
+            })
+            .catch(error => {
+                console.error('Error calculating shipping:', error);
+                showNotification('Network error. Using estimated shipping cost.', 'error');
+                // Fallback to local calculation
+                currentShipping = calculateShipping(method, subtotal);
+                updateSummaryTotals();
+            });
+    }, 300);
 }
+
+/**
+ * Save shipping method to session (for persistence across page reloads)
+ * @param {string} method - Shipping method to save
+ */
+function saveShippingToSession(method) {
+    // Create a hidden form and submit it to save to session
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.style.display = 'none';
+
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'shipping_method';
+    input.value = method;
+
+    form.appendChild(input);
+    document.body.appendChild(form);
+
+    // Use fetch to submit without page reload
+    const formData = new FormData(form);
+    fetch(window.location.href, {
+        method: 'POST',
+        body: formData
+    }).then(() => {
+        form.remove();
+    }).catch(error => {
+        console.error('Error saving shipping to session:', error);
+        form.remove();
+    });
+}
+
 
 
 function togglePaymentForms() {
@@ -115,7 +204,7 @@ function togglePaymentForms() {
 
 function updateSummaryTotals() {
     const checkoutContainer = document.getElementById('checkout-container');
-    const subtotal = parseInt(checkoutContainer.dataset.subtotal);
+    const subtotal = parseFloat(checkoutContainer.dataset.subtotal);
 
     // Elements
     const shippingRow = document.getElementById('summary-shipping');
@@ -269,3 +358,56 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+/**
+ * Show notification message to user
+ * @param {string} message - Message to display
+ * @param {string} type - Notification type: 'success', 'error', 'warning', 'info'
+ */
+function showNotification(message, type = 'info') {
+    // Remove existing notification if any
+    const existingNotification = document.querySelector('.checkout-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `checkout-notification checkout-notification--${type}`;
+    notification.innerHTML = `
+        <div class="checkout-notification__content">
+            <span class="checkout-notification__icon">${getNotificationIcon(type)}</span>
+            <span class="checkout-notification__message">${message}</span>
+        </div>
+    `;
+
+    // Add to page
+    document.body.appendChild(notification);
+
+    // Auto-remove after 4 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 4000);
+}
+
+function getNotificationIcon(type) {
+    const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠',
+        info: 'ℹ'
+    };
+    return icons[type] || icons.info;
+}
+
+function getNotificationColor(type) {
+    const colors = {
+        success: '#10b981',
+        error: '#ef4444',
+        warning: '#f59e0b',
+        info: '#3b82f6'
+    };
+    return colors[type] || colors.info;
+}
+
