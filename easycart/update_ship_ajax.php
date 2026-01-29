@@ -18,6 +18,9 @@ $input = json_decode(file_get_contents('php://input'), true);
 $shippingMethod = $input['shipping_method'] ?? 'standard';
 $subtotal = floatval($input['subtotal'] ?? 0);
 
+// Persist selection to session
+$_SESSION['selected_shipping'] = $shippingMethod;
+
 // Validate subtotal
 if ($subtotal <= 0) {
     http_response_code(400);

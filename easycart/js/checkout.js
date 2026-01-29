@@ -99,9 +99,6 @@ function updateShipping(method, name) {
 
                     // Update the summary display
                     updateSummaryTotals();
-
-                    // Save to session via hidden form submission (for persistence)
-                    saveShippingToSession(method);
                 } else {
                     console.error('Shipping calculation failed:', data.error);
                     showNotification('Unable to calculate shipping. Using estimated cost.', 'warning');
@@ -120,36 +117,6 @@ function updateShipping(method, name) {
     }, 300);
 }
 
-/**
- * Save shipping method to session (for persistence across page reloads)
- * @param {string} method - Shipping method to save
- */
-function saveShippingToSession(method) {
-    // Create a hidden form and submit it to save to session
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.style.display = 'none';
-
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'shipping_method';
-    input.value = method;
-
-    form.appendChild(input);
-    document.body.appendChild(form);
-
-    // Use fetch to submit without page reload
-    const formData = new FormData(form);
-    fetch(window.location.href, {
-        method: 'POST',
-        body: formData
-    }).then(() => {
-        form.remove();
-    }).catch(error => {
-        console.error('Error saving shipping to session:', error);
-        form.remove();
-    });
-}
 
 
 
