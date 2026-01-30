@@ -1,6 +1,7 @@
 // Current state storage
 let currentShipping = 500;
 let currentPaymentCharge = 0;
+let currentDiscount = 0; // Track applied coupon discount
 let shippingUpdateTimeout = null; // For debouncing
 
 /**
@@ -271,9 +272,10 @@ function updateSummaryTotals() {
     const placeOrderButton = document.getElementById('place-order-button');
 
     // Calculations - shipping is per order, not per item
+    // Tax is calculated on (subtotal - discount + shipping)
     const calculatedShipping = currentShipping;
-    const calculatedTax = calculateTax(subtotal, calculatedShipping);
-    const newTotal = subtotal + calculatedShipping + calculatedTax + currentPaymentCharge;
+    const calculatedTax = calculateTax(subtotal - currentDiscount, calculatedShipping);
+    const newTotal = subtotal - currentDiscount + calculatedShipping + calculatedTax + currentPaymentCharge;
 
     // Updates
     if (shippingRow) shippingRow.textContent = '₹' + calculatedShipping.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -470,3 +472,140 @@ function getNotificationColor(type) {
     return colors[type] || colors.info;
 }
 
+/**
+ * Apply coupon code via AJAX
+ */
+function applyCoupon() {
+    const couponInput = document.getElementById('coupon-input');
+    const couponMessage = document.getElementById('coupon-message');
+    const applyBtn = document.getElementById('apply-coupon-btn');
+    const removeBtn = document.getElementById('remove-coupon-btn');
+    const discountRow = document.getElementById('discount-row');
+    const discountAmount = document.getElementById('discount-amount');
+
+    const couponCode = couponInput.value.trim();
+
+    // Validate input
+    if (!couponCode) {
+        couponMessage.textContent = 'Please enter a coupon code';
+        couponMessage.style.color = '#ef4444';
+        return;
+    }
+
+    // Get subtotal
+    const checkoutContainer = document.getElementById('checkout-container');
+    const subtotal = parseFloat(checkoutContainer.dataset.subtotal);
+
+    // Show loading state
+    applyBtn.disabled = true;
+    applyBtn.textContent = 'Applying...';
+    couponMessage.textContent = '';
+
+    // Make AJAX request
+    fetch('apply_coupon_ajax.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `coupon_code=${encodeURIComponent(couponCode)}&subtotal=${subtotal}`
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Store discount in global variable
+                currentDiscount = data.discount_amount;
+
+                // Update discount row
+                const discountPercentageSpan = discountRow.querySelector('span:first-child');
+                discountPercentageSpan.textContent = `Discount (${data.discount_percentage}%)`;
+                discountAmount.textContent = '-₹' + data.discount_amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                // Show discount row
+                discountRow.style.display = 'flex';
+
+                // Update totals
+                updateSummaryTotals();
+
+                // Show success message
+                couponMessage.textContent = data.message;
+                couponMessage.style.color = '#10b981';
+
+                // Toggle buttons
+                applyBtn.style.display = 'none';
+                removeBtn.style.display = 'block';
+
+                // Show notification
+                showNotification(data.message, 'success');
+            } else {
+                // Show error message
+                couponMessage.textContent = data.message;
+                couponMessage.style.color = '#ef4444';
+
+                // Reset button
+                applyBtn.disabled = false;
+                applyBtn.textContent = 'Apply';
+            }
+        })
+        .catch(error => {
+            console.error('Error applying coupon:', error);
+            couponMessage.textContent = 'Error applying coupon. Please try again.';
+            couponMessage.style.color = '#ef4444';
+
+            // Reset button
+            applyBtn.disabled = false;
+            applyBtn.textContent = 'Apply';
+        });
+}
+
+/**
+ * Remove applied coupon via AJAX
+ */
+function removeCoupon() {
+    const couponInput = document.getElementById('coupon-input');
+    const couponMessage = document.getElementById('coupon-message');
+    const applyBtn = document.getElementById('apply-coupon-btn');
+    const removeBtn = document.getElementById('remove-coupon-btn');
+    const discountRow = document.getElementById('discount-row');
+
+    // Show loading state
+    removeBtn.disabled = true;
+    removeBtn.textContent = 'Removing...';
+
+    // Make AJAX request
+    fetch('remove_coupon_ajax.php', {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Reset discount
+                currentDiscount = 0;
+
+                // Hide discount row
+                discountRow.style.display = 'none';
+
+                // Update totals
+                updateSummaryTotals();
+
+                // Clear input and message
+                couponInput.value = '';
+                couponMessage.textContent = '';
+
+                // Toggle buttons
+                applyBtn.style.display = 'block';
+                removeBtn.style.display = 'none';
+                removeBtn.disabled = false;
+                removeBtn.textContent = 'Remove';
+
+                // Show notification
+                showNotification('Coupon removed successfully', 'info');
+            }
+        })
+        .catch(error => {
+            console.error('Error removing coupon:', error);
+
+            // Reset button
+            removeBtn.disabled = false;
+            removeBtn.textContent = 'Remove';
+        });
+}

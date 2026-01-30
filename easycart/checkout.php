@@ -53,11 +53,26 @@ if (isset($_POST['shipping_method'])) {
 $selected_shipping = $_SESSION['selected_shipping'] ?? $_POST['shipping_method'] ?? 'standard';
 $shipping = calculateShippingCost($selected_shipping, $subtotal);
 
-// Calculate tax using shared logic
-$tax = calculateTax($subtotal, $shipping);
+// Get coupon discount if applied
+$discount = 0;
+$coupon_code = '';
+$discount_percentage = 0;
+if (isset($_SESSION['applied_coupon'])) {
+    $coupon_code = $_SESSION['applied_coupon']['code'];
+    $discount_percentage = $_SESSION['applied_coupon']['percentage'];
+    
+    // Recalculate discount based on current subtotal (in case cart changed)
+    $discount = ($subtotal * $discount_percentage) / 100;
+    
+    // Update session with new discount amount
+    $_SESSION['applied_coupon']['amount'] = $discount;
+}
+
+// Calculate tax using shared logic (on subtotal - discount + shipping)
+$tax = calculateTax($subtotal - $discount, $shipping);
 
 $extra_charges = 0; // Will be set based on payment method
-$total = $subtotal + $shipping + $tax + $extra_charges;
+$total = $subtotal - $discount + $shipping + $tax + $extra_charges;
 $cartCount = count($_SESSION['cart']);
 
 // Handle order placement
@@ -145,8 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         $extra_charges = 50; // COD charge
     }
 
-    // Recalculate total with tax and extra charges
-    $final_total = $subtotal + $shipping + $tax + $extra_charges;
+    // Recalculate total with discount, tax and extra charges
+    $final_total = $subtotal - $discount + $shipping + $tax + $extra_charges;
 
     // If no errors, process the order
     if (empty($errors)) {
@@ -173,6 +188,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             'shipping_method' => $selected_shipping,
             'items' => $cartItems,
             'subtotal' => $subtotal,
+            'discount' => $discount,
+            'coupon_code' => $coupon_code,
             'shipping' => $shipping,
             'tax' => $tax,
             'extra_charges' => $extra_charges,
@@ -201,8 +218,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         $_SESSION['order_success'] = true;
         $_SESSION['last_order_id'] = $order_id;
         
-        // Clear shipping selection after order is placed
+        // Clear shipping selection and coupon after order is placed
         unset($_SESSION['selected_shipping']);
+        unset($_SESSION['applied_coupon']);
 
         header('Location: orders.php');
         exit;
@@ -528,11 +546,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <?php endforeach; ?>
                         </div>
 
+                        <!-- Coupon Section -->
+                        <div class="coupon-section" style="padding: 16px; border-bottom: 1px solid var(--color-border, #e5e7eb); margin-bottom: 16px;">
+                            <div class="coupon-input-wrapper" style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                <input 
+                                    type="text" 
+                                    id="coupon-input" 
+                                    placeholder="Enter coupon code" 
+                                    style="flex: 1; padding: 10px 12px; border: 1px solid var(--color-border, #e5e7eb); border-radius: 6px; font-size: 14px;"
+                                    value="<?php echo htmlspecialchars($coupon_code); ?>"
+                                >
+                                <button 
+                                    type="button" 
+                                    id="apply-coupon-btn" 
+                                    onclick="applyCoupon()" 
+                                    style="padding: 10px 20px; background: var(--color-primary, #3b82f6); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; <?php echo $discount > 0 ? 'display: none;' : ''; ?>"
+                                >
+                                    Apply
+                                </button>
+                                <button 
+                                    type="button" 
+                                    id="remove-coupon-btn" 
+                                    onclick="removeCoupon()" 
+                                    style="padding: 10px 20px; background: var(--color-danger, #ef4444); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; <?php echo $discount > 0 ? '' : 'display: none;'; ?>"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                            <div id="coupon-message" style="font-size: 13px; margin-top: 4px;"></div>
+                        </div>
+
                         <div class="order-summary__row">
                             <span>Subtotal</span>
                             <span>
                                 <?php echo formatPrice($subtotal); ?>
                             </span>
+                        </div>
+                        
+                        <!-- Discount Row -->
+                        <div class="order-summary__row" id="discount-row" style="color: var(--color-success, #10b981); <?php echo $discount > 0 ? '' : 'display: none;'; ?>">
+                            <span>Discount (<?php echo $discount_percentage; ?>%)</span>
+                            <span id="discount-amount">-<?php echo formatPrice($discount); ?></span>
                         </div>
                         <div class="order-summary__row">
                             <span>Shipping</span>
