@@ -120,6 +120,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         }
     }
 
+    // CRITICAL: Validate shipping method is allowed for cart contents
+    // This prevents form manipulation and ensures business rules are enforced
+    $shipping_method = $_POST['shipping_method'] ?? 'standard';
+    $allowedShippingData = getAllowedShippingMethods($cartItems, $subtotal);
+    
+    if (!in_array($shipping_method, $allowedShippingData['allowed_methods'])) {
+        // Shipping method is not allowed for this cart
+        $reason = '';
+        if ($allowedShippingData['has_freight_item']) {
+            $reason = 'Your cart contains Freight items which require premium shipping.';
+        } elseif ($allowedShippingData['subtotal_threshold_met']) {
+            $reason = 'Orders of ₹300 or more require premium shipping.';
+        } else {
+            $reason = 'The selected shipping method is not available for your cart.';
+        }
+        
+        $errors[] = $reason . ' Please select ' . implode(' or ', array_map('ucfirst', $allowedShippingData['allowed_methods'])) . '.';
+    }
+
     // Calculate extra charges based on payment method
     $extra_charges = 0;
     if ($payment_method === 'cod') {
@@ -496,6 +515,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                     <div class="order-item-info">
                                         <p><?php echo htmlspecialchars($item['product']['name']); ?></p>
                                         <p><?php echo htmlspecialchars($item['product']['category']); ?></p>
+                                        <?php if (isset($item['product']['shipping_type'])): ?>
+                                            <span class="shipping-badge shipping-badge--<?php echo strtolower($item['product']['shipping_type']); ?>" style="position: relative; top: 0; left: 0; margin-top: 4px; display: inline-block; font-size: 9px; padding: 2px 6px;">
+                                                <?php echo htmlspecialchars($item['product']['shipping_type']); ?>
+                                            </span>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="order-item-price">
                                         <?php echo formatPrice($item['total']); ?>

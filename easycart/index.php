@@ -160,6 +160,12 @@ $featuredProducts = array_slice($products, 0, 6);
                             <div class="product-card__image">
                                 <img src="<?php echo htmlspecialchars($product['image_url']); ?>"
                                     alt="<?php echo htmlspecialchars($product['name']); ?>" loading="lazy">
+                                <?php if (isset($product['shipping_type'])): ?>
+                                    <span
+                                        class="shipping-badge shipping-badge--<?php echo strtolower($product['shipping_type']); ?>">
+                                        <?php echo htmlspecialchars($product['shipping_type']); ?>
+                                    </span>
+                                <?php endif; ?>
                             </div>
                             <div class="product-card__content">
                                 <h3 class="product-card__title">

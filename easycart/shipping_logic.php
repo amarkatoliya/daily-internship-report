@@ -46,3 +46,60 @@ function calculateTax($subtotal, $shipping)
     $tax_rate = 0.18; // 18%
     return ($subtotal + $shipping) * $tax_rate;
 }
+
+/**
+ * Determine allowed shipping methods based on cart contents and subtotal
+ * Business Rules:
+ * - IF cart has Freight item OR subtotal >= ₹300: Only white_glove and freight allowed
+ * - ELSE: Only standard and express allowed
+ * 
+ * @param array $cartItems - Array of cart items with product details
+ * @param float $subtotal - Cart subtotal amount
+ * @return array ['allowed_methods' => array, 'default_method' => string, 'has_freight_item' => bool, 'subtotal_threshold_met' => bool]
+ */
+function getAllowedShippingMethods($cartItems, $subtotal)
+{
+    // Check if any cart item has Freight shipping type
+    $hasFreightItem = false;
+    foreach ($cartItems as $item) {
+        if (
+            isset($item['product']['shipping_type']) &&
+            strtolower($item['product']['shipping_type']) === 'freight'
+        ) {
+            $hasFreightItem = true;
+            break;
+        }
+    }
+
+    // Apply shipping rules
+    if ($hasFreightItem || $subtotal >= 300) {
+        // High-value or Freight items: Only premium shipping
+        return [
+            'allowed_methods' => ['white_glove', 'freight'],
+            'default_method' => 'freight',
+            'has_freight_item' => $hasFreightItem,
+            'subtotal_threshold_met' => $subtotal >= 300
+        ];
+    } else {
+        // Standard items under ₹300: Only standard shipping
+        return [
+            'allowed_methods' => ['standard', 'express'],
+            'default_method' => 'standard',
+            'has_freight_item' => false,
+            'subtotal_threshold_met' => false
+        ];
+    }
+}
+
+/**
+ * Validate if a shipping method is allowed for the given cart
+ * @param string $method - Shipping method to validate
+ * @param array $cartItems - Array of cart items with product details
+ * @param float $subtotal - Cart subtotal amount
+ * @return bool True if method is allowed, false otherwise
+ */
+function isShippingMethodAllowed($method, $cartItems, $subtotal)
+{
+    $allowedData = getAllowedShippingMethods($cartItems, $subtotal);
+    return in_array($method, $allowedData['allowed_methods']);
+}

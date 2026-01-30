@@ -589,6 +589,31 @@
     box-shadow: var(--shadow-sm);
 }
 
+/* Shipping Badge Styles */
+.shipping-badge {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+.shipping-badge--freight {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+}
+
+.shipping-badge--express {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
 .product-card__content {
     padding: var(--space-4);
     flex: 1;
@@ -1037,6 +1062,19 @@
     border-color: var(--color-primary);
     background: #eff6ff;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.payment-method-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    background: var(--color-gray-50);
+}
+
+.payment-method-card.disabled:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border-color);
 }
 
 .payment-method-card input {

@@ -171,6 +171,13 @@ $total = $subtotal + $shipping;
                                                 <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 4px;">
                                                     <?php echo htmlspecialchars($item['product']['category']); ?>
                                                 </p>
+                                                <?php if (isset($item['product']['shipping_type'])): ?>
+                                                    <span
+                                                        class="shipping-badge shipping-badge--<?php echo strtolower($item['product']['shipping_type']); ?>"
+                                                        style="position: relative; top: 0; left: 0; margin-top: 4px; display: inline-block;">
+                                                        <?php echo htmlspecialchars($item['product']['shipping_type']); ?>
+                                                    </span>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>

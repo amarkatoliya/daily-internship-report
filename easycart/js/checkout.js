@@ -97,8 +97,22 @@ function updateShipping(method, name) {
                     // Update current shipping cost
                     currentShipping = data.shipping;
 
+                    // Update shipping options based on allowed methods
+                    updateShippingOptions(data);
+
                     // Update the summary display
                     updateSummaryTotals();
+
+                    // Show notification if method was changed due to restrictions
+                    if (data.method_changed) {
+                        let reason = '';
+                        if (data.has_freight_item) {
+                            reason = 'Your cart contains Freight items.';
+                        } else if (data.subtotal_threshold_met) {
+                            reason = 'Your order total is ₹300 or more.';
+                        }
+                        showNotification(`${reason} Only premium shipping options are available.`, 'info');
+                    }
                 } else {
                     console.error('Shipping calculation failed:', data.error);
                     showNotification('Unable to calculate shipping. Using estimated cost.', 'warning');
@@ -115,6 +129,81 @@ function updateShipping(method, name) {
                 updateSummaryTotals();
             });
     }, 300);
+}
+
+/**
+ * Update shipping options UI based on allowed methods
+ * @param {Object} data - Response data from AJAX containing allowed_methods
+ */
+function updateShippingOptions(data) {
+    const allowedMethods = data.allowed_methods || [];
+    const currentMethod = data.current_method;
+
+    const shippingRadios = document.getElementsByName('shipping_method');
+
+    shippingRadios.forEach(radio => {
+        const methodValue = radio.value;
+        const card = radio.closest('.payment-method-card');
+        const isAllowed = allowedMethods.includes(methodValue);
+
+        if (isAllowed) {
+            // Enable this option
+            radio.disabled = false;
+            card.classList.remove('disabled');
+            card.style.opacity = '1';
+            card.style.cursor = 'pointer';
+            card.style.pointerEvents = 'auto';
+
+            // Check if this is the current method
+            if (methodValue === currentMethod) {
+                radio.checked = true;
+                card.classList.add('active');
+            }
+        } else {
+            // Disable this option
+            radio.disabled = true;
+            radio.checked = false;
+            card.classList.remove('active');
+            card.classList.add('disabled');
+            card.style.opacity = '0.5';
+            card.style.cursor = 'not-allowed';
+            card.style.pointerEvents = 'none';
+        }
+    });
+}
+
+/**
+ * Initialize shipping restrictions on page load
+ * @param {number} subtotal - Cart subtotal amount
+ */
+function initializeShippingRestrictions(subtotal) {
+    // Get the currently selected shipping method
+    const selectedRadio = document.querySelector('input[name="shipping_method"]:checked');
+    const selectedMethod = selectedRadio ? selectedRadio.value : 'standard';
+
+    // Trigger shipping update to get restrictions
+    fetch('update_ship_ajax.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+            shipping_method: selectedMethod,
+            subtotal: subtotal
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                currentShipping = data.shipping;
+                updateShippingOptions(data);
+                updateSummaryTotals();
+            }
+        })
+        .catch(error => {
+            console.error('Error initializing shipping restrictions:', error);
+        });
 }
 
 
@@ -233,6 +322,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (checkoutContainer) {
         const subtotal = parseInt(checkoutContainer.dataset.subtotal);
         currentShipping = calculateShipping('standard', subtotal);
+
+        // Check shipping restrictions on page load
+        initializeShippingRestrictions(subtotal);
     }
 
     togglePaymentForms();

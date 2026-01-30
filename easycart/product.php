@@ -86,6 +86,15 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                         <h1>
                             <?php echo htmlspecialchars($product['name']); ?>
                         </h1>
+                        <?php if (isset($product['shipping_type'])): ?>
+                            <div style="margin-bottom: var(--space-3);">
+                                <span
+                                    class="shipping-badge shipping-badge--<?php echo strtolower($product['shipping_type']); ?>"
+                                    style="position: relative; top: 0; left: 0;">
+                                    <?php echo htmlspecialchars($product['shipping_type']); ?>
+                                </span>
+                            </div>
+                        <?php endif; ?>
                         <p class="product-detail__price">
                             <?php echo formatPrice($product['price']); ?>
                         </p>
