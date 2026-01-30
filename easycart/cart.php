@@ -109,8 +109,8 @@ foreach ($_SESSION['cart'] as $item) {
         $totalQuantity += (int) $item['quantity'];
     }
 }
-$shipping = 500 * $totalQuantity;
-$total = $subtotal + $shipping;
+// Shipping calculated at checkout
+$total = $subtotal;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -237,12 +237,6 @@ $total = $subtotal + $shipping;
                             <span>Subtotal:</span>
                             <span id="cart-subtotal">
                                 <?php echo formatPrice($subtotal); ?>
-                            </span>
-                        </div>
-                        <div class="order-summary__row">
-                            <span>Shipping:</span>
-                            <span id="cart-shipping-display">
-                                <?php echo formatPrice($shipping); ?>
                             </span>
                         </div>
                         <div class="order-summary__row order-summary__row--total">
