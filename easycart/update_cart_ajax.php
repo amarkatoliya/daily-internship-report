@@ -72,15 +72,16 @@ if (isset($_SESSION['cart'])) {
             $subtotal += $currentTotal;
             $totalItemsCount++;
             $totalQuantity += $item['quantity'];
-            if ($item['id'] === $productId) {
+            if ((int) $item['id'] === (int) $productId) {
                 $itemTotal = $currentTotal;
             }
         }
     }
 }
 
-$shipping = 500 * $totalQuantity;
-$total = $subtotal + $shipping;
+// Shipping calculated at checkout, so 0 for cart page summary
+$shipping = 0;
+$total = $subtotal;
 
 echo json_encode([
     'success' => true,

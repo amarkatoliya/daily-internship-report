@@ -239,8 +239,12 @@ $total = $subtotal;
                                 <?php echo formatPrice($subtotal); ?>
                             </span>
                         </div>
+                        <div class="order-summary__row" style="opacity: 0.7;">
+                            <span>Shipping:</span>
+                            <span id="cart-shipping-display">Calculated at Checkout</span>
+                        </div>
                         <div class="order-summary__row order-summary__row--total">
-                            <strong>Total:</strong>
+                            <strong>Subtotal Total:</strong>
                             <strong id="cart-total">
                                 <?php echo formatPrice($total); ?>
                             </strong>
