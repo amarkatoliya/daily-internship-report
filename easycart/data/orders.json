@@ -115,5 +115,56 @@
         "extra_charges": 0,
         "total": 22998,
         "status": "CONFIRMED"
+    },
+    {
+        "id": "ORD-2026-004",
+        "date": "2026-01-30 13:42:20",
+        "customer": {
+            "email": "xyz@gmail.com",
+            "first_name": "xyz",
+            "last_name": "xyz",
+            "address": "sector 28",
+            "city": "gandhinagar",
+            "state": "India",
+            "zip": "382015"
+        },
+        "payment_method": "upi",
+        "shipping_method": "white_glove",
+        "items": [
+            {
+                "product": {
+                    "id": 3,
+                    "name": "Laptop Backpack",
+                    "price": 200,
+                    "shipping_type": "Express",
+                    "image_url": "assets\/images\/laptop-backpack.jpg",
+                    "category": "Fashion",
+                    "brand": "Nike",
+                    "description": "Professional laptop backpack designed for business and travel. Features multiple compartments, padded laptop sleeve, and ergonomic design.",
+                    "features": [
+                        "Fits up to 15.6\" laptop",
+                        "Multiple compartments",
+                        "Water-resistant material",
+                        "Ergonomic design",
+                        "Anti-theft pocket"
+                    ],
+                    "images": [
+                        "assets\/images\/laptop-backpack.jpg",
+                        "https:\/\/images.unsplash.com\/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop",
+                        "https:\/\/images.unsplash.com\/photo-1622560480605-d83c853bc5c3?q=80&w=800&auto=format&fit=crop"
+                    ]
+                },
+                "quantity": 2,
+                "total": 400
+            }
+        ],
+        "subtotal": 400,
+        "discount": 40,
+        "coupon_code": "SAVE10",
+        "shipping": 20,
+        "tax": 68.39999999999999,
+        "extra_charges": 0,
+        "total": 448.4,
+        "status": "CONFIRMED"
     }
 ]

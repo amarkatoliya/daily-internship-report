@@ -593,6 +593,8 @@ function removeCoupon() {
 
                 // Toggle buttons
                 applyBtn.style.display = 'block';
+                applyBtn.disabled = false;
+                applyBtn.textContent = 'Apply';
                 removeBtn.style.display = 'none';
                 removeBtn.disabled = false;
                 removeBtn.textContent = 'Remove';
