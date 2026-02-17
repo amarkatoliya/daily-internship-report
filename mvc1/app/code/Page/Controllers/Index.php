@@ -1,5 +1,5 @@
 <?php
-class Page_Controllers_Index
+class Page_Controllers_Index extends Core_Controllers_Front
 {
     public function indexAction()
     {
