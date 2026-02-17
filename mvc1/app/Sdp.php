@@ -19,6 +19,14 @@ class Sdp
 
 
     }
+    public static function getBlock($blockname)
+    {
+        $block = array_map("ucfirst", explode("/", $blockname));
+        $block = sprintf("%s_Block_%s", $block[0], $block[1]);
+        $blockObj = new $block();
+        return $blockObj;
+
+    }
 }
 
 
