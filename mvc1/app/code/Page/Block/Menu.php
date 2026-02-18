@@ -4,7 +4,6 @@ class Page_Block_Menu extends Core_Block_Template
 {
     public function __construct()
     {
-        parent::__construct();
         $this->setTemplate("Page/View/menu.phtml");
     }
 
