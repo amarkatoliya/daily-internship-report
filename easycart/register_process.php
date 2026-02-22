@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'Database/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = trim($_POST['first_name'] ?? '');
@@ -26,38 +27,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $usersFile = 'data/users.json';
-    $users = [];
+    // Check if email already exists in database
+    $stmt = $pdo->prepare("SELECT COUNT(*) AS email_exists FROM customer_entity WHERE email = :email");
+    $stmt->execute(['email' => $email]);
+    $result = $stmt->fetch();
 
-    // Read existing users
-    if (file_exists($usersFile)) {
-        $jsonContent = file_get_contents($usersFile);
-        $users = json_decode($jsonContent, true) ?: [];
+    if ($result['email_exists'] > 0) {
+        $_SESSION['error'] = "Email already registered.";
+        header("Location: signup");
+        exit();
     }
 
-    // Check if email already exists
-    foreach ($users as $user) {
-        if ($user['email'] === $email) {
-            $_SESSION['error'] = "Email already registered.";
-            header("Location: signup");
-            exit();
-        }
-    }
-
-    // Hash password and add user
+    // Hash password and insert user into database
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $newUser = [
-        'first_name' => $first_name,
-        'last_name' => $last_name,
+
+    $stmt = $pdo->prepare("
+        INSERT INTO customer_entity (firstname, lastname, email, password_hash) 
+        VALUES (:firstname, :lastname, :email, :password_hash)
+    ");
+
+    $success = $stmt->execute([
+        'firstname' => $first_name,
+        'lastname' => $last_name,
         'email' => $email,
-        'password' => $hashedPassword,
-        'created_at' => date('Y-m-d H:i:s')
-    ];
+        'password_hash' => $hashedPassword
+    ]);
 
-    $users[] = $newUser;
-
-    // Save back to JSON
-    if (file_put_contents($usersFile, json_encode($users, JSON_PRETTY_PRINT))) {
+    if ($success) {
         $_SESSION['success'] = "Registration successful! Please login.";
         header("Location: login");
         exit();

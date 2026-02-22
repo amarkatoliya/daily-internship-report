@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Include data layer
+// Include data layer (provides $pdo and helper functions)
 require_once 'data.php';
 
 // Check for order success message
@@ -18,54 +18,36 @@ if ($orderSuccess) {
     unset($_SESSION['order_success']);
 }
 
-// Static orders array (simulating past orders)
-$staticOrders = [
-    [
-        'id' => 'ORD-2026-001',
-        'date' => '2026-01-15',
-        'items' => 3,
-        'total' => 33996,
-        'status' => 'Delivered',
-        'tracking' => 'TRACK1234567890'
-    ],
-    [
-        'id' => 'ORD-2026-002',
-        'date' => '2026-01-18',
-        'items' => 2,
-        'total' => 23498,
-        'status' => 'In Transit',
-        'tracking' => 'TRACK0987654321'
-    ],
-    [
-        'id' => 'ORD-2026-003',
-        'date' => '2026-01-20',
-        'items' => 1,
-        'total' => 90499,
-        'status' => 'Processing',
-        'tracking' => 'TRACK1122334455'
-    ]
-];
+// Get logged-in user's ID
+$userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
 
-// Load orders from persistent JSON storage
-$ordersFile = 'data/orders.json';
-$orders = $staticOrders; // Initialize with static orders
-$allPersistentOrders = [];
-if (file_exists($ordersFile)) {
-    $jsonContent = file_get_contents($ordersFile);
-    $allPersistentOrders = json_decode($jsonContent, true) ?: [];
-}
+// Load orders from database for this user
+$orders = [];
+if ($userId) {
+    $stmt = $pdo->prepare("
+        SELECT 
+            o.increment_id AS id,
+            o.created_at AS date,
+            o.grand_total AS total,
+            o.status,
+            COALESCE(SUM(oi.quantity), 0) AS items
+        FROM sales_order o
+        LEFT JOIN sales_order_item oi ON o.entity_id = oi.order_id
+        WHERE o.customer_id = :user_id
+        GROUP BY o.entity_id, o.increment_id, o.created_at, o.grand_total, o.status
+        ORDER BY o.created_at DESC
+    ");
+    $stmt->execute(['user_id' => $userId]);
+    $dbOrders = $stmt->fetchAll();
 
-// Filter orders for the logged-in user and format them for display
-$userEmail = $_SESSION['user']['email'];
-foreach ($allPersistentOrders as $persistentOrder) {
-    if (isset($persistentOrder['customer']['email']) && $persistentOrder['customer']['email'] === $userEmail) {
+    foreach ($dbOrders as $dbOrder) {
         $orders[] = [
-            'id' => $persistentOrder['id'],
-            'date' => date('Y-m-d', strtotime($persistentOrder['date'])),
-            'items' => count($persistentOrder['items']),
-            'total' => $persistentOrder['total'],
-            'status' => ucfirst($persistentOrder['status']),
-            'tracking' => 'TRACK' . substr(md5($persistentOrder['id']), 0, 10) // Mock tracking ID based on order ID
+            'id' => $dbOrder['id'],
+            'date' => date('Y-m-d', strtotime($dbOrder['date'])),
+            'items' => (int) $dbOrder['items'],
+            'total' => $dbOrder['total'],
+            'status' => ucfirst(strtolower($dbOrder['status'])),
+            'tracking' => 'TRACK' . substr(md5($dbOrder['id']), 0, 10)
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'Database/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
@@ -12,33 +13,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $usersFile = 'data/users.json';
-    $users = [];
+    // Query database for user by email
+    $stmt = $pdo->prepare("SELECT entity_id, firstname, lastname, email, password_hash FROM customer_entity WHERE email = :email");
+    $stmt->execute(['email' => $email]);
+    $user = $stmt->fetch();
 
-    // Read existing users
-    if (file_exists($usersFile)) {
-        $jsonContent = file_get_contents($usersFile);
-        $users = json_decode($jsonContent, true) ?: [];
-    }
+    // Verify password
+    if ($user && password_verify($password, $user['password_hash'])) {
+        // Remove password hash from session data for security
+        unset($user['password_hash']);
 
-    // Find user and verify password
-    $foundUser = null;
-    foreach ($users as $user) {
-        if ($user['email'] === $email) {
-            if (password_verify($password, $user['password'])) {
-                $foundUser = $user;
-                break;
-            }
-        }
-    }
-
-    if ($foundUser) {
-        // Remove password from session data for security
-        unset($foundUser['password']);
+        // Map DB column names to session keys (for backward compatibility)
+        $sessionUser = [
+            'id' => $user['entity_id'],
+            'first_name' => $user['firstname'],
+            'last_name' => $user['lastname'],
+            'email' => $user['email']
+        ];
 
         // Success: Store user in session
-        $_SESSION['user'] = $foundUser;
-        $_SESSION['success'] = "Welcome back, " . $foundUser['first_name'] . "!";
+        $_SESSION['user'] = $sessionUser;
+        $_SESSION['success'] = "Welcome back, " . $sessionUser['first_name'] . "!";
 
         // Redirect to homepage
         header("Location: index");

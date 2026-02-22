@@ -165,53 +165,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
     // If no errors, process the order
     if (empty($errors)) {
-        // Generate consistent order ID
+        // Generate order ID from database count
         $year = date('Y');
-        $existing_orders = isset($_SESSION['orders']) ? $_SESSION['orders'] : [];
-        $order_index = count($existing_orders) + 4; // Start from 004 since static orders go up to 003
-        $order_id = sprintf('ORD-%s-%03d', $year, $order_index);
+        $stmt = $pdo->query("SELECT COUNT(*) AS cnt FROM sales_order");
+        $orderCount = $stmt->fetch()['cnt'];
+        $order_id = sprintf('ORD-%s-%03d', $year, $orderCount + 1);
 
-        // Create order data
-        $order = [
-            'id' => $order_id,
-            'date' => date('Y-m-d H:i:s'),
-            'customer' => [
+        // Get customer ID from session (if logged in)
+        $customer_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+
+        try {
+            $pdo->beginTransaction();
+
+            // Insert into sales_order
+            $stmt = $pdo->prepare("
+                INSERT INTO sales_order 
+                (increment_id, customer_id, status, subtotal, discount_amount, coupon_code, 
+                 shipping_amount, tax_amount, extra_charges, grand_total, 
+                 customer_email, customer_firstname, customer_lastname, 
+                 shipping_method, payment_method)
+                VALUES 
+                (:increment_id, :customer_id, 'CONFIRMED', :subtotal, :discount, :coupon_code,
+                 :shipping, :tax, :extra_charges, :grand_total,
+                 :email, :firstname, :lastname,
+                 :shipping_method, :payment_method)
+            ");
+            $stmt->execute([
+                'increment_id' => $order_id,
+                'customer_id' => $customer_id,
+                'subtotal' => $subtotal,
+                'discount' => $discount,
+                'coupon_code' => !empty($coupon_code) ? $coupon_code : null,
+                'shipping' => $shipping,
+                'tax' => $tax,
+                'extra_charges' => $extra_charges,
+                'grand_total' => $final_total,
                 'email' => $_POST['email'],
-                'first_name' => $_POST['first_name'],
-                'last_name' => $_POST['last_name'],
-                'address' => $_POST['address'],
-                'city' => $_POST['city'],
-                'state' => $_POST['state'],
-                'zip' => $_POST['zip']
-            ],
-            'payment_method' => $payment_method,
-            'shipping_method' => $selected_shipping,
-            'items' => $cartItems,
-            'subtotal' => $subtotal,
-            'discount' => $discount,
-            'coupon_code' => $coupon_code,
-            'shipping' => $shipping,
-            'tax' => $tax,
-            'extra_charges' => $extra_charges,
-            'total' => $final_total,
-            'status' => 'CONFIRMED'
-        ];
+                'firstname' => $_POST['first_name'],
+                'lastname' => $_POST['last_name'],
+                'shipping_method' => $selected_shipping,
+                'payment_method' => $payment_method
+            ]);
 
-        // Store order in persistent JSON storage
-        $ordersFile = 'data/orders.json';
-        $allOrders = [];
-        if (file_exists($ordersFile)) {
-            $jsonContent = file_get_contents($ordersFile);
-            $allOrders = json_decode($jsonContent, true) ?: [];
-        }
-        $allOrders[] = $order;
-        file_put_contents($ordersFile, json_encode($allOrders, JSON_PRETTY_PRINT));
+            // Get the auto-generated entity_id
+            $order_entity_id = $pdo->lastInsertId();
 
-        // Also keep in session for immediate feedback
-        if (!isset($_SESSION['orders'])) {
-            $_SESSION['orders'] = [];
+            // Insert order items
+            $itemStmt = $pdo->prepare("
+                INSERT INTO sales_order_item 
+                (order_id, product_id, sku, name, price, quantity, row_total)
+                VALUES (:order_id, :product_id, :sku, :name, :price, :quantity, :row_total)
+            ");
+
+            foreach ($cartItems as $cartItem) {
+                $itemStmt->execute([
+                    'order_id' => $order_entity_id,
+                    'product_id' => $cartItem['product']['id'],
+                    'sku' => $cartItem['product']['sku'] ?? '',
+                    'name' => $cartItem['product']['name'],
+                    'price' => $cartItem['product']['price'],
+                    'quantity' => $cartItem['quantity'],
+                    'row_total' => $cartItem['total']
+                ]);
+            }
+
+            $pdo->commit();
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            $_SESSION['checkout_errors'] = ['An error occurred while placing your order. Please try again.'];
+            header('Location: checkout');
+            exit;
         }
-        $_SESSION['orders'][] = $order;
 
         // Clear cart and set success message
         $_SESSION['cart'] = [];
