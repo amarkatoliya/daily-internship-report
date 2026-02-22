@@ -12,10 +12,10 @@
             <div class="footer__section">
                 <h3>Shop</h3>
                 <ul class="footer__links">
-                    <li><a href="plp.php" class="footer__link">All Products</a></li>
-                    <li><a href="plp.php?category=Electronics" class="footer__link">Electronics</a></li>
-                    <li><a href="plp.php?category=Fashion" class="footer__link">Fashion</a></li>
-                    <li><a href="plp.php" class="footer__link">New Arrivals</a></li>
+                    <li><a href="plp" class="footer__link">All Products</a></li>
+                    <li><a href="plp?category=Electronics" class="footer__link">Electronics</a></li>
+                    <li><a href="plp?category=Fashion" class="footer__link">Fashion</a></li>
+                    <li><a href="plp" class="footer__link">New Arrivals</a></li>
                 </ul>
             </div>
 

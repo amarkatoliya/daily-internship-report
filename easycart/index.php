@@ -60,7 +60,7 @@ $featuredProducts = array_slice($products, 0, 6);
                         </p>
 
                         <div class="hero__actions">
-                            <a href="plp.php" class="hero__cta hero__cta--primary">
+                            <a href="plp" class="hero__cta hero__cta--primary">
                                 <span>Start Shopping</span>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -175,9 +175,9 @@ $featuredProducts = array_slice($products, 0, 6);
                                     <?php echo formatPrice($product['price']); ?>
                                 </p>
                                 <div class="product-card__actions">
-                                    <a href="product.php?id=<?php echo $product['id']; ?>"
-                                        class="btn btn--primary btn--sm">View Details</a>
-                                    <form action="add_to_cart.php" method="POST" style="flex-shrink: 0;">
+                                    <a href="product?id=<?php echo $product['id']; ?>" class="btn btn--primary btn--sm">View
+                                        Details</a>
+                                    <form action="add_to_cart" method="POST" style="flex-shrink: 0;">
                                         <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                                         <button type="submit" class="btn btn--outline btn--sm" aria-label="Add to cart">
                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -201,7 +201,7 @@ $featuredProducts = array_slice($products, 0, 6);
                 <h2 class="section__title">Popular Categories</h2>
                 <div class="categories-grid">
                     <?php foreach ($categories as $category): ?>
-                        <a href="plp.php?category=<?php echo urlencode($category['name']); ?>" class="category-card">
+                        <a href="plp?category=<?php echo urlencode($category['name']); ?>" class="category-card">
                             <div class="category-card__icon">
                                 <?php echo $category['icon']; ?>
                             </div>
@@ -218,7 +218,7 @@ $featuredProducts = array_slice($products, 0, 6);
                 <h2 class="section__title">Popular Brands</h2>
                 <div class="categories-grid">
                     <?php foreach ($brands as $brand): ?>
-                        <a href="plp.php?brand=<?php echo urlencode($brand['name']); ?>" class="category-card">
+                        <a href="plp?brand=<?php echo urlencode($brand['name']); ?>" class="category-card">
                             <div class="category-card__icon">
                                 <?php echo $brand['logo']; ?>
                             </div>

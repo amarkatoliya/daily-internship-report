@@ -81,7 +81,7 @@ function updateShipping(method, name) {
     // Debounce: Wait 300ms after last click
     shippingUpdateTimeout = setTimeout(() => {
         // Make AJAX request to calculate shipping
-        fetch('update_ship_ajax.php', {
+        fetch('update_ship_ajax', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ function initializeShippingRestrictions(subtotal) {
     const selectedMethod = selectedRadio ? selectedRadio.value : 'standard';
 
     // Trigger shipping update to get restrictions
-    fetch('update_ship_ajax.php', {
+    fetch('update_ship_ajax', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -502,7 +502,7 @@ function applyCoupon() {
     couponMessage.textContent = '';
 
     // Make AJAX request
-    fetch('apply_coupon_ajax.php', {
+    fetch('apply_coupon_ajax', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -572,7 +572,7 @@ function removeCoupon() {
     removeBtn.textContent = 'Removing...';
 
     // Make AJAX request
-    fetch('remove_coupon_ajax.php', {
+    fetch('remove_coupon_ajax', {
         method: 'POST'
     })
         .then(response => response.json())

@@ -253,8 +253,8 @@ $total = $subtotal;
 
                     <!-- Cart Actions -->
                     <div style="display: flex; gap: var(--space-4); margin-top: var(--space-6);">
-                        <a href="checkout.php" class="btn btn--primary btn--lg">Proceed to Checkout</a>
-                        <a href="plp.php" class="btn btn--outline btn--lg">Continue Shopping</a>
+                        <a href="checkout" class="btn btn--primary btn--lg">Proceed to Checkout</a>
+                        <a href="plp" class="btn btn--outline btn--lg">Continue Shopping</a>
                         <form method="POST" style="margin-left: auto;">
                             <button type="submit" name="clear_cart" class="btn btn--lg"
                                 style="background: var(--color-danger); color: white;"
@@ -275,7 +275,7 @@ $total = $subtotal;
                         <h3 style="font-size: var(--font-size-2xl); margin-bottom: var(--space-4);">Your cart is empty</h3>
                         <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">Add some products to get
                             started</p>
-                        <a href="plp.php" class="btn btn--primary btn--lg">Browse Products</a>
+                        <a href="plp" class="btn btn--primary btn--lg">Browse Products</a>
                     </div>
                 </section>
             <?php endif; ?>

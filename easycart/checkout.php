@@ -15,7 +15,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 
 // Redirect if cart is empty
 if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
-    header('Location: cart.php');
+    header('Location: cart');
     exit;
 }
 
@@ -222,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         unset($_SESSION['selected_shipping']);
         unset($_SESSION['applied_coupon']);
 
-        header('Location: orders.php');
+        header('Location: orders');
         exit;
     } else {
         // Store errors in session to display
@@ -246,30 +246,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <header class="header">
         <div class="container">
             <div class="header__content">
-                <a href="index.php" class="header__logo">EasyCart</a>
+                <a href="index" class="header__logo">EasyCart</a>
                 <nav class="header__nav">
                     <ul class="nav__list">
-                        <li><a href="index.php" class="nav__link">Home</a></li>
-                        <li><a href="plp.php" class="nav__link">Products</a></li>
-                        <li><a href="cart.php" class="nav__link nav__link--cart">Cart
+                        <li><a href="index" class="nav__link">Home</a></li>
+                        <li><a href="plp" class="nav__link">Products</a></li>
+                        <li><a href="cart" class="nav__link nav__link--cart">Cart
                                 <?php if ($cartCount > 0): ?>
                                     <span class="cart-badge">
                                         <?php echo $cartCount; ?>
                                     </span>
                                 <?php endif; ?>
                             </a></li>
-                        <li><a href="orders.php" class="nav__link">Orders</a></li>
+                        <li><a href="orders" class="nav__link">Orders</a></li>
                         <?php if (isset($_SESSION['user'])): ?>
                             <li class="nav__user">
                                 <span class="nav__link" style="color: var(--color-primary); font-weight: 600;">
                                     Hi, <?php echo htmlspecialchars($_SESSION['user']['first_name']); ?>
                                 </span>
                             </li>
-                            <li><a href="logout.php" class="nav__link"
+                            <li><a href="logout" class="nav__link"
                                     onclick="return confirm('Are you sure you want to logout?');">Logout</a></li>
                         <?php else: ?>
-                            <li><a href="login.php" class="nav__link">Login</a></li>
-                            <li><a href="signup.php" class="nav__link">Signup</a></li>
+                            <li><a href="login" class="nav__link">Login</a></li>
+                            <li><a href="signup" class="nav__link">Signup</a></li>
                         <?php endif; ?>
                     </ul>
                 </nav>

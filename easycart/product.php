@@ -15,7 +15,7 @@ $product = getProductById($productId);
 
 // If product not found, redirect to products page
 if (!$product) {
-    header('Location: plp.php');
+    header('Location: plp');
     exit;
 }
 
@@ -51,7 +51,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     <main class="main">
         <div class="container">
             <section class="section">
-                <a href="plp.php" class="product-detail__back">
+                <a href="plp" class="product-detail__back">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M19 12H5M5 12l7-7m-7 7l7 7" />
                     </svg>
@@ -130,7 +130,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                         </div>
 
                         <!-- Add to Cart Form -->
-                        <form action="add_to_cart.php" method="POST" class="product-detail__actions">
+                        <form action="add_to_cart" method="POST" class="product-detail__actions">
                             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                             <button type="submit" class="btn btn--primary btn--lg">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -141,7 +141,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                                 </svg>
                                 Add to Cart
                             </button>
-                            <a href="plp.php" class="btn btn--outline btn--lg">Continue Shopping</a>
+                            <a href="plp" class="btn btn--outline btn--lg">Continue Shopping</a>
                         </form>
                     </div>
                 </div>

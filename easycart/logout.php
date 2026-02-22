@@ -13,5 +13,5 @@ if (isset($_COOKIE[session_name()])) {
 session_destroy();
 
 // Redirect to home
-header("Location: index.php");
+header("Location: index");
 exit();

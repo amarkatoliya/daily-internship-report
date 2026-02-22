@@ -10,19 +10,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Basic validation
     if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
         $_SESSION['error'] = "All fields are required.";
-        header("Location: signup.php");
+        header("Location: signup");
         exit();
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error'] = "Invalid email format.";
-        header("Location: signup.php");
+        header("Location: signup");
         exit();
     }
 
     if (strlen($password) < 6) {
         $_SESSION['error'] = "Password must be at least 6 characters.";
-        header("Location: signup.php");
+        header("Location: signup");
         exit();
     }
 
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($users as $user) {
         if ($user['email'] === $email) {
             $_SESSION['error'] = "Email already registered.";
-            header("Location: signup.php");
+            header("Location: signup");
             exit();
         }
     }
@@ -59,14 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Save back to JSON
     if (file_put_contents($usersFile, json_encode($users, JSON_PRETTY_PRINT))) {
         $_SESSION['success'] = "Registration successful! Please login.";
-        header("Location: login.php");
+        header("Location: login");
         exit();
     } else {
         $_SESSION['error'] = "An error occurred. Please try again.";
-        header("Location: signup.php");
+        header("Location: signup");
         exit();
     }
 } else {
-    header("Location: signup.php");
+    header("Location: signup");
     exit();
 }

@@ -56,12 +56,12 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
         <div class="auth-form-side">
             <!-- Floating Navigation -->
             <div style="position: absolute; top: 2rem; right: 2rem; z-index: 10;">
-                <a href="index.php" class="btn btn--outline btn--sm">Back to Home</a>
+                <a href="index" class="btn btn--outline btn--sm">Back to Home</a>
             </div>
 
             <div class="auth-form-container">
                 <div class="auth-header">
-                    <a href="index.php" class="auth-logo">EasyCart</a>
+                    <a href="index" class="auth-logo">EasyCart</a>
                     <h2 class="auth-title">Log in to your account</h2>
                     <p class="auth-subtitle">Welcome back! Please enter your details.</p>
 
@@ -86,7 +86,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                     <?php endif; ?>
                 </div>
 
-                <form class="form" id="login-form" action="login_process.php" method="POST"
+                <form class="form" id="login-form" action="login_process" method="POST"
                     style="box-shadow: none; padding: 0; background: transparent; border: none; max-width: 100%;">
                     <div class="auth-input-group">
                         <label for="email" class="auth-label">Email</label>
@@ -139,7 +139,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 
                     <div style="text-align: center; margin-top: 1.5rem;">
                         <span style="color: var(--text-secondary);">Don't have an account? </span>
-                        <a href="signup.php"
+                        <a href="signup"
                             style="color: var(--color-primary); font-weight: 600; text-decoration: none;">Sign up</a>
                     </div>
                 </form>

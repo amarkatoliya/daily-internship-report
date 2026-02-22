@@ -47,6 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
 }
 
 // Redirect to cart page for standard form submissions
-header('Location: cart.php');
+header('Location: cart');
 exit;
 ?>

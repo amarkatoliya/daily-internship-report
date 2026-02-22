@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Select all "Add to Cart" forms
-    const addToCartForms = document.querySelectorAll('form[action="add_to_cart.php"]');
+    const addToCartForms = document.querySelectorAll('form[action="add_to_cart"]');
 
     addToCartForms.forEach(form => {
         form.addEventListener('submit', function (e) {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const formData = new FormData(form);
 
-            fetch('add_to_cart.php', {
+            fetch('add_to_cart', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateHeaderCartBadge(count) {
         let badge = document.querySelector('.cart-badge');
-        const cartLink = document.querySelector('.nav__link--cart') || document.querySelector('a[href="cart.php"]');
+        const cartLink = document.querySelector('.nav__link--cart') || document.querySelector('a[href="cart"]');
 
         if (!badge && cartLink) {
             badge = document.createElement('span');

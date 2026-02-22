@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Basic validation
     if (empty($email) || empty($password)) {
         $_SESSION['error'] = "Both email and password are required.";
-        header("Location: login.php");
+        header("Location: login");
         exit();
     }
 
@@ -41,15 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['success'] = "Welcome back, " . $foundUser['first_name'] . "!";
 
         // Redirect to homepage
-        header("Location: index.php");
+        header("Location: index");
         exit();
     } else {
         // Failure: Show error
         $_SESSION['error'] = "Invalid email or password.";
-        header("Location: login.php");
+        header("Location: login");
         exit();
     }
 } else {
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }

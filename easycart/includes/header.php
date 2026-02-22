@@ -4,16 +4,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <header class="header">
     <div class="container">
         <div class="header__content">
-            <a href="index.php" class="header__logo">EasyCart</a>
+            <a href="index" class="header__logo">EasyCart</a>
             <nav class="header__nav">
                 <ul class="nav__list">
-                    <li><a href="index.php"
+                    <li><a href="index"
                             class="nav__link <?php echo $current_page == 'index.php' ? 'nav__link--active' : ''; ?>">Home</a>
                     </li>
-                    <li><a href="plp.php"
+                    <li><a href="plp"
                             class="nav__link <?php echo $current_page == 'plp.php' || $current_page == 'product.php' ? 'nav__link--active' : ''; ?>">Products</a>
                     </li>
-                    <li><a href="cart.php"
+                    <li><a href="cart"
                             class="nav__link <?php echo $current_page == 'cart.php' ? 'nav__link--active' : ''; ?>"
                             style="position: relative;">Cart
                             <?php if (isset($cartCount) && $cartCount > 0): ?>
@@ -22,7 +22,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 </span>
                             <?php endif; ?>
                         </a></li>
-                    <li><a href="orders.php"
+                    <li><a href="orders"
                             class="nav__link <?php echo $current_page == 'orders.php' ? 'nav__link--active' : ''; ?>">Orders</a>
                     </li>
                     <?php if (isset($_SESSION['user'])): ?>
@@ -32,11 +32,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <?php echo htmlspecialchars($_SESSION['user']['first_name']); ?>
                             </span>
                         </li>
-                        <li><a href="logout.php" class="nav__link"
+                        <li><a href="logout" class="nav__link"
                                 onclick="return confirm('Are you sure you want to logout?');">Logout</a></li>
                     <?php else: ?>
-                        <li><a href="login.php" class="nav__link">Login</a></li>
-                        <li><a href="signup.php" class="nav__link">Signup</a></li>
+                        <li><a href="login" class="nav__link">Login</a></li>
+                        <li><a href="signup" class="nav__link">Signup</a></li>
                     <?php endif; ?>
                 </ul>
             </nav>

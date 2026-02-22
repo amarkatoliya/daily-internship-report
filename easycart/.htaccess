@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# Remove trailing slash (optional, keeps URLs clean)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# Redirect .php URLs to clean URLs (external redirect)
+# e.g. /easycart/cart.php -> /easycart/cart
+RewriteCond %{THE_REQUEST} \s/internship-report/easycart/([^.]+)\.php[\s?] [NC]
+RewriteRule ^ /internship-report/easycart/%1 [R=301,L]
+
+# Internally rewrite clean URLs to .php files
+# e.g. /easycart/cart -> /easycart/cart.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]

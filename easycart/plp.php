@@ -106,9 +106,9 @@ if ($categoryFilter !== 'all') {
                                         <?php echo formatPrice($product['price']); ?>
                                     </p>
                                     <div class="product-card__actions">
-                                        <a href="product.php?id=<?php echo $product['id']; ?>"
-                                            class="btn btn--primary btn--sm">View Details</a>
-                                        <form action="add_to_cart.php" method="POST" style="flex-shrink: 0;">
+                                        <a href="product?id=<?php echo $product['id']; ?>" class="btn btn--primary btn--sm">View
+                                            Details</a>
+                                        <form action="add_to_cart" method="POST" style="flex-shrink: 0;">
                                             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                                             <button type="submit" class="btn btn--outline btn--sm" aria-label="Add to cart">
                                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none"

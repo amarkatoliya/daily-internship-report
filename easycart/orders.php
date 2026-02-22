@@ -5,7 +5,7 @@ session_start();
 // Protection: Redirect to login if not authenticated
 if (!isset($_SESSION['user'])) {
     $_SESSION['error'] = "Please log in to view your orders.";
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -172,7 +172,7 @@ $cartCount = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
                 </div>
 
                 <div style="margin-top: var(--space-8); text-align: center;">
-                    <a href="plp.php" class="btn btn--primary btn--lg">Continue Shopping</a>
+                    <a href="plp" class="btn btn--primary btn--lg">Continue Shopping</a>
                 </div>
             </section>
         </div>

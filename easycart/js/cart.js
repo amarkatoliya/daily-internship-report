@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('delta', delta);
 
         try {
-            const response = await fetch('update_cart_ajax.php', {
+            const response = await fetch('update_cart_ajax', {
                 method: 'POST',
                 body: formData
             });
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('product_id', productId);
 
         try {
-            const response = await fetch('update_cart_ajax.php', {
+            const response = await fetch('update_cart_ajax', {
                 method: 'POST',
                 body: formData
             });
