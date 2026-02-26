@@ -1,5 +1,7 @@
 <?php
-include "app/code/autoload.php";
-include "app/Sdp.php";
-Sdp::run();
-?>
+require_once "app/code/autoload.php";
+require_once "app/Sdp.php";
+
+Sdp::run(); 
+
+?>  
