@@ -43,25 +43,29 @@ INSERT INTO order_items VALUES
 
 -- query to get customers who have made purchases in the last 30 days and their total spending, along with the average spending of all customers in the same period
 
-SELECT 
-    c.customer_id,
-    c.customer_name,
-    COUNT(o.order_id) AS purchase_count,
-    SUM(oi.quantity * oi.price) AS total_spending
-    
-FROM customers c
-JOIN orders o ON c.customer_id = o.customer_id
-JOIN order_items oi ON o.order_id = oi.order_id
-WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
-GROUP BY c.customer_id, c.customer_name
-HAVING total_spending >
-(
-    SELECT AVG(customer_total)
-    FROM (
-        SELECT SUM(oi.quantity * oi.price) AS customer_total
-        FROM orders o
-        JOIN order_items oi ON o.order_id = oi.order_id
-        WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
-        GROUP BY o.customer_id
-    ) t
-);
+with customer_spending as (
+    select 
+        c.customer_id,
+        c.customer_name,
+        count(o.order_id) as purchase_count,
+        sum(oi.quantity * oi.price) as total_spending
+    from customers c
+    join orders o on c.customer_id = o.customer_id
+    join order_items oi on o.order_id = oi.order_id
+    where o.order_date >= curdate() - interval 30 day
+    group by c.customer_id, c.customer_name
+),
+
+avg_spending as (
+    select avg(total_spending) as avg_total
+    from customer_spending
+)
+
+select 
+    cs.customer_id,
+    cs.customer_name,
+    cs.purchase_count,
+    cs.total_spending
+from customer_spending cs
+join avg_spending a
+on cs.total_spending > a.avg_total;

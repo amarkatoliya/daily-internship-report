@@ -22,10 +22,12 @@ INSERT INTO products VALUES
 (12, 103, 'Mixer', 10000);
 
 -- query to get top 3 products by revenue for each category
+with ranked_output as (
+    select product_id, category_id, product_name, revenue,
+           dense_rank() over (partition by category_id order by revenue desc) as rank_num
+    from products
+)
+
 select product_id, category_id, product_name, revenue, rank_num
-from (
-	select product_id, category_id, product_name, revenue, 
-		   dense_rank() over (partition by category_id order by revenue desc) as rank_num
-	from products	
-) as ranked_output
+from ranked_output
 where rank_num <= 3;
